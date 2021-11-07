@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   useEffect(() => {
     const sayHello = async () => {
-      const response = await fetch("/api/hello");
+      const response = await fetch("/users/");
       const body = await response.json();
       console.log(body);
     };
