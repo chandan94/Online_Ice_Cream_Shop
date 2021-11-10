@@ -5,9 +5,17 @@ import './App.css';
 function App() {
   useEffect(() => {
     const sayHello = async () => {
-      const response = await fetch("/users/");
-      const body = await response.json();
-      console.log(body);
+      let todo = {
+        title: "impsum doloris",
+
+    };
+    
+    fetch('api/customer/618c22204b8153d5f2bf45f5', {
+        method: 'PUT',
+        body: JSON.stringify(todo),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(res => res.json())
+      .then(json => console.log(json));
     };
     sayHello();
 }, []);
