@@ -31,7 +31,6 @@ router.get('/:id', function (req: any, res: any) {
 });
 
 router.post('/', function (req: any, res: any) {
-  
     db
     .collection("customer")
     .insertOne( req.body, function (err: any, result: any) {
