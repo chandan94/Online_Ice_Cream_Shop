@@ -37,10 +37,10 @@ const SignupSchema = yup.object().shape({
     state: yup.string()
         .min(2, "State should have at least two characters.")
         .required("State is required."),
-    zip: yup.number()
-        .required("Zip code is required")
-        .min(6, "Zip code should have of minimum 6 digits.")
-        .max(6, "Zip code should be of maximum 6 digits."),
+    // zip: yup.number()
+    //     .required("Zip code is required")
+    //     .min(5, "Zip code should have of minimum 5 digits.")
+    //     .max(5, "Zip code should be of maximum 5 digits."),
 });
 
 const initialValues = {
@@ -58,12 +58,33 @@ const initialValues = {
 }
 const SignUp = () => {
     const width = window.outerWidth;
+   
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={SignupSchema}
-            onSubmit={values => {
+            onSubmit={(values) => {
                 console.log(values);
+                const url = '/api/customer/';
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName:values.firstName,
+                        lastName:values.lastName,
+                        email:values.email,
+                        password:values.password,
+                        phoneNumber:values.phoneNumber,
+                        address1:values.address1,
+                        address2:values.address2,
+                        city:values.city,
+                        state:values.state,
+                        zip:values.zip
+                    })
+                };
+                fetch(url, requestOptions)
+                .then(response => console.log('Submitted successfully'))
+                .catch(error => console.log('Form submit error', error));
             }}
         >
             {({
@@ -71,8 +92,9 @@ const SignUp = () => {
                 touched,
                 handleBlur,
                 handleChange,
+                handleSubmit
             }) => (
-                <Form className="sign-up">
+                <Form className="sign-up" onSubmit={handleSubmit} >
                     <h3 className="mb-3">Sign Up</h3>
                     <Row className="mb-1">
                         <Form.Group as={Col} sm={6} className={width < 768 ? "mb-3" : ""} controlId="formGridFname">

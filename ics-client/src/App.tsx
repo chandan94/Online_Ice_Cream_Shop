@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-// import LogIn from './components/log-in/log-in.component';
-// import SignUp from './components/sign-up/sign-up.component';
+ import LogIn from './components/log-in/log-in.component';
+ import SignUp from './components/sign-up/sign-up.component';
 
 function App() {
 //   useEffect(() => {
@@ -21,8 +21,10 @@ function App() {
 // }, []);
   return (
     <div className="App">
-      {/* <LogIn />
-      <SignUp /> */}
+      { 
+     // <LogIn />
+      <SignUp /> 
+    }
     </div>
   );
 }
