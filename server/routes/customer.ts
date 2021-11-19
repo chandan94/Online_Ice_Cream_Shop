@@ -18,16 +18,27 @@ router.get('/', function (req: any, res: any) {
     });
 });
 
-router.get('/:id', function (req: any, res: any) {
-    db
-    .collection("customer")
-    .findOne({_id: new ObjectId(req.params.id)},function (err: any, result: any) {
-      if (err) {
-        res.status(400).send("Error fetching listings!");
-     } else {
-        res.json(result);
-      }
-    });
+// router.get('/:id', function (req: any, res: any) {
+//     db
+//     .collection("customer")
+//     .findOne({_id: new ObjectId(req.params.id)},function (err: any, result: any) {
+//       if (err) {
+//         res.status(400).send("Error fetching listings!");
+//      } else {
+//         res.json(result);
+//       }
+//     });
+// });
+router.get('/:email', function (req: any, res: any) {
+  db
+  .collection("customer")
+  .findOne({email: req.params.email},function (err: any, result: any) {
+    if (err) {
+      res.status(400).send("Error fetching listings!");
+   } else {
+      res.json(result);
+    }
+  });
 });
 
 router.post('/', function (req: any, res: any) {
