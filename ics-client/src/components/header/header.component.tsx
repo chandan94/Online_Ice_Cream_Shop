@@ -13,12 +13,14 @@ const Header = () => {
         iconName : "cart3",
         btnName: "Cart",
         url: "/cart-items",
+        disabled: false,
     };
 
     const signIn : IconBtnProps = {
         iconName: "person-check-fill",
         btnName: "Sign In",
-        url: "/sign-in-up"
+        url: "/sign-in-up",
+        disabled: false,
     }
 
     const handleNavSelect = (selectedKey: string | null) => navigate(selectedKey ? selectedKey : "", { replace: true });

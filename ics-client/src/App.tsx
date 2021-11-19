@@ -5,7 +5,7 @@ import './App.css';
 
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
-import SignInUpPage from './pages/sign-in-up.component';
+import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
 
 function App() {
 //   useEffect(() => {

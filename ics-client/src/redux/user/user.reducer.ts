@@ -5,12 +5,12 @@ const INITIAL_STATE : UserState = {
     isAdmin: true,
 }
 
-const userReducer = (state = INITIAL_STATE, action : any) => {
+const userReducer = (state : UserState = INITIAL_STATE, action : any) : UserState => {
     switch(action.type) {
         case userActions.SET_CURRENT_USER:
             return {
                 ...state,
-                currentUser: action.payload
+                currentUser: action.payload,
             };
         default:
             return state;
