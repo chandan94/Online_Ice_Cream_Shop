@@ -9,8 +9,6 @@ import { IconBtnProps } from '../icon-btn/icon-btn.types';
 
 import './menu-item.styles.scss';
 import { MenuItemProps } from './menu-item.types';
-import { createStructuredSelector } from 'reselect';
-import { selectModalShow } from '../../redux/add-edit-modal/add-edit-modal.selector';
 
 const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, showModal}: MenuItemProps,) => {
 
