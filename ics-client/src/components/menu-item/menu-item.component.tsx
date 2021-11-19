@@ -52,7 +52,7 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
         <div className="menu-item">
             <Card style={{ width: '18rem' }}>
                 {
-                    isAdmin ?
+                    isAdmin && !isAddItem ?
                         (
                             <div className="modify-btn-group">
                                 <IconButton button={editBtn} />
@@ -68,7 +68,7 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
                         isAdmin && isAddItem ? <Button variant="primary" onClick={setShowModal}>Add Ice-cream</Button> : null
                     }
                     {
-                        isAdmin && isAddItem ?
+                        !isAdmin && !isAddItem ?
                             (
                                 <div className="inc-dec-btn-group">
                                     <IconButton button={minusIconBtn} />
