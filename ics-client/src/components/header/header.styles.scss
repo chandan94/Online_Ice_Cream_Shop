@@ -1,0 +1,40 @@
+.header {
+    padding: 1.25em;
+
+    form {
+        justify-content: center;
+        margin-left: 10em;
+    }
+
+    @media screen and (max-width: 992px){ 
+        form {
+            margin: 1em auto;
+        }
+    }
+
+    .search-bar {
+        width: 25em;
+    }
+
+    .search-icon, .search-icon:hover, .search-icon:active  {
+        border: none;
+        margin-left: -2.5em;
+        color: black;
+        background: none;
+        box-shadow: none;
+    }
+
+    .icon-btn {
+        height: 2.5em;
+    }
+
+    .custom-icon {
+        font-size: 1.25em;
+    }
+
+    .icon-btn-group {
+        width: 26em;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
