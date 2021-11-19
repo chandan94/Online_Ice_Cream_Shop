@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import './sign-up.styles.scss';
 import axios from 'axios';
+var bcrypt = require('bcryptjs');
+
 
 const SignupSchema = yup.object().shape({
     firstName: yup.string()
@@ -63,6 +65,10 @@ const SignUp = () => {
             initialValues={initialValues}
             validationSchema={SignupSchema}
             onSubmit={(values) => {
+                const saltRounds = 10;
+                const salt = bcrypt.genSaltSync(saltRounds);
+                const hashdPwd=bcrypt.hashSync(values.password,salt);
+                console.log(values);
                 const url = '/api/customer/';
                 const requestOptions = {
                     method: 'POST',
@@ -71,7 +77,7 @@ const SignUp = () => {
                         firstName: values.firstName,
                         lastName: values.lastName,
                         email: values.email,
-                        password: values.password,
+                        password: hashdPwd,
                         phoneNumber: values.phoneNumber,
                         address1: values.address1,
                         address2: values.address2,
@@ -81,12 +87,12 @@ const SignUp = () => {
                     })
                 };
                 axios.post(url, requestOptions)
-                .then(resp =>  {
+                .then((resp: { status: number; }) =>  {
                     if (resp.status === 200) {
                         console.log(resp);
                     }
                 })
-                .catch(err => console.error(err));
+                .catch((err: any) => console.error(err));
 }}
         >
     {({

@@ -4,6 +4,9 @@ import * as yup from 'yup';
 
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import './log-in.styles.scss';
+import axios from 'axios';
+var bcrypt = require('bcryptjs');
+
 
 const LoginSchema = yup.object().shape({
     email: yup.string()
@@ -24,15 +27,37 @@ const LogIn = () => {
             }}
             validationSchema={LoginSchema}
             onSubmit={values => {
-                console.log(values);
-            }}>
+                const saltRounds = 10;
+                const salt = bcrypt.genSaltSync(saltRounds);
+                const url = '/api/customer/'+values.email;
+                const requestOptionsss = {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                };
+                axios.get(url)
+                .then(resp  =>
+                    {
+                        if (resp.status === 200) {
+                        if (!bcrypt.compareSync(values.password,resp.data.password))
+                    {
+                        alert('INVALID PASSWORD');
+                    }
+                    else{
+                        alert('VALID PASSWORD');
+                    }
+                    }                
+                    }
+                    )
+                .catch((err: any) => console.error(err));
+                }}>
             {({
                 errors,
                 touched,
                 handleChange,
-                handleBlur
+                handleBlur,
+                handleSubmit
             }) => (
-                <Form className="log-in" onSubmit={(e) => { e.preventDefault(); }}>
+                <Form className="log-in" onSubmit={handleSubmit}>
                     <h3>Log In</h3>
                     <Row>
                         <Col>
