@@ -1,0 +1,24 @@
+.icon-btn {
+    height: 2.5em;
+    border: none;
+    color: white;
+    background: none;
+    margin: 0 1.25em;
+    cursor: pointer;
+
+
+    .custom-icon {
+        font-size: 1.25em;
+    }
+
+    .icon-btn-name {
+        font-size: .85em;
+    }
+}
+
+@media screen and (max-width: 992px){ 
+    .icon-btn {
+        margin: 1em auto;
+    }
+}
+
