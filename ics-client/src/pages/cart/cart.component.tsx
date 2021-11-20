@@ -5,7 +5,7 @@ import { createStructuredSelector } from "reselect";
 import { selectCartItems, selectCartItemsTotal } from '../../redux/cart/cart.selector';
 import CartItem from '../../components/cart/cart-item.compnent'
 
-const Cart = ({cartItems, cartTotal}:any)=> (
+const CartPage = ({cartItems, cartTotal}:any)=> (
     <section className="pt-5 pb-5">
   <div className="container">
     <div className="row w-100">
@@ -54,4 +54,4 @@ const mapStateToProps = createStructuredSelector({
     cartTotal: selectCartItemsTotal
 });
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps)(CartPage);

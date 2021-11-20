@@ -77,7 +77,7 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
                     }
                 </Card.Body>
             </Card>
-            <AddEditModal />
+            <AddEditModal modalTitle={`Add Ice-cream.`}/>
         </div>
     )
 };

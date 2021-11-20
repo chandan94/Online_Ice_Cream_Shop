@@ -5,20 +5,20 @@ import * as yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import './log-in.styles.scss';
 import axios from 'axios';
-var bcrypt = require('bcryptjs');
-
-
-const LoginSchema = yup.object().shape({
-    email: yup.string()
-        .email('Please enter a valid email address.')
-        .required('Email is required.')
-        .matches(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)
-        .trim(),
-    password: yup.string()
-        .required('Password is required.'),
-});
+import bcrypt from 'bcryptjs';
 
 const LogIn = () => {
+
+    const LoginSchema = yup.object().shape({
+        email: yup.string()
+            .email('Please enter a valid email address.')
+            .required('Email is required.')
+            .matches(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g)
+            .trim(),
+        password: yup.string()
+            .required('Password is required.'),
+    });
+
     return (
         <Formik
             initialValues={{
@@ -45,7 +45,7 @@ const LogIn = () => {
                     else{
                         alert('VALID PASSWORD');
                     }
-                    }                
+                    }
                     }
                     )
                 .catch((err: any) => console.error(err));
