@@ -8,22 +8,7 @@ import HomePage from './pages/homepage/homepage.component';
 import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
 import CartPage from './pages/cart/cart.component';
 
-function App() {
-//   useEffect(() => {
-//     const sayHello = async () => {
-//       let todo = {
-//         title: "impsum doloris",
-
-//     };
-//     fetch('api/customer/618c22204b8153d5f2bf45f5', {
-//         method: 'PUT',
-//         body: JSON.stringify(todo),
-//         headers: { 'Content-Type': 'application/json' }
-//     }).then(res => res.json())
-//       .then(json => console.log(json));
-//     };
-//     sayHello();
-// }, []);
+const App = () => {
   return (
     <div className="App">
       <Header />

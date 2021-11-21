@@ -5,11 +5,13 @@ var router=express.Router();
 var mongodbutil = require( '../db/connection' );
 var db = mongodbutil.getDb();
 
+const ICE_CREAM_COLL = "ice-cream";
+
 router.get('/', function (req: any, res: any) {
     db
-    .collection("iceCream")
+    .collection(ICE_CREAM_COLL)
     .find({})
-    .toArray(function (err: any, results: any) {
+    .toArray( (err: any, results: any) => {
       if (err) {
         res.status(400).send("Error fetching listings!");
      } else {
@@ -20,7 +22,7 @@ router.get('/', function (req: any, res: any) {
 
 router.get('/:id', function (req: any, res: any) {
     db
-    .collection("iceCream")
+    .collection(ICE_CREAM_COLL)
     .findOne({_id: new ObjectId(req.params.id)},function (err: any, result: any) {
       if (err) {
         res.status(400).send("Error fetching listings!");
@@ -31,9 +33,8 @@ router.get('/:id', function (req: any, res: any) {
 });
 
 router.post('/', function (req: any, res: any) {
-  
     db
-    .collection("iceCream")
+    .collection(ICE_CREAM_COLL)
     .insertOne( req.body, function (err: any, result: any) {
         if (err) {
           res.status(400).send("Error inserting matches!");
@@ -47,7 +48,7 @@ router.post('/', function (req: any, res: any) {
 
 router.put('/:id', function (req: any, res: any) {
     db
-    .collection("iceCream")
+    .collection(ICE_CREAM_COLL)
     .updateOne({
       _id: new ObjectId(req.params.id)
       }, {$set:req.body}, function (err: any, result: any) {
@@ -61,7 +62,7 @@ router.put('/:id', function (req: any, res: any) {
     //delete an existing  video 
 router.delete('/:id', function (req: any, res: any) {
   db
-  .collection("iceCream")
+  .collection(ICE_CREAM_COLL)
   .deleteOne( { _id: new ObjectId(req.params.id) },function (err: any, result: any) {
       if (err) { throw err };
       res.json(result);

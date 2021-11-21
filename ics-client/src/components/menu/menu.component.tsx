@@ -7,8 +7,9 @@ import './menu.styles.scss';
 import { selectIsAdminUser } from '../../redux/user/user.selector';
 import { Item } from '../menu-item/menu-item.types';
 import { MenuProps } from './menu.types';
+import { selectAllICream } from '../../redux/icream/icream.selector';
 
-const Menu = ({ isAdmin }: MenuProps) => {
+const Menu = ({ isAdmin, icreams }: MenuProps) => {
 
     const addIceCreamItem: Item = {
         img: "./images/plus-lg.svg",
@@ -17,17 +18,33 @@ const Menu = ({ isAdmin }: MenuProps) => {
         quantity: -1,
     }
     return (
-        <div className="menu">
-            <Container>
-                {
-                    isAdmin ? <MenuItem item={addIceCreamItem} isAdmin={isAdmin} isAddItem={true} /> : null
-                }
-            </Container>
-        </div>
+        <Container className="menu">
+            {
+                isAdmin ? <MenuItem item={addIceCreamItem} isAdmin={isAdmin} isAddItem={true} /> : null
+            }
+            {
+                icreams.map(({ name, flavor, calorie, quantity, ingredients, image }, index) => {
+                    const item: Item = {
+                        name,
+                        calorie,
+                        quantity,
+                        ingredients,
+                        flavor,
+                        desc: `This ice-cream is of ${flavor}, made up of ${ingredients} and has ${calorie} per serving`,
+                        img: image,
+                    };
+                    return (
+                        <MenuItem key={index + 1} item={item} isAdmin={isAdmin} isAddItem={false} />
+                    );
+                })
+            }
+        </Container>
+
     );
 }
 
 const mapStateToProps = createStructuredSelector({
-    isAdmin: selectIsAdminUser
+    isAdmin: selectIsAdminUser,
+    icreams: selectAllICream,
 })
 export default connect(mapStateToProps)(Menu);

@@ -3,6 +3,10 @@ export interface Item {
     desc: string,
     img: string,
     quantity: number,
+    calorie?: number,
+    ingredients?: string,
+    size?: string,
+    flavor?: string,
 }
 
 export interface MenuItemProps {

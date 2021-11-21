@@ -58,7 +58,7 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
                             </div>
                         ) : null
                 }
-                <Card.Img variant="top" src={img} />
+                <Card.Img variant="top" src={img} className={`${desc.includes("add") ? "img-margin" : ""}`}/>
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>{desc}</Card.Text>
@@ -77,7 +77,9 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
                     }
                 </Card.Body>
             </Card>
-            <AddEditModal modalTitle={`Add Ice-cream.`}/>
+            {
+                <AddEditModal modalTitle={`Add Ice-cream.`} modalButton={`Add`}/>
+            }
         </div>
     )
 };

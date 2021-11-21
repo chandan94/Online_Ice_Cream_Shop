@@ -9,16 +9,20 @@ import { setModalShow } from '../../redux/add-edit-modal/add-edit-modal.actions'
 import { selectModalShow } from '../../redux/add-edit-modal/add-edit-modal.selector';
 
 import './add-edit-modal.styles.scss';
-import { AddEditModalProps, HTMLInputEvent } from './add-edit-modal.types';
+import { AddEditModalProps } from './add-edit-modal.types';
+import axios from 'axios';
 
-const FILE_SIZE = 1024 * 160;
+const FILE_SIZE = 1024 * 1024 * 3;
+const ICE_CREAM_URL = "/api/ice-cream";
 const SUPPORTED_FORMATS = [
     "image/jpg",
     "image/jpeg",
     "image/png"
 ];
 
-const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps) => {
+const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEditModalProps) => {
+
+    let imageData : any ;
 
     const handleClose = () => {
         if(closeModal) {
@@ -41,8 +45,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps)
             .required("Please upload an image for the file.")
             .test("fileSize",
                     "File size should be less than "+FILE_SIZE,
-                    value => value && value.size <= FILE_SIZE
-                )
+                    value => value && value.size <= FILE_SIZE)
             .test("fileType",
                 "Only JPG/JPEG and PNG format are supported.",
                 value => value && SUPPORTED_FORMATS.includes(value.type)),
@@ -58,18 +61,19 @@ const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps)
             .optional(),
     });
 
-    const handleImageUpload = (e: any) => {
+    const handleImageUpload = (e: any, setFieldValue: any) => {
         const reader = new FileReader();
-        reader.onload = e1 => {
-            console.log(e1);
+        reader.onload = image => {
+            imageData = image.target?.result;
         };
         if(e.target && e.target.files) {
-            reader.readAsDataURL(e.target.files[0])
+            reader.readAsDataURL(e.target.files[0]);
+            setFieldValue("image", e.target.files[0]);
         }
     };
 
     return (
-        <div>
+        <div className="add-edit-modal">
             <Modal show={showModal} size="lg" onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{modalTitle}</Modal.Title>
@@ -79,22 +83,53 @@ const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps)
                         initialValues={{
                             name: '',
                             flavor: '',
-                            image: {},
-                            avail: 0,
+                            image: '',
+                            avail: '',
                             ingredients: '',
-                            calorie: 0,
+                            calorie: '',
                             servingSize: 'small',
                         }}
                         validationSchema={modalSchema}
-                        onSubmit={values => {
+                        onSubmit={(values, actions) => {
                             console.log(values);
+                            if (!imageData || imageData.length === 0) {
+                                actions.setFieldError("image", "Please upload a valid image  file.")
+                            }
+                            const { name, flavor , calorie, ingredients, avail} = values;
+
+                            const data = {
+                                name,
+                                flavor,
+                                calorie,
+                                ingredients,
+                                quantity: avail,
+                                image: imageData,
+                            };
+
+                            axios.post(ICE_CREAM_URL, data)
+                            .then(resp => {
+                                if (resp.status === 200) {
+                                    alert(`${values.name} ice-cream added successfully`);
+                                } else {
+                                   alert(`There was an issue in adding ${values.name}, please try later`);
+                                }
+                            })
+                            .catch(err => {
+                                actions.setStatus(`There was an issue in adding ${values.name} ${err}`);
+                            })
+                            .finally(() => {
+                                if (closeModal) {
+                                    closeModal(false);
+                                }
+                            })
                         }}>
                         {({
                             errors,
                             touched,
                             handleChange,
                             handleBlur,
-                            handleSubmit
+                            handleSubmit,
+                            setFieldValue,
                         }) => (
                             <Form className="add-edit-modal" onSubmit={handleSubmit}>
                                 <Row>
@@ -141,7 +176,8 @@ const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps)
                                         <Form.Control type="file" name="image"
                                             placeholder="Upload an image"
                                             className={touched.image && errors.image ? "error" : ""}
-                                            onChange={handleImageUpload}
+                                            onChange={(e) => handleImageUpload(e, setFieldValue)}
+                                            onBlur={handleBlur}
                                          />
                                         {
                                             touched.image && errors.image ?
@@ -202,7 +238,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps)
                                 </Row>
                                 <Row>
                                     <Form.Group className="mb-3" controlId="ic-ingredients">
-                                        <Form.Label>Image</Form.Label>
+                                        <Form.Label>Ingredients</Form.Label>
                                         <Form.Control type="text" name="ingredients"
                                             placeholder="Enter the ingredients. (Comma seperated values)"
                                             className={touched.ingredients && errors.ingredients ? "error" : ""}
@@ -215,18 +251,15 @@ const AddEditModal = ({ showModal, closeModal, modalTitle } : AddEditModalProps)
                                         }
                                     </Form.Group>
                                 </Row>
+                                <div className="submit-btn">
+                                    <Button variant="primary" type="submit" onClick={handleAddEdit}>
+                                       {modalButton}
+                                    </Button>
+                                </div>
                             </Form>
                         )}
                     </Formik>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleAddEdit}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
             </Modal>
         </div>
     );
