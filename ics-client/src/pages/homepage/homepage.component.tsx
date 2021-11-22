@@ -10,8 +10,8 @@ import { HomepageProps } from './homepage.types';
 class HomePage extends React.Component<HomepageProps> {
 
     componentDidMount() {
-        const { getIcream } = this.props;
-        getIcream();
+        const { getAllIcream } = this.props;
+        getAllIcream();
     }
 
     render() {
@@ -24,7 +24,7 @@ class HomePage extends React.Component<HomepageProps> {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    getIcream: () => dispatch(fetchIcreamStart()),
+    getAllIcream: () => dispatch(fetchIcreamStart()),
 });
 
 export default connect(null, mapDispatchToProps)(HomePage);

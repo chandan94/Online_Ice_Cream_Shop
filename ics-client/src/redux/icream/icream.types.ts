@@ -5,10 +5,11 @@ export const icreamActions = {
 }
 
 export interface ICream {
+    _id: string,
     name: string,
     flavor: string,
     image: string,
-    quantity: number,
+    cost: number,
     calorie: number,
     ingredients: string,
 }

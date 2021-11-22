@@ -8,4 +8,5 @@ export interface IconBtnProps {
 
 export interface IconBtn {
     button: IconBtnProps
+    onPress?: () => void,
 }

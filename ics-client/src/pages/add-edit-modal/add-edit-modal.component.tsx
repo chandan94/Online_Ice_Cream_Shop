@@ -11,6 +11,7 @@ import { selectModalShow } from '../../redux/add-edit-modal/add-edit-modal.selec
 import './add-edit-modal.styles.scss';
 import { AddEditModalProps } from './add-edit-modal.types';
 import axios from 'axios';
+import { fetchIcreamStart } from '../../redux/icream/icream.action';
 
 const FILE_SIZE = 1024 * 1024 * 3;
 const ICE_CREAM_URL = "/api/ice-cream";
@@ -20,9 +21,11 @@ const SUPPORTED_FORMATS = [
     "image/png"
 ];
 
-const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEditModalProps) => {
+const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllICream, currIcream, isEdit} : AddEditModalProps) => {
 
-    let imageData : any ;
+    let imageData: any;
+    let imgName: string = "";
+    let imageFile: any;
 
     const handleClose = () => {
         if(closeModal) {
@@ -33,6 +36,26 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
     const handleAddEdit = () => {
         return;
     };
+
+    const dataURLtoFile = (dataUrl: string, filename: string) =>{
+        const arr = dataUrl.split(',');
+        const match1 = (arr[0].match(/:(.*?);/));
+        const mime = match1 ? match1[1] : null;
+        const bstr = arr ? atob(arr[1]) : null
+        let n = bstr ? bstr.length : 0;
+        const u8arr = new Uint8Array(n);
+
+        while(n--){
+            if(bstr)
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, {type : mime ? mime : ''});
+    }
+
+    if (isEdit && currIcream) {
+        imageFile =  dataURLtoFile(currIcream.img, "file.png");
+    }
 
     const modalSchema = yup.object().shape({
         name: yup.string()
@@ -49,12 +72,14 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
             .test("fileType",
                 "Only JPG/JPEG and PNG format are supported.",
                 value => value && SUPPORTED_FORMATS.includes(value.type)),
-        avail: yup.number()
-            .required("Please enter the quantity of ice-cream available.")
-            .min(0, "At least 1 quantity of the ice-cream should be available."),
+        cost: yup.number()
+            .test("isDecimal", "Enter a valid cost for the ice-cream.",
+            value => value && (value + "").match(/^\d{0,2}(\.\d{1,2})?$/) ? true : false)
+            .required("Please enter the cost of ice-cream..")
+            .min(1, "Cost cannot be 0."),
         calorie: yup.number()
-            .required("Please enter the quantity of ice-cream available.")
-        .   min(0, "At least 1 quantity of the ice-cream should be available."),
+            .required("Please enter the quantity of ice-cream costable.")
+        .   min(0, "At least 1 quantity of the ice-cream should be costable."),
         ingredients: yup.string()
             .required("Please enter at least one ingredient."),
         servingSize: yup.string()
@@ -67,8 +92,10 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
             imageData = image.target?.result;
         };
         if(e.target && e.target.files) {
-            reader.readAsDataURL(e.target.files[0]);
-            setFieldValue("image", e.target.files[0]);
+            const imgFile = e.target.files[0];
+            imgName = imgFile.name;
+            reader.readAsDataURL(imgFile);
+            setFieldValue("image", imgFile);
         }
     };
 
@@ -81,47 +108,68 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                 <Modal.Body>
                     <Formik
                         initialValues={{
-                            name: '',
-                            flavor: '',
-                            image: '',
-                            avail: '',
-                            ingredients: '',
-                            calorie: '',
+                            name: currIcream ? currIcream.name : '',
+                            flavor: currIcream ? currIcream.flavor : '',
+                            image: currIcream && imageFile? imageFile: '',
+                            cost: currIcream ? currIcream.cost : '',
+                            ingredients: currIcream ? currIcream.ingredients : '',
+                            calorie: currIcream ? currIcream.calorie :'',
                             servingSize: 'small',
                         }}
                         validationSchema={modalSchema}
                         onSubmit={(values, actions) => {
-                            console.log(values);
                             if (!imageData || imageData.length === 0) {
                                 actions.setFieldError("image", "Please upload a valid image  file.")
                             }
-                            const { name, flavor , calorie, ingredients, avail} = values;
+                            const { name, flavor , calorie, ingredients, cost} = values;
 
                             const data = {
                                 name,
                                 flavor,
                                 calorie,
                                 ingredients,
-                                quantity: avail,
+                                cost,
                                 image: imageData,
+                                imgName,
                             };
-
-                            axios.post(ICE_CREAM_URL, data)
-                            .then(resp => {
-                                if (resp.status === 200) {
-                                    alert(`${values.name} ice-cream added successfully`);
-                                } else {
-                                   alert(`There was an issue in adding ${values.name}, please try later`);
-                                }
-                            })
-                            .catch(err => {
-                                actions.setStatus(`There was an issue in adding ${values.name} ${err}`);
-                            })
-                            .finally(() => {
-                                if (closeModal) {
-                                    closeModal(false);
-                                }
-                            })
+                            if(!isEdit) {
+                                axios.post(ICE_CREAM_URL, data)
+                                .then(resp => {
+                                    if (resp.status === 200) {
+                                        alert(`${values.name} ice-cream added successfully`);
+                                        getAllICream();
+                                    } else {
+                                       alert(`There was an issue in adding ${values.name}, please try later`);
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                })
+                                .finally(() => {
+                                    if (closeModal) {
+                                        closeModal(false);
+                                    }
+                                });
+                            } else if (isEdit) {
+                                const id = currIcream ? currIcream._id: ''
+                                axios.put(`${ICE_CREAM_URL}/${id}` , data)
+                                .then(resp => {
+                                    if (resp.status === 200) {
+                                        alert(`${values.name} ice-cream updated successfully`);
+                                        getAllICream();
+                                    } else {
+                                       alert(`There was an issue in updating ${values.name}, please try later`);
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error(err);
+                                })
+                                .finally(() => {
+                                    if (closeModal) {
+                                        closeModal(false);
+                                    }
+                                })
+                            }
                         }}>
                         {({
                             errors,
@@ -143,6 +191,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                                                 className={touched.name && errors.name ? "error" : ""}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
+                                                defaultValue={currIcream ? currIcream.name : ''}
                                             />
                                             {
                                                 touched.name && errors.name ?
@@ -161,6 +210,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                                                 className={touched.flavor && errors.flavor ? "error" : ""}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
+                                                defaultValue={currIcream? currIcream.flavor : ''}
                                             />
                                             {
                                                 touched.flavor && errors.flavor ?
@@ -170,22 +220,24 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Form.Group as={Col} className="mb-3" controlId="image-file">
-                                        <Form.Label>Image</Form.Label>
-                                        <Form.Control type="file" name="image"
-                                            placeholder="Upload an image"
-                                            className={touched.image && errors.image ? "error" : ""}
-                                            onChange={(e) => handleImageUpload(e, setFieldValue)}
-                                            onBlur={handleBlur}
-                                         />
-                                        {
-                                            touched.image && errors.image ?
-                                                (<div className="error-message">{errors.image}</div>)
-                                                : null
-                                        }
-                                    </Form.Group>
-                                </Row>
+                                {
+                                    !isEdit ? <Row>
+                                        <Form.Group as={Col} className="mb-3" controlId="image-file">
+                                            <Form.Label>Image</Form.Label>
+                                            <Form.Control type="file" name="image"
+                                                placeholder="Upload an image"
+                                                className={touched.image && errors.image ? "error" : ""}
+                                                onChange={(e) => handleImageUpload(e, setFieldValue)}
+                                                onBlur={handleBlur}
+                                            />
+                                            {
+                                                touched.image && errors.image ?
+                                                    (<div className="error-message">{errors.image}</div>)
+                                                    : null
+                                            }
+                                        </Form.Group>
+                                    </Row> : null
+                                }
                                 <Row className="mb-3">
                                         <Form.Group as={Col} className="mb-3" controlId="ice-cream-calorie">
                                             <Form.Label>Calorie</Form.Label>
@@ -196,6 +248,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                                                 className={touched.calorie && errors.calorie ? "error" : ""}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
+                                                defaultValue={currIcream? currIcream.calorie :''}
                                             />
                                             {
                                                 touched.calorie && errors.calorie ?
@@ -203,19 +256,20 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                                                     : null
                                             }
                                         </Form.Group>
-                                        <Form.Group as={Col} className="mb-3" controlId="ice-cream-quant">
-                                            <Form.Label>Quantity</Form.Label>
+                                        <Form.Group as={Col} className="mb-3" controlId="ice-cream-cost">
+                                            <Form.Label>Cost</Form.Label>
                                             <Form.Control
-                                                type="number"
-                                                name="avail"
-                                                placeholder="Enter the quantity."
-                                                className={touched.avail && errors.avail ? "error" : ""}
+                                                type="string"
+                                                name="cost"
+                                                placeholder="Enter the cost (in $)."
+                                                className={touched.cost && errors.cost ? "error" : ""}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
+                                                value={currIcream? currIcream.cost :''}
                                             />
                                             {
-                                                touched.avail && errors.avail ?
-                                                    (<div className="error-message">{errors.avail}</div>)
+                                                touched.cost && errors.cost ?
+                                                    (<div className="error-message">{errors.cost}</div>)
                                                     : null
                                             }
                                         </Form.Group>
@@ -243,7 +297,8 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton } : AddEd
                                             placeholder="Enter the ingredients. (Comma seperated values)"
                                             className={touched.ingredients && errors.ingredients ? "error" : ""}
                                             onChange={handleChange}
-                                            onBlur={handleBlur} />
+                                            onBlur={handleBlur}
+                                            defaultValue={currIcream? currIcream.ingredients :''} />
                                         {
                                             touched.ingredients && errors.ingredients ?
                                                 (<div className="error-message">{errors.ingredients}</div>)
@@ -271,6 +326,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch : Dispatch) => ({
     closeModal: (show:boolean) => dispatch(setModalShow(show)),
-})
+    getAllICream: () => dispatch(fetchIcreamStart()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEditModal);

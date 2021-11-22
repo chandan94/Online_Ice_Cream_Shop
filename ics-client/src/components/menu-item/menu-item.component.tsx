@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { setModalShow } from '../../redux/add-edit-modal/add-edit-modal.actions';
+import { onItemEditClick } from '../../redux/menu-item/menu-item.actions';
 import IconButton from '../icon-btn/icon-btn.component';
-import AddEditModal from '../../pages/add-edit-modal/add-edit-modal.component';
 import { IconBtnProps } from '../icon-btn/icon-btn.types';
 
 import './menu-item.styles.scss';
-import { MenuItemProps } from './menu-item.types';
+import { MenuItemProps, Item } from './menu-item.types';
 
-const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, showModal}: MenuItemProps,) => {
+const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked }: MenuItemProps) => {
+
+    const  { name, desc, img, cost } = item;
 
     const plusIconBtn: IconBtnProps = {
         iconName: "plus-circle",
@@ -23,7 +25,7 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
         iconName: "dash-circle",
         url: "",
         btnName: "",
-        disabled: quantity < 0 ? true : false,
+        disabled: true,
     };
 
     const editBtn: IconBtnProps = {
@@ -46,19 +48,28 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
         }
     };
 
+    const handleOnEdit = () => {
+        if (editBtnClicked) {
+            editBtnClicked(item);
+            if (showModal) {
+                showModal(true);
+            }
+        }
+    }
+
     return (
         <div className="menu-item">
-            <Card style={{ width: '18rem' }}>
+            <Card>
                 {
                     isAdmin && !isAddItem ?
                         (
                             <div className="modify-btn-group">
-                                <IconButton button={editBtn} />
+                                <IconButton button={editBtn} onPress={handleOnEdit}/>
                                 <IconButton button={delBtn} />
                             </div>
                         ) : null
                 }
-                <Card.Img variant="top" src={img} className={`${desc.includes("add") ? "img-margin" : ""}`}/>
+                <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}/>
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>{desc}</Card.Text>
@@ -70,22 +81,20 @@ const MenuItem = ({ item: { name, desc, img, quantity }, isAdmin, isAddItem, sho
                             (
                                 <div className="inc-dec-btn-group">
                                     <IconButton button={minusIconBtn} />
-                                    <span>{quantity}</span>
+                                    <span>{0}</span>
                                     <IconButton button={plusIconBtn} />
                                 </div>
                             ) : null
                     }
                 </Card.Body>
             </Card>
-            {
-                <AddEditModal modalTitle={`Add Ice-cream.`} modalButton={`Add`}/>
-            }
         </div>
     )
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     showModal: (show: boolean) => dispatch(setModalShow(show)),
-})
+    editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
+});
 
 export default connect(null, mapDispatchToProps)(MenuItem);

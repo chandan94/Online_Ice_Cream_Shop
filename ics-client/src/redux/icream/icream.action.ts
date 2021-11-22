@@ -12,4 +12,4 @@ export const fetchIcreamSuccess = (icream: ICream[]) => ({
 export const fetchIcreamFailure = (err: Error) => ({
     type: icreamActions.FETCH_ICREAM_FAILURE,
     payload: err
-})
+});
