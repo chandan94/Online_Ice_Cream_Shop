@@ -11,7 +11,7 @@ class HomePage extends React.Component<HomepageProps> {
 
     componentDidMount() {
         const { getAllIcream } = this.props;
-        getAllIcream();
+        getAllIcream("");
     }
 
     render() {
@@ -24,7 +24,7 @@ class HomePage extends React.Component<HomepageProps> {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    getAllIcream: () => dispatch(fetchIcreamStart()),
+    getAllIcream: (search: string) => dispatch(fetchIcreamStart(search)),
 });
 
 export default connect(null, mapDispatchToProps)(HomePage);

@@ -3,19 +3,13 @@ import { useNavigate } from 'react-router';
 import './icon-btn.styles.scss';
 import { IconBtn } from './icon-btn.types';
 
-const IconButton = ({ button : {iconName , btnName, url, disabled }, onPress }: IconBtn) => {
+const IconButton = ({ button : {iconName , btnName, url, disabled }}: IconBtn) => {
 
     const navigate = useNavigate();
 
     const navigateToURL = () => {
         if (url && url.length > 0) {
-            if (url !==  "/add-edit-modal") {
-                navigate(url);
-            } else {
-                if (onPress) {
-                    onPress();
-                }
-            }
+            navigate(url);
         }
     }
 

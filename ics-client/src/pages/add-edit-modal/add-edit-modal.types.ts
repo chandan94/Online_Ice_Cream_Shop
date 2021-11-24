@@ -2,8 +2,9 @@ import { Item } from "../../components/menu-item/menu-item.types";
 
 export interface AddEditModalProps {
     showModal?: boolean,
-    getAllICream: () => void,
+    getAllICream: (search: string) => void,
     closeModal?: (show: boolean) => void,
+    editCleanUp?: () => void,
     modalTitle: string,
     modalButton: string,
     currIcream: Item | null,

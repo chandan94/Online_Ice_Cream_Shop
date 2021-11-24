@@ -9,6 +9,8 @@ export interface Item {
     size?: string,
     flavor?: string,
     orderAmount?: number,
+    delete?: boolean
+    imageName?: string,
 }
 
 export interface MenuItemProps {
@@ -17,4 +19,5 @@ export interface MenuItemProps {
     isAddItem: boolean,
     showModal?: (show: boolean) => void,
     editBtnClicked?: (item: Item) => void,
+    getAllICream?: (search: string) => void
 }

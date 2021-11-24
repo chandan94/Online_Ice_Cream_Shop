@@ -13,12 +13,18 @@ const menuItemReducer = (state = INITIAL_STATE, action : any) => {
                 ...state,
                 editing: true,
                 currItem: action.payload,
-            }
+            };
         case menuItemActions.DELETE_MENU_ITEM:
             return {
                 ...state,
                 editing: action.payload,
-            }
+            };
+        case menuItemActions.EDIT_DONE:
+            return {
+                ...state,
+                editing: false,
+                currItem: null,
+            };
         default: return state;
     }
 }

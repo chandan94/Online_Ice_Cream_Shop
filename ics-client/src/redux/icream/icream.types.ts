@@ -12,10 +12,12 @@ export interface ICream {
     cost: number,
     calorie: number,
     ingredients: string,
+    imageName: string,
 }
 
 export interface ICreamState {
     icreams: ICream[],
     isFetching: boolean,
     error: Error | null,
+    search: string,
 }

@@ -10,7 +10,7 @@ const ICE_CREAM_COLL = "ice-cream";
 router.get('/', function (req: any, res: any) {
     db
     .collection(ICE_CREAM_COLL)
-    .find({})
+    .find({ delete : false})
     .toArray( (err: any, results: any) => {
       if (err) {
         res.status(400).send("Error fetching listings!");

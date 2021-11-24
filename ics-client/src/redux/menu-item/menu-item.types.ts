@@ -4,10 +4,11 @@ import { Item } from "../../components/menu-item/menu-item.types";
 export const menuItemActions = {
     EDIT_MENU_ITEM : 'EDIT_MENU_ITEM',
     DELETE_MENU_ITEM: 'DELETE_MENU_ITEM',
-}
+    EDIT_DONE: 'EDIT_DONE',
+};
 
 export interface MenuItemState {
     editing: boolean,
     deleting: boolean,
     currItem: Item | null,
-}
+};

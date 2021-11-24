@@ -4,6 +4,7 @@ const INITIAL_STATE : ICreamState = {
     icreams : [],
     isFetching: false,
     error: null,
+    search: '',
 }
 
 const icreamReducer = (state: ICreamState = INITIAL_STATE, action: any) : ICreamState => {
