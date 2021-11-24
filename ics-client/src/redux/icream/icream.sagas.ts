@@ -5,9 +5,9 @@ import { axiosGetCall } from "./icream.util";
 
 const ICREAM_URL = '/api/ice-cream';
 
-export function* fetchIcreamCall(): Generator<any, any, any> {
+export function* fetchIcreamCall({ payload } : any): Generator<any, any, any> {
     try {
-        const icreamResp = yield axiosGetCall(ICREAM_URL);
+        const icreamResp = yield axiosGetCall(ICREAM_URL, payload );
         yield put(fetchIcreamSuccess(icreamResp));
     } catch (error : any) {
         yield put(fetchIcreamFailure(error));
@@ -20,6 +20,6 @@ export function* fetchIcreamStartSaga() {
 
 export default function* icreamSaga() {
     yield all([
-        call(fetchIcreamStartSaga)
+        call(fetchIcreamStartSaga),
     ])
 }

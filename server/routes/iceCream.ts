@@ -8,9 +8,16 @@ var db = mongodbutil.getDb();
 const ICE_CREAM_COLL = "ice-cream";
 
 router.get('/', function (req: any, res: any) {
+    const filter: any = { delete : false };
+    const searchName = req.query.search;
+
+    if (searchName) {
+      filter.name = { $regex : new RegExp(`${searchName}`, 'i')}
+    }
+
     db
     .collection(ICE_CREAM_COLL)
-    .find({ delete : false})
+    .find(filter)
     .toArray( (err: any, results: any) => {
       if (err) {
         res.status(400).send("Error fetching listings!");
@@ -59,11 +66,11 @@ router.put('/:id', function (req: any, res: any) {
     });
 
 
-    //delete an existing  video 
+//delete an existing  video 
 router.delete('/:id', function (req: any, res: any) {
   db
   .collection(ICE_CREAM_COLL)
-  .deleteOne( { _id: new ObjectId(req.params.id) },function (err: any, result: any) {
+  .deleteOne( { _id: new ObjectId(req.params.id) }, function (err: any, result: any) {
       if (err) { throw err };
       res.json(result);
   });

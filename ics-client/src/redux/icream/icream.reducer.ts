@@ -13,6 +13,7 @@ const icreamReducer = (state: ICreamState = INITIAL_STATE, action: any) : ICream
             return {
                 ...state,
                 isFetching: true,
+                search: action.payload,
             };
         case icreamActions.FETCH_ICREAM_FAILURE:
             return {

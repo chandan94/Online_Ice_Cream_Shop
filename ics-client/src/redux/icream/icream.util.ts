@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-export const axiosGetCall = async (route:string , body = null, token = null) => {
+export const axiosGetCall = async (route:string , query: string , body: any = null, token = null) => {
 
     const onSuccess = (response : AxiosResponse) => {
         console.debug('Request Successful!', response);
@@ -26,7 +26,7 @@ export const axiosGetCall = async (route:string , body = null, token = null) => 
         return Promise.reject(error.response || error.message);
     }
 
-    return axios.get(route, {
+    return axios.get(`${route}?search=${query}`, {
         data: body
     }).then(onSuccess)
         .catch(onError);
