@@ -40,7 +40,7 @@ const IPagination = ({active, total, setActivePage, getAllICream, search, isAdmi
     if(total) {
         for (let num = 1; num <= pageCount  ; num++) {
             icreams.push(
-                <Pagination.Item key={total + 1 + num} active={num === active} onClick={handlePageClick}>
+                <Pagination.Item key={total + 1 + num} active={num === active} onClick={handlePageClick} >
                 {num}
                 </Pagination.Item>,
             );

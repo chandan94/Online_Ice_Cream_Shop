@@ -1,19 +1,19 @@
 .header {
     padding: 1.25em;
 
+    .container {
+        padding: 0;
+    }
+
     form {
         justify-content: center;
-        margin-left: 2em;
-    }
-    .dropdown-custom
-    {
-        width: auto;
+        margin-left: 10.5em;
     }
 
     @media screen and (max-width: 992px){ 
         form {
             margin: 1em auto;
-        }
+        }   
     }
 
     .search-bar {
@@ -36,8 +36,9 @@
     }
 
     .icon-btn-group {
-        width: 26em;
+        width: 25em;
         display: flex;
         justify-content: flex-end;
+        margin: 0 auto;
     }
 }

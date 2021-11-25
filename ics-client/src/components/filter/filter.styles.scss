@@ -1,0 +1,16 @@
+.filter {
+    text-align: left;
+    margin: 4em 0 2em 10.65em;
+}
+
+.form-select {
+    width: auto;
+}
+
+@media screen and (max-width: 992px){ 
+    .form-select {
+        width: 70%;
+        margin-left: 4.6em;
+    }
+
+}

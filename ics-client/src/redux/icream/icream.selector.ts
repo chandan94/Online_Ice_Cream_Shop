@@ -13,3 +13,8 @@ export const selectICreamSearch = createSelector (
     [selectIcream],
     (icream: ICreamState) => icream.search,
 );
+
+export const selectICreamFilter = createSelector (
+    [selectIcream],
+    (icream: ICreamState) => icream.filter,
+);

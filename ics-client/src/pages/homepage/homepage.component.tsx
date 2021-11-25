@@ -10,6 +10,7 @@ import IPagination from '../../components/pagination/pagination.component';
 import { createStructuredSelector } from 'reselect';
 import { selectActivePage } from '../../redux/pagination/pagination.selector';
 import { GetAllICreamPayload } from '../../redux/icream/icream.types';
+import Filter from '../../components/filter/filter.component';
 
 class HomePage extends React.Component<HomepageProps> {
 
@@ -25,6 +26,7 @@ class HomePage extends React.Component<HomepageProps> {
     render() {
         return (
             <div>
+                <Filter />
                 <Menu />
                 <IPagination />
             </div>

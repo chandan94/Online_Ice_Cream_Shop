@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import IconButton from '../icon-btn/icon-btn.component';
 import { IconBtnProps } from '../icon-btn/icon-btn.types';
 import { createStructuredSelector } from "reselect";
-import { selectCartItemsCount } from '../../redux/cart/cart.selector';
+// import { selectCartItemsCount } from '../../redux/cart/cart.selector';
 
 import { Dispatch } from 'redux';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
@@ -53,7 +53,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
         }
     }
 
-    const handleSearch = (evt: any) => {
+    const handleSearch = () => {
         const searchBar: any = document.getElementById("search-bar")
         const searchValue = searchBar ? searchBar.value : "";
         const dropdown: any = document.getElementById("flavor-filter");
@@ -67,15 +67,20 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
         }
     }
 
+    const handleBrandClick = () => {
+        navigate("/");
+        handleSearch();
+    }
+
     const handleNavSelect = (selectedKey: string | null) => navigate(selectedKey ? selectedKey : "", { replace: true });
 
     return (
         <Navbar className="header" bg="dark" variant="dark" expand="lg" sticky="top">
             <Container>
-                <Navbar.Brand href="" onClick={() => { navigate("/") }}>Ice-Cream Shop</Navbar.Brand>
+                <Navbar.Brand href="" onClick={handleBrandClick}>Ice-Cream Shop</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav onSelect={handleNavSelect} id="ice-cream-nav" className="me-auto justify-content-center">
+                    <Nav onSelect={handleNavSelect} id="ice-cream-nav" className="justify-content-center">
                         <Nav.Link href="" eventKey="/menu" >Menu</Nav.Link>
                         <Nav.Link href="" eventKey="/contact">Contact Us</Nav.Link>
                         <Form className="d-flex" onSubmit={handleSearchFormSubmit}>
@@ -89,7 +94,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
                             />
                             <Button variant="outline-light search-icon" onClick={handleSearch}><i className="bi bi-search"></i></Button>
                         </Form>
-                        <select id="flavor-filter" className="dropdown-custom form-select" aria-label=".form-select-lg example" onChange={handleSearch}>
+                        {/* <select id="flavor-filter" className="dropdown-custom form-select" aria-label=".form-select-lg example" onChange={handleSearch}>
 
                             <option value="" >Flavor Filter</option>
 
@@ -103,7 +108,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
 
                             <option value="scifi">Sci-fi</option>
 
-                        </select>
+                        </select> */}
 
                         <div className="icon-btn-group">
                             <IconButton button={signIn} />

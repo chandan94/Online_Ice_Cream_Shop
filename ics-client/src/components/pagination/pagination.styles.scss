@@ -2,4 +2,18 @@
     .pagination {
         justify-content: center;
     }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #212529;
+        border-color: #212529;
+      
+    }
+    .page-item .page-link {
+        z-index: 3;
+        color: black;
+        background-color: white;
+        border-color: #212529;
+    }
 }

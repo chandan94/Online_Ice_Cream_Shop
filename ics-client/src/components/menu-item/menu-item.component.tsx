@@ -18,7 +18,7 @@ import { MenuItemProps, Item } from './menu-item.types';
 
 const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage }: MenuItemProps) => {
 
-    const  { name, flavor, cost, img, calorie, ingredients, imageName, desc  } = item;
+    const { name, flavor, cost, img, calorie, ingredients, imageName, desc } = item;
 
     // const plusIconBtn: IconBtnProps = {
     //     iconName: "plus-circle",
@@ -37,7 +37,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
     // };
 
     const setShowModal = () => {
-        if(showModal) {
+        if (showModal) {
             showModal(true);
         }
     };
@@ -52,7 +52,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
     }
 
     const handleOnDelete = () => {
-        if(window.confirm(`Are you sure you want to delete ice-cream ${item.name}`)) {
+        if (window.confirm(`Are you sure you want to delete ice-cream ${item.name}`)) {
             const data = {
                 name,
                 flavor,
@@ -64,18 +64,18 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 delete: true,
             }
             axios.put(`${ICE_CREAM_URL}/${item._id}`, data)
-            .then(resp => {
-                if (resp.status === 200) {
-                    alert(` ${item.name} ice-cream deleted successfully`);
-                    if (getAllICream) {
-                        getAllICream({
-                            search: "",
-                            page: activePage && activePage > 1 ? activePage : 0,
-                            filter: "",
-                        });
+                .then(resp => {
+                    if (resp.status === 200) {
+                        alert(` ${item.name} ice-cream deleted successfully`);
+                        if (getAllICream) {
+                            getAllICream({
+                                search: "",
+                                page: activePage && activePage > 1 ? activePage : 0,
+                                filter: "",
+                            });
+                        }
                     }
-                }
-            })
+                })
         }
     }
 
@@ -91,11 +91,13 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                             </div>
                         ) : null
                 }
-                <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}/>
+                <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Subtitle>{cost}$</Card.Subtitle>
+                    <Card.Subtitle>Cost : {cost}$</Card.Subtitle>
                     <Card.Text>{desc}</Card.Text>
+                </Card.Body>
+                <Card.Footer>
                     {
                         isAdmin && isAddItem ? <Button variant="primary" onClick={setShowModal}>Add Ice-cream</Button> : null
                     }
@@ -109,14 +111,14 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                                 // </div>
                                 // <Row>
                                 // <Col>
-                                    <Button variant="primary" type="submit" className="add-to-cart">
-                                        Add to Cart
-                                    </Button>
-                            //     </Col>
-                            // </Row>
+                                <Button variant="dark" type="submit" className="add-to-cart">
+                                    Add to Cart
+                                </Button>
+                                //     </Col>
+                                // </Row>
                             ) : null
                     }
-                </Card.Body>
+                </Card.Footer>
             </Card>
         </div>
     )
