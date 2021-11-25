@@ -3,7 +3,7 @@ import { setTotalPageCount } from '../pagination/pagination.action';
 import { selectIsAdminUser } from '../user/user.selector';
 import { fetchIcreamFailure, fetchIcreamSuccess } from './icream.action';
 import { icreamActions } from "./icream.types";
-import { axiosGetCall } from "./icream.util";
+import { axiosGetCall } from "../axios.util";
 
 const ICREAM_URL = '/api/ice-cream';
 

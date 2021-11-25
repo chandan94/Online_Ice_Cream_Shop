@@ -10,8 +10,8 @@ import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 import { onItemEditClick } from '../../redux/menu-item/menu-item.actions';
 import { selectActivePage } from '../../redux/pagination/pagination.selector';
-import IconButton from '../icon-btn/icon-btn.component';
-import { IconBtnProps } from '../icon-btn/icon-btn.types';
+// import IconButton from '../icon-btn/icon-btn.component';
+// import { IconBtnProps } from '../icon-btn/icon-btn.types';
 
 import './menu-item.styles.scss';
 import { MenuItemProps, Item } from './menu-item.types';
@@ -20,21 +20,21 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
 
     const  { name, flavor, cost, img, calorie, ingredients, imageName, desc  } = item;
 
-    const plusIconBtn: IconBtnProps = {
-        iconName: "plus-circle",
-        url: "",
-        btnName: "",
-        disabled: false,
-        quantity :0
-    };
+    // const plusIconBtn: IconBtnProps = {
+    //     iconName: "plus-circle",
+    //     url: "",
+    //     btnName: "",
+    //     disabled: false,
+    //     quantity :0
+    // };
 
-    const minusIconBtn: IconBtnProps = {
-        iconName: "dash-circle",
-        url: "",
-        btnName: "",
-        disabled: true,
-        quantity :0
-    };
+    // const minusIconBtn: IconBtnProps = {
+    //     iconName: "dash-circle",
+    //     url: "",
+    //     btnName: "",
+    //     disabled: true,
+    //     quantity :0
+    // };
 
     const setShowModal = () => {
         if(showModal) {
@@ -94,6 +94,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}/>
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
+                    <Card.Subtitle>{cost}$</Card.Subtitle>
                     <Card.Text>{desc}</Card.Text>
                     {
                         isAdmin && isAddItem ? <Button variant="primary" onClick={setShowModal}>Add Ice-cream</Button> : null
@@ -101,11 +102,18 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                     {
                         !isAdmin && !isAddItem ?
                             (
-                                <div className="inc-dec-btn-group">
-                                    <IconButton button={minusIconBtn} />
-                                    <span>{0}</span>
-                                    <IconButton button={plusIconBtn} />
-                                </div>
+                                // <div className="inc-dec-btn-group">
+                                //     <IconButton button={minusIconBtn} />
+                                //     <span>{0}</span>
+                                //     <IconButton button={plusIconBtn} />
+                                // </div>
+                                // <Row>
+                                // <Col>
+                                    <Button variant="primary" type="submit" className="add-to-cart">
+                                        Add to Cart
+                                    </Button>
+                            //     </Col>
+                            // </Row>
                             ) : null
                     }
                 </Card.Body>

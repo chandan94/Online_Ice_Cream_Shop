@@ -23,11 +23,6 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: I
             {
                 btnName && btnName.length > 0 ?  <p className="icon-btn-name">{btnName}</p> : null
             }
-        
-          
-            
-            
-                <p className="icon-btn-name">{btnName}</p>
         </div>
     );
 }

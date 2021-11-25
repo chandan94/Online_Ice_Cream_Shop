@@ -5,6 +5,8 @@ import cartReducer from './cart/cart.reducer';
 import icreamReducer from './icream/icream.reducer';
 import menuItemReducer from './menu-item/menu-item.reducer';
 import paginatonReducer from './pagination/pagination.reducer';
+import ordersReducer from './orders/order.reducer';
+
 const rootReducer = combineReducers({
     user: userReducer,
     cart : cartReducer,
@@ -12,6 +14,7 @@ const rootReducer = combineReducers({
     icream: icreamReducer,
     menu: menuItemReducer,
     page: paginatonReducer,
+    orderDetails: ordersReducer,
 });
 
 export default rootReducer;

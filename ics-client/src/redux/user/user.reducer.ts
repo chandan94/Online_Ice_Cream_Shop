@@ -2,7 +2,7 @@ import {  userActions, UserState } from "./user.types"
 
 const INITIAL_STATE : UserState = {
     currentUser : {},
-    isAdmin: true,
+    isAdmin: false,
 }
 
 const userReducer = (state : UserState = INITIAL_STATE, action : any) : UserState => {

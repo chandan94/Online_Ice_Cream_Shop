@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import logger from 'redux-logger';
 import rootReducer from './root.reducer';
-import rootState from './store.type';
+import RootState from './store.type';
 import rootSaga from './root.saga';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 const middleware = [logger, sagaMiddleware];
 
 
-const store: Store<rootState, any> & { dispatch: Dispatch } = createStore(
+const store: Store<RootState, any> & { dispatch: Dispatch } = createStore(
     rootReducer,
     applyMiddleware(...middleware)
 );
