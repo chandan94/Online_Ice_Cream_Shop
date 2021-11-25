@@ -27,13 +27,7 @@ const LogIn = () => {
             }}
             validationSchema={LoginSchema}
             onSubmit={values => {
-                const saltRounds = 10;
-                const salt = bcrypt.genSaltSync(saltRounds);
                 const url = '/api/customer/'+values.email;
-                const requestOptionsss = {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                };
                 axios.get(url)
                 .then(resp  =>
                     {

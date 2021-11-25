@@ -22,6 +22,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
         url: "",
         btnName: "",
         disabled: false,
+        quantity :0
     };
 
     const minusIconBtn: IconBtnProps = {
@@ -29,6 +30,23 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
         url: "",
         btnName: "",
         disabled: true,
+        quantity :0
+    };
+
+    const editBtn: IconBtnProps = {
+        iconName: "pencil-fill",
+        url: "/add-edit-modal",
+        btnName: "",
+        disabled: false,
+        quantity :0
+    };
+
+    const delBtn: IconBtnProps = {
+        iconName: "trash-fill",
+        url: "/add-edit-modal",
+        btnName: "",
+        disabled: false,
+        quantity :0
     };
 
     const setShowModal = () => {
@@ -63,7 +81,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 if (resp.status === 200) {
                     alert(` ${item.name} ice-cream deleted successfully`);
                     if (getAllICream) {
-                        getAllICream("");
+                        getAllICream("","");
                     }
                 }
             })
@@ -108,7 +126,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     showModal: (show: boolean) => dispatch(setModalShow(show)),
     editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
-    getAllICream: (search: string) => dispatch(fetchIcreamStart(search)),
+    getAllICream: (search: string,flavor :string) => dispatch(fetchIcreamStart(search,flavor)),
 });
 
 export default connect(null, mapDispatchToProps)(MenuItem);

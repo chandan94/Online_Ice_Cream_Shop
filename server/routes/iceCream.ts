@@ -10,14 +10,27 @@ const ICE_CREAM_COLL = "ice-cream";
 router.get('/', function (req: any, res: any) {
     const filter: any = { delete : false };
     const searchName = req.query.search;
+    const flavorName = req.query.filter;
 
-    if (searchName) {
-      filter.name = { $regex : new RegExp(`${searchName}`, 'i')}
-    }
+    // if (searchName) {
+    //   filter.name = { $regex : new RegExp(`${searchName}`, 'i')}
+    // }
+    // if (flavorName)
+    // {
+    //   filter.flavor = { $regex : new RegExp(`${flavorName}`, 'i')}
+    // }
+
+    console.log(searchName);
+    console.log(flavorName);
 
     db
     .collection(ICE_CREAM_COLL)
-    .find(filter)
+    .find({
+      "$and": [
+        {name : { '$regex': searchName, '$options': 'i' }},
+        {flavor : { '$regex': flavorName, '$options': 'i' }}
+      ]
+    })
     .toArray( (err: any, results: any) => {
       if (err) {
         res.status(400).send("Error fetching listings!");

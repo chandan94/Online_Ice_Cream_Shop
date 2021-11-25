@@ -1,3 +1,3 @@
 export interface HomepageProps {
-    getAllIcream: (search:string) => {},
+    getAllIcream: (search:string,flavor:string) => {},
 }

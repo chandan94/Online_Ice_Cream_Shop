@@ -1,8 +1,9 @@
 import { ICream, icreamActions } from "./icream.types";
 
-export const fetchIcreamStart = (search: string) => ({
+export const fetchIcreamStart = (search: string,filter :string) => ({
     type: icreamActions.FETCH_ICREAM_START,
     payload: search,
+    payload1 : filter
 });
 
 export const fetchIcreamSuccess = (icream: ICream[]) => ({

@@ -5,9 +5,13 @@ import { axiosGetCall } from "./icream.util";
 
 const ICREAM_URL = '/api/ice-cream';
 
-export function* fetchIcreamCall({ payload } : any): Generator<any, any, any> {
+export function* fetchIcreamCall({ payload ,payload1} : any): Generator<any, any, any> {
     try {
-        const icreamResp = yield axiosGetCall(ICREAM_URL, payload );
+        var request = {
+            search : payload,
+            filter :payload1
+                };
+        const icreamResp = yield axiosGetCall(ICREAM_URL, payload,payload1 );
         yield put(fetchIcreamSuccess(icreamResp));
     } catch (error : any) {
         yield put(fetchIcreamFailure(error));

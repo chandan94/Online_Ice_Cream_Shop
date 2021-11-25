@@ -139,7 +139,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                     .then(resp => {
                                         if (resp.status === 200) {
                                             alert(`${values.name} ice-cream added successfully`);
-                                            getAllICream("");
+                                            getAllICream("","");
                                         } else {
                                             alert(`There was an issue in adding ${values.name}, please try later`);
                                         }
@@ -161,7 +161,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                     .then(resp => {
                                         if (resp.status === 200) {
                                             alert(`${values.name} ice-cream updated successfully`);
-                                            getAllICream("");
+                                            getAllICream("","");
                                         } else {
                                             alert(`There was an issue in updating ${values.name}, please try later`);
                                         }
@@ -348,7 +348,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     closeModal: (show: boolean) => dispatch(setModalShow(show)),
-    getAllICream: (search: string) => dispatch(fetchIcreamStart(search)),
+    getAllICream: (search: string,flavor :string) => dispatch(fetchIcreamStart(search,flavor)),
     editCleanUp: () => dispatch(editDone())
 });
 

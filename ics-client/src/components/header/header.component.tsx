@@ -1,28 +1,37 @@
-import { Navbar, Container, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, Form, FormControl, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { connect } from 'react-redux';
 
 import IconButton from '../icon-btn/icon-btn.component';
 import { IconBtnProps } from '../icon-btn/icon-btn.types';
+import { createStructuredSelector } from "reselect";
+import { selectCartItemsCount } from '../../redux/cart/cart.selector';
+
+
+
 import './header.styles.scss';
 import { Dispatch } from 'redux';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { HeaderProps } from './header.types';
+import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
-const Header = ({ getAllICream } : HeaderProps) => {
+const Header = ({ getAllICream }: HeaderProps, { itemCount }: any) => {
     const navigate = useNavigate();
-
-    const cartIcon : IconBtnProps = {
-        iconName : "cart3",
+    console.log(itemCount);
+    const cartIcon: IconBtnProps = {
+        iconName: "cart3",
         btnName: "Cart",
         url: "/cart-items",
-        disabled: false,
+        quantity: itemCount,
+        disabled: false
     };
 
-    const signIn : IconBtnProps = {
+
+    const signIn: IconBtnProps = {
         iconName: "person-check-fill",
         btnName: "Sign In",
         url: "/sign-in-up",
+        quantity: 0,
         disabled: false,
     }
 
@@ -31,17 +40,20 @@ const Header = ({ getAllICream } : HeaderProps) => {
     }
 
     const handleEmptySearch = (e: any) => {
-        const searchBar : any = document.getElementById("search-bar");
+        const searchBar: any = document.getElementById("search-bar");
         if (searchBar && searchBar?.value === "" && getAllICream) {
-            getAllICream("");
+            getAllICream("", "");
         }
     }
 
-    const handleSearch = () => {
+    const handleSearch = (evt: any) => {
         const searchBar: any = document.getElementById("search-bar")
-        const searchValue = searchBar? searchBar.value : "";
+        const searchValue = searchBar ? searchBar.value : "";
+        const dropdown: any = document.getElementById("flavor-filter");
+        const dropdownValue = dropdown ? dropdown.value : "";
         if (getAllICream) {
-            getAllICream(searchValue);
+            console.log("In here");
+            getAllICream(searchValue, dropdownValue);
         }
     }
 
@@ -68,6 +80,22 @@ const Header = ({ getAllICream } : HeaderProps) => {
                             />
                             <Button variant="outline-light search-icon" onClick={handleSearch}><i className="bi bi-search"></i></Button>
                         </Form>
+                        <select id="flavor-filter" className="form-select form-select-lg" aria-label=".form-select-lg example" onChange={handleSearch}>
+
+                            <option selected value="" >Flavor Filter</option>
+
+                            <option value="drama" >Drama</option>
+
+                            <option value="adventure">Adventure</option>
+
+                            <option value="comedy">Comedy</option>
+
+                            <option value="fantasy">Fantasy</option>
+
+                            <option value="scifi">Sci-fi</option>
+
+                        </select>
+
                         <div className="icon-btn-group">
                             <IconButton button={signIn} />
                             <IconButton button={cartIcon} />
@@ -79,8 +107,9 @@ const Header = ({ getAllICream } : HeaderProps) => {
     );
 }
 
-const mapDispatchToProps = (dispatch : Dispatch) => ({
-    getAllICream: (search: string) => dispatch(fetchIcreamStart(search))
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    getAllICream: (search: string, flavor: string) => dispatch(fetchIcreamStart(search, flavor)),
+    itemCount: selectCartItemsCount
 });
 
 export default connect(null, mapDispatchToProps)(Header);

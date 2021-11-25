@@ -19,5 +19,5 @@ export interface MenuItemProps {
     isAddItem: boolean,
     showModal?: (show: boolean) => void,
     editBtnClicked?: (item: Item) => void,
-    getAllICream?: (search: string) => void
+    getAllICream?: (search: string,flavor:string) => void
 }

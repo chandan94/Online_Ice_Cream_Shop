@@ -20,4 +20,5 @@ export interface ICreamState {
     isFetching: boolean,
     error: Error | null,
     search: string,
+    filter :string,
 }

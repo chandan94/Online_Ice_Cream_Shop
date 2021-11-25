@@ -1,3 +1,3 @@
 export interface HeaderProps {
-    getAllICream?: (search : string) => void,
+    getAllICream?: (search : string,flavor :string) => void,
 }
