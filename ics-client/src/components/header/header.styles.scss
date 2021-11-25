@@ -3,11 +3,11 @@
 
     form {
         justify-content: center;
-        margin-left: 10em;
+        margin-left: 2em;
     }
-    dropdown {
-        justify-content: center;
-        margin-left: 10em;
+    .dropdown-custom
+    {
+        width: auto;
     }
 
     @media screen and (max-width: 992px){ 

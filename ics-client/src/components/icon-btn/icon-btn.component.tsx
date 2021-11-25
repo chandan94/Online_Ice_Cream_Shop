@@ -15,6 +15,9 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: I
 
     return (
         <div className={`icon icon-btn ${disabled ? 'disable-btn': ''} `} id="icon-btn-id" onClick={navigateToURL}>
+                { 
+                 btnName && btnName === 'Cart' ? <span className='badge badge-warning' id='lblCartCount'> {quantity}</span> :null
+            }
             <i className={`bi bi-${iconName} custom-icon`}></i>
 
             {
@@ -22,9 +25,7 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: I
             }
         
           
-            { 
-                 btnName && btnName === 'Cart' ? <span className='badge badge-warning' id='lblCartCount'> {quantity}</span> :null
-            }
+            
             
                 <p className="icon-btn-name">{btnName}</p>
         </div>

@@ -16,7 +16,7 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
 import './header.styles.scss';
 
-const Header = ({ getAllICream , activePage} : HeaderProps , itemCount: any ) => {
+const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
 
 
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps , itemCount: any ) =>
         iconName: "cart3",
         btnName: "Cart",
         url: "/cart-items",
-        quantity: itemCount,
+        quantity: 0,
         disabled: false
     };
 
@@ -89,7 +89,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps , itemCount: any ) =>
                             />
                             <Button variant="outline-light search-icon" onClick={handleSearch}><i className="bi bi-search"></i></Button>
                         </Form>
-                        <select id="flavor-filter" className="form-select form-select-lg" aria-label=".form-select-lg example" onChange={handleSearch}>
+                        <select id="flavor-filter" className="dropdown-custom form-select" aria-label=".form-select-lg example" onChange={handleSearch}>
 
                             <option value="" >Flavor Filter</option>
 
@@ -122,7 +122,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch : Dispatch) => ({
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
-    itemCount: selectCartItemsCount
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
