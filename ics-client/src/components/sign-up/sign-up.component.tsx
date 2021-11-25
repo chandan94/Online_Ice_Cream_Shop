@@ -276,7 +276,7 @@ const SignUp = () => {
             <Form.Group className="mb-3" id="formGridCheckbox">
                 <Form.Check type="checkbox" label="Log me in" />
             </Form.Group>
-            <Button variant="primary" type="submit" className="sign-up-button">
+            <Button variant="dark" type="submit" className="sign-up-button">
                 Sign Up
             </Button>
         </Form>

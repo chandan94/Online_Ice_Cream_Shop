@@ -81,8 +81,8 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav onSelect={handleNavSelect} id="ice-cream-nav" className="justify-content-center">
-                        <Nav.Link href="" eventKey="/menu" >Menu</Nav.Link>
-                        <Nav.Link href="" eventKey="/contact">Contact Us</Nav.Link>
+                        {/* <Nav.Link href="" eventKey="/menu" >Menu</Nav.Link>
+                        <Nav.Link href="" eventKey="/contact">Contact Us</Nav.Link> */}
                         <Form className="d-flex" onSubmit={handleSearchFormSubmit}>
                             <FormControl
                                 type="search"
@@ -94,22 +94,6 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
                             />
                             <Button variant="outline-light search-icon" onClick={handleSearch}><i className="bi bi-search"></i></Button>
                         </Form>
-                        {/* <select id="flavor-filter" className="dropdown-custom form-select" aria-label=".form-select-lg example" onChange={handleSearch}>
-
-                            <option value="" >Flavor Filter</option>
-
-                            <option value="drama" >Drama</option>
-
-                            <option value="adventure">Adventure</option>
-
-                            <option value="comedy">Comedy</option>
-
-                            <option value="fantasy">Fantasy</option>
-
-                            <option value="scifi">Sci-fi</option>
-
-                        </select> */}
-
                         <div className="icon-btn-group">
                             <IconButton button={signIn} />
                             <IconButton button={cartIcon} />

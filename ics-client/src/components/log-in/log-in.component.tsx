@@ -29,21 +29,18 @@ const LogIn = () => {
             onSubmit={values => {
                 const url = '/api/customer/'+values.email;
                 axios.get(url)
-                .then(resp  =>
-                    {
+                    .then(resp => {
                         if (resp.status === 200) {
-                        if (!bcrypt.compareSync(values.password,resp.data.password))
-                    {
-                        alert('INVALID PASSWORD');
-                    }
-                    else{
-                        alert('VALID PASSWORD');
-                    }
-                    }
-                    }
-                    )
-                .catch((err: any) => console.error(err));
-                }}>
+                            if (!bcrypt.compareSync(values.password, resp.data.password)) {
+                                alert('INVALID PASSWORD');
+                            }
+                            else {
+                                alert('VALID PASSWORD');
+                            }
+                        }
+                    })
+                    .catch((err: any) => console.error(err));
+            }}>
             {({
                 errors,
                 touched,
@@ -95,7 +92,7 @@ const LogIn = () => {
                     </Row>
                     <Row>
                         <Col>
-                            <Button variant="primary" type="submit" className="log-in-button">
+                            <Button variant="dark" type="submit" className="log-in-button">
                                 Log In
                             </Button>
                         </Col>

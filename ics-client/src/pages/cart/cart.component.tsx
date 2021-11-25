@@ -38,10 +38,10 @@ const CartPage = ({cartItems, cartTotal,itemCount}:any)=> (
     </div>
     <div className="row mt-4 d-flex align-items-center">
         <div className="col-sm-6 order-md-2 text-right">
-            <a href="catalog.html" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
+            <a href="catalog.html" className="btn btn-dark mb-4 btn-lg pl-5 pr-5">Checkout</a>
         </div>
         <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-            <a href="catalog.html">
+            <a href="catalog.html" className="btn btn-dark mb-4 btn-lg pl-5 pr-5">
                 <i className="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
         </div>
     </div>

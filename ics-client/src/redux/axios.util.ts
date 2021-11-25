@@ -12,7 +12,7 @@ export const axiosGetCall = async (route:string , query: GetAllICreamPayload , c
     if (route === ICE_CREAM_URL) {
          ({ search, page, filter } = query);
          if (page > 1) {
-            offset = (offset - 1) * count;
+            offset = (page - 1) * count;
         }
         route = `${route}?search=${search}&filter=${filter}&offset=${offset}&limit=${count}`;
     }
