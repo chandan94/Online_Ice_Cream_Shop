@@ -6,25 +6,34 @@ import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import Menu from '../../components/menu/menu.component';
 import './homepage.styles.scss';
 import { HomepageProps } from './homepage.types';
+import IPagination from '../../components/pagination/pagination.component';
+import { createStructuredSelector } from 'reselect';
+import { selectActivePage } from '../../redux/pagination/pagination.selector';
+import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 
 class HomePage extends React.Component<HomepageProps> {
 
     componentDidMount() {
-        const { getAllIcream } = this.props;
-        getAllIcream("");
+        const { getAllIcream, activePage } = this.props;
+        getAllIcream({search : "", page: activePage > 1 ? activePage : 0});
     }
 
     render() {
         return (
             <div>
                 <Menu />
+                <IPagination />
             </div>
         );
     }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    getAllIcream: (search: string) => dispatch(fetchIcreamStart(search)),
+    getAllIcream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
 });
 
-export default connect(null, mapDispatchToProps)(HomePage);
+const mapStateToProps = createStructuredSelector({
+    activePage: selectActivePage,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

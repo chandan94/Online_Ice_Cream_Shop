@@ -8,8 +8,11 @@ import './header.styles.scss';
 import { Dispatch } from 'redux';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { HeaderProps } from './header.types';
+import { GetAllICreamPayload } from '../../redux/icream/icream.types';
+import { createStructuredSelector } from 'reselect';
+import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
-const Header = ({ getAllICream } : HeaderProps) => {
+const Header = ({ getAllICream , activePage} : HeaderProps) => {
     const navigate = useNavigate();
 
     const cartIcon : IconBtnProps = {
@@ -33,7 +36,10 @@ const Header = ({ getAllICream } : HeaderProps) => {
     const handleEmptySearch = (e: any) => {
         const searchBar : any = document.getElementById("search-bar");
         if (searchBar && searchBar?.value === "" && getAllICream) {
-            getAllICream("");
+            getAllICream({
+                search: "",
+                page: activePage && activePage > 1 ? activePage : 0,
+            });
         }
     }
 
@@ -41,7 +47,10 @@ const Header = ({ getAllICream } : HeaderProps) => {
         const searchBar: any = document.getElementById("search-bar")
         const searchValue = searchBar? searchBar.value : "";
         if (getAllICream) {
-            getAllICream(searchValue);
+            getAllICream({
+                search: searchValue,
+                page: activePage && activePage > 1 ? activePage : 0,
+            });
         }
     }
 
@@ -79,8 +88,12 @@ const Header = ({ getAllICream } : HeaderProps) => {
     );
 }
 
+const mapStateToProps = createStructuredSelector({
+    activePage: selectActivePage,
+})
+
 const mapDispatchToProps = (dispatch : Dispatch) => ({
-    getAllICream: (search: string) => dispatch(fetchIcreamStart(search))
+    getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload))
 });
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,3 +1,6 @@
+import { GetAllICreamPayload } from "../../redux/icream/icream.types";
+
 export interface HomepageProps {
-    getAllIcream: (search:string) => {},
+    getAllIcream: (paylaod: GetAllICreamPayload) => {},
+    activePage: number,
 }

@@ -5,7 +5,7 @@ const INITIAL_STATE : ICreamState = {
     isFetching: false,
     error: null,
     search: '',
-}
+};
 
 const icreamReducer = (state: ICreamState = INITIAL_STATE, action: any) : ICreamState => {
     switch(action.type) {
@@ -13,7 +13,7 @@ const icreamReducer = (state: ICreamState = INITIAL_STATE, action: any) : ICream
             return {
                 ...state,
                 isFetching: true,
-                search: action.payload,
+                search: action.payload.search,
             };
         case icreamActions.FETCH_ICREAM_FAILURE:
             return {

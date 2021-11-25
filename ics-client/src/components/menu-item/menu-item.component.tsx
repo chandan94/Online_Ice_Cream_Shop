@@ -2,18 +2,21 @@ import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { ICE_CREAM_URL } from '../../ics-constants';
 
 import { setModalShow } from '../../redux/add-edit-modal/add-edit-modal.actions';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
+import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 import { onItemEditClick } from '../../redux/menu-item/menu-item.actions';
+import { selectActivePage } from '../../redux/pagination/pagination.selector';
 import IconButton from '../icon-btn/icon-btn.component';
 import { IconBtnProps } from '../icon-btn/icon-btn.types';
 
 import './menu-item.styles.scss';
 import { MenuItemProps, Item } from './menu-item.types';
 
-const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream }: MenuItemProps) => {
+const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage }: MenuItemProps) => {
 
     const  { name, flavor, cost, img, calorie, ingredients, imageName, desc  } = item;
 
@@ -63,7 +66,10 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 if (resp.status === 200) {
                     alert(` ${item.name} ice-cream deleted successfully`);
                     if (getAllICream) {
-                        getAllICream("");
+                        getAllICream({
+                            search: "",
+                            page: activePage && activePage > 1 ? activePage : 0,
+                        });
                     }
                 }
             })
@@ -105,10 +111,14 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
     )
 };
 
+const mapStateToProps = createStructuredSelector({
+    activePage: selectActivePage,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     showModal: (show: boolean) => dispatch(setModalShow(show)),
     editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
-    getAllICream: (search: string) => dispatch(fetchIcreamStart(search)),
+    getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
 });
 
-export default connect(null, mapDispatchToProps)(MenuItem);
+export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);

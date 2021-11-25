@@ -9,7 +9,7 @@ export const selectAllICream = createSelector (
     (icream: ICreamState) => icream.icreams,
 );
 
-export const selectAllICreamSearch = createSelector (
+export const selectICreamSearch = createSelector (
     [selectIcream],
     (icream: ICreamState) => icream.search,
 );

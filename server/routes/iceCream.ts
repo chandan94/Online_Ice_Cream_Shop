@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 
 var express= require('express');
@@ -7,22 +8,31 @@ var db = mongodbutil.getDb();
 
 const ICE_CREAM_COLL = "ice-cream";
 
-router.get('/', function (req: any, res: any) {
+router.get('/',  async (req: Request, res: Response) => {
     const filter: any = { delete : false };
     const searchName = req.query.search;
+    const offsetStr : any = req.query.offset;
+    const limitStr : any = req.query.limit;
 
     if (searchName) {
       filter.name = { $regex : new RegExp(`${searchName}`, 'i')}
     }
 
-    db
-    .collection(ICE_CREAM_COLL)
-    .find(filter)
-    .toArray( (err: any, results: any) => {
+    const offset = offsetStr ? parseInt(offsetStr, 10) : 0;
+    const limit = limitStr ? parseInt(limitStr, 10) : 0;
+
+    const totalCount = await db.collection(ICE_CREAM_COLL).find({delete : false}).count();
+
+    const cursor = db.collection(ICE_CREAM_COLL).find(filter).skip(offset).limit(limit);
+    cursor.toArray(async (err: any, results: any) => {
       if (err) {
         res.status(400).send("Error fetching listings!");
      } else {
-        res.json(results);
+       const result = {
+         count : totalCount,
+         data : results,
+       }
+        res.json(result);
       }
     });
 });

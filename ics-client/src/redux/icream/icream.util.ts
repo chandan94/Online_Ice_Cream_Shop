@@ -1,6 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { GetAllICreamPayload } from "./icream.types";
 
-export const axiosGetCall = async (route:string , query: string , body: any = null, token = null) => {
+export const axiosGetCall = async (route:string , query: GetAllICreamPayload , count : number = 6,  body: any = null, token = null) => {
+
+    const { search, page } = query;
 
     const onSuccess = (response : AxiosResponse) => {
         console.debug('Request Successful!', response);
@@ -26,7 +29,13 @@ export const axiosGetCall = async (route:string , query: string , body: any = nu
         return Promise.reject(error.response || error.message);
     }
 
-    return axios.get(`${route}?search=${query}`, {
+    let offset = page;
+
+    if (offset > 0) {
+        offset = (offset - 1) * count;
+    }
+
+    return axios.get(`${route}?search=${search}&offset=${offset}&limit=${count}`, {
         data: body
     }).then(onSuccess)
         .catch(onError);

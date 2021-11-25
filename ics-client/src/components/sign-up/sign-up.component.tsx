@@ -68,7 +68,7 @@ const SignUp = () => {
                 const saltRounds = 10;
                 const salt = bcrypt.genSaltSync(saltRounds);
                 const hashdPwd=bcrypt.hashSync(values.password,salt);
-                console.log(values);
+
                 const url = '/api/customer/';
                 const requestOptions = {
                     method: 'POST',

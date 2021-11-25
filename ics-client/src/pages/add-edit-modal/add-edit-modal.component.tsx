@@ -14,8 +14,10 @@ import axios from 'axios';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { editDone } from '../../redux/menu-item/menu-item.actions';
 import { FILE_SIZE, ICE_CREAM_URL, SUPPORTED_FORMATS } from '../../ics-constants';
+import { GetAllICreamPayload } from '../../redux/icream/icream.types';
+import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
-const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllICream, currIcream, isEdit, editCleanUp }: AddEditModalProps) => {
+const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllICream, currIcream, isEdit, editCleanUp, activePage }: AddEditModalProps) => {
 
     let imageData: any;
     let imageName: string | undefined = isEdit && currIcream ? currIcream.imageName : "";
@@ -80,11 +82,12 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
             .min(1, "Cost cannot be 0."),
         calorie: yup.number()
             .required("Please enter the quantity of ice-cream costable.")
-            .min(0, "At least 1 quantity of the ice-cream should be costable."),
+            .min(1, "Calories should be greater than 0."),
         ingredients: yup.string()
             .required("Please enter at least one ingredient."),
-        servingSize: yup.string()
-            .optional(),
+        quantity: yup.number()
+            .required("Please enter the quantity of ice-cream costable.")
+            .min(1, "At least 1 quantity of the ice-cream should be costable."),
     });
 
     const handleImageUpload = (e: any, setFieldValue: any) => {
@@ -115,11 +118,12 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                             cost: currIcream ? currIcream.cost : 0,
                             ingredients: currIcream ? currIcream.ingredients : '',
                             calorie: currIcream ? currIcream.calorie : '',
+                            quantity: currIcream ? currIcream.quantity: 0,
                             servingSize: 'small',
                         }}
                         validationSchema={modalSchema}
                         onSubmit={(values, actions) => {
-                            const { name, flavor, calorie, ingredients, cost, image } = values;
+                            const { name, flavor, calorie, ingredients, cost, image, quantity } = values;
 
                             const data = {
                                 name,
@@ -130,6 +134,8 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                 image: isEdit && image === '' ?  currIcream ? currIcream.img : '' : imageData,
                                 imageName,
                                 delete: false,
+                                servingSize: "small",
+                                quantity,
                             };
                             if (!isEdit) {
                                 if (!imageData || imageData.length === 0) {
@@ -139,7 +145,10 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                     .then(resp => {
                                         if (resp.status === 200) {
                                             alert(`${values.name} ice-cream added successfully`);
-                                            getAllICream("");
+                                            getAllICream({
+                                                search: "",
+                                                page: activePage && activePage > 1 ? activePage : 0,
+                                            });
                                         } else {
                                             alert(`There was an issue in adding ${values.name}, please try later`);
                                         }
@@ -161,7 +170,10 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                     .then(resp => {
                                         if (resp.status === 200) {
                                             alert(`${values.name} ice-cream updated successfully`);
-                                            getAllICream("");
+                                            getAllICream({
+                                                search: "",
+                                                page: activePage && activePage > 1 ? activePage : 0,
+                                            });
                                         } else {
                                             alert(`There was an issue in updating ${values.name}, please try later`);
                                         }
@@ -295,19 +307,20 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                                 : null
                                         }
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" controlId="ice-cream-size">
-                                        <Form.Label>Size</Form.Label>
+                                    <Form.Group as={Col} className="mb-3" controlId="ice-cream-quant">
+                                        <Form.Label>Quantity</Form.Label>
                                         <Form.Control
-                                            type="text"
-                                            name="servingSize"
-                                            placeholder="Enter the default serving size."
-                                            className={touched.servingSize && errors.servingSize ? "error" : ""}
+                                            type="number"
+                                            name="quantity"
+                                            placeholder="Enter the quantity available."
+                                            className={touched.quantity && errors.quantity ? "error" : ""}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
+                                            defaultValue={currIcream? currIcream.quantity : 0}
                                         />
                                         {
-                                            touched.servingSize && errors.servingSize ?
-                                                (<div className="error-message">{errors.servingSize}</div>)
+                                            touched.quantity && errors.quantity ?
+                                                (<div className="error-message">{errors.quantity}</div>)
                                                 : null
                                         }
                                     </Form.Group>
@@ -344,11 +357,12 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
 
 const mapStateToProps = createStructuredSelector({
     showModal: selectModalShow,
+    activePage: selectActivePage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     closeModal: (show: boolean) => dispatch(setModalShow(show)),
-    getAllICream: (search: string) => dispatch(fetchIcreamStart(search)),
+    getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
     editCleanUp: () => dispatch(editDone())
 });
 

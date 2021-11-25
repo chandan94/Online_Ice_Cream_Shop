@@ -1,7 +1,7 @@
 export const icreamActions = {
     FETCH_ICREAM_START: 'FETCH_ICREAM_START',
     FETCH_ICREAM_SUCCESS: 'FETCH_ICREAM_SUCCESS',
-    FETCH_ICREAM_FAILURE: 'FETCH_ICREAM_FAILURE'
+    FETCH_ICREAM_FAILURE: 'FETCH_ICREAM_FAILURE',
 }
 
 export interface ICream {
@@ -13,6 +13,7 @@ export interface ICream {
     calorie: number,
     ingredients: string,
     imageName: string,
+    quantity: number,
 }
 
 export interface ICreamState {
@@ -20,4 +21,14 @@ export interface ICreamState {
     isFetching: boolean,
     error: Error | null,
     search: string,
+}
+
+export interface ICreamGetRepsonse {
+    count : number,
+    data: ICream[],
+}
+
+export interface GetAllICreamPayload {
+    search: string,
+    page: number,
 }

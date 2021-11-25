@@ -28,7 +28,7 @@ const Menu = ({ isAdmin, icreams, editClicked, currIcream }: MenuProps) => {
                 isAdmin ? <MenuItem item={addIceCreamItem} isAdmin={isAdmin} isAddItem={true} /> : null
             }
             {
-                icreams.map(({ _id, name, flavor, calorie, cost, ingredients, image, imageName }, index) => {
+                icreams.map(({ _id, name, flavor, calorie, cost, ingredients, image, imageName, quantity }, index) => {
                     const item: Item = {
                         _id,
                         name,
@@ -42,6 +42,7 @@ const Menu = ({ isAdmin, icreams, editClicked, currIcream }: MenuProps) => {
                         img: image,
                         imageName,
                         orderAmount: 0,
+                        quantity,
                     };
                     return (
                         <MenuItem key={index + 1} item={item} isAdmin={isAdmin} isAddItem={false} />

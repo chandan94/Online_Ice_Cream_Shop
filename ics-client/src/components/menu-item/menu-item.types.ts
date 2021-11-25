@@ -1,3 +1,5 @@
+import { GetAllICreamPayload } from "../../redux/icream/icream.types";
+
 export interface Item {
     _id?: string,
     name: string,
@@ -11,13 +13,15 @@ export interface Item {
     orderAmount?: number,
     delete?: boolean
     imageName?: string,
+    quantity?: number,
 }
 
 export interface MenuItemProps {
     item: Item,
     isAdmin: boolean,
     isAddItem: boolean,
+    activePage?: number,
     showModal?: (show: boolean) => void,
     editBtnClicked?: (item: Item) => void,
-    getAllICream?: (search: string) => void
+    getAllICream?: (payload: GetAllICreamPayload) => void
 }
