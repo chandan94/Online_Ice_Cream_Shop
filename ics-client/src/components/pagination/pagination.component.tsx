@@ -26,6 +26,7 @@ const IPagination = ({active, total, setActivePage, getAllICream, search, isAdmi
             getAllICream({
                 search : search && search.length > 0 ? search : "",
                 page: page > 1 ? page : 0,
+                filter: "",
             });
         }
     }

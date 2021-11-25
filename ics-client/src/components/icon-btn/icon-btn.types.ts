@@ -3,7 +3,8 @@ export interface IconBtnProps {
     iconName: string,
     btnName: string,
     url: string,
-    disabled: boolean,
+    quantity : number,
+    disabled: boolean
 };
 
 export interface IconBtn {

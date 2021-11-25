@@ -15,7 +15,11 @@ class HomePage extends React.Component<HomepageProps> {
 
     componentDidMount() {
         const { getAllIcream, activePage } = this.props;
-        getAllIcream({search : "", page: activePage > 1 ? activePage : 0});
+        getAllIcream({
+            search : "",
+            page: activePage > 1 ? activePage : 0,
+            filter: "",
+        });
     }
 
     render() {

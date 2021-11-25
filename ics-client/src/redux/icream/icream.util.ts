@@ -3,7 +3,7 @@ import { GetAllICreamPayload } from "./icream.types";
 
 export const axiosGetCall = async (route:string , query: GetAllICreamPayload , count : number = 6,  body: any = null, token = null) => {
 
-    const { search, page } = query;
+    const { search, page, filter } = query;
 
     const onSuccess = (response : AxiosResponse) => {
         console.debug('Request Successful!', response);
@@ -35,7 +35,7 @@ export const axiosGetCall = async (route:string , query: GetAllICreamPayload , c
         offset = (offset - 1) * count;
     }
 
-    return axios.get(`${route}?search=${search}&offset=${offset}&limit=${count}`, {
+    return axios.get(`${route}?search=${search}&filter=${filter}&offset=${offset}&limit=${count}`, {
         data: body
     }).then(onSuccess)
         .catch(onError);

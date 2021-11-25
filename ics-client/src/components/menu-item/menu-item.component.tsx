@@ -25,6 +25,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
         url: "",
         btnName: "",
         disabled: false,
+        quantity :0
     };
 
     const minusIconBtn: IconBtnProps = {
@@ -32,6 +33,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
         url: "",
         btnName: "",
         disabled: true,
+        quantity :0
     };
 
     const setShowModal = () => {
@@ -69,6 +71,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                         getAllICream({
                             search: "",
                             page: activePage && activePage > 1 ? activePage : 0,
+                            filter: "",
                         });
                     }
                 }

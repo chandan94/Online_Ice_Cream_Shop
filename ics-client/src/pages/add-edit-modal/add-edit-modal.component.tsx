@@ -148,6 +148,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                             getAllICream({
                                                 search: "",
                                                 page: activePage && activePage > 1 ? activePage : 0,
+                                                filter: "",
                                             });
                                         } else {
                                             alert(`There was an issue in adding ${values.name}, please try later`);
@@ -173,6 +174,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                             getAllICream({
                                                 search: "",
                                                 page: activePage && activePage > 1 ? activePage : 0,
+                                                filter: "",
                                             });
                                         } else {
                                             alert(`There was an issue in updating ${values.name}, please try later`);

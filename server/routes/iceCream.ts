@@ -13,18 +13,30 @@ router.get('/',  async (req: Request, res: Response) => {
     const searchName = req.query.search;
     const offsetStr : any = req.query.offset;
     const limitStr : any = req.query.limit;
+    const flavorName = req.query.filter;
 
     if (searchName) {
       filter.name = { $regex : new RegExp(`${searchName}`, 'i')}
     }
+    if (flavorName)
+    {
+      filter.flavor = { $regex : new RegExp(`${flavorName}`, 'i')}
+    }
+
 
     const offset = offsetStr ? parseInt(offsetStr, 10) : 0;
     const limit = limitStr ? parseInt(limitStr, 10) : 0;
 
     const totalCount = await db.collection(ICE_CREAM_COLL).find({delete : false}).count();
 
+    // "$and": [
+    //   {name : { '$regex': searchName, '$options': 'i' }},
+    //   {flavor : { '$regex': flavorName, '$options': 'i' }}
+    // ]
+
     const cursor = db.collection(ICE_CREAM_COLL).find(filter).skip(offset).limit(limit);
-    cursor.toArray(async (err: any, results: any) => {
+
+    cursor.toArray( (err: any, results: any) => {
       if (err) {
         res.status(400).send("Error fetching listings!");
      } else {

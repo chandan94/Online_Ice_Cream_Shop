@@ -21,6 +21,7 @@ export interface ICreamState {
     isFetching: boolean,
     error: Error | null,
     search: string,
+    filter: string,
 }
 
 export interface ICreamGetRepsonse {
@@ -31,4 +32,5 @@ export interface ICreamGetRepsonse {
 export interface GetAllICreamPayload {
     search: string,
     page: number,
+    filter :string,
 }
