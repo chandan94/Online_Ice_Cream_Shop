@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { ICE_CREAM_URL } from '../../ics-constants';
 
 import { setModalShow } from '../../redux/add-edit-modal/add-edit-modal.actions';
+import { addItem } from '../../redux/cart/cart.action';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 import { onItemEditClick } from '../../redux/menu-item/menu-item.actions';
@@ -16,7 +17,7 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 import './menu-item.styles.scss';
 import { MenuItemProps, Item } from './menu-item.types';
 
-const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage }: MenuItemProps) => {
+const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage, addItem }: MenuItemProps) => {
 
     const { name, flavor, cost, img, calorie, ingredients, imageName, desc } = item;
 
@@ -79,6 +80,12 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
         }
     }
 
+    const handleAddToCart = () => {
+        if (addItem) {
+            addItem(item);
+        }
+    }
+
     return (
         <div className="menu-item">
             <Card>
@@ -99,7 +106,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 </Card.Body>
                 <Card.Footer>
                     {
-                        isAdmin && isAddItem ? <Button variant="primary" onClick={setShowModal}>Add Ice-cream</Button> : null
+                        isAdmin && isAddItem ? <Button variant="dark" onClick={setShowModal}>Add Ice-cream</Button> : null
                     }
                     {
                         !isAdmin && !isAddItem ?
@@ -111,7 +118,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                                 // </div>
                                 // <Row>
                                 // <Col>
-                                <Button variant="dark" type="submit" className="add-to-cart">
+                                <Button variant="dark" type="submit" className="add-to-cart" onClick={handleAddToCart}>
                                     Add to Cart
                                 </Button>
                                 //     </Col>
@@ -132,6 +139,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     showModal: (show: boolean) => dispatch(setModalShow(show)),
     editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
+    addItem: (item: Item) => dispatch(addItem(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);

@@ -24,4 +24,5 @@ export interface MenuItemProps {
     showModal?: (show: boolean) => void,
     editBtnClicked?: (item: Item) => void,
     getAllICream?: (payload: GetAllICreamPayload) => void
+    addItem?: (item: Item) => void,
 }
