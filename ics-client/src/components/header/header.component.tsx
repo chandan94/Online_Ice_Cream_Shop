@@ -86,7 +86,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
                         <Form className="d-flex" onSubmit={handleSearchFormSubmit}>
                             <FormControl
                                 type="search"
-                                placeholder="Search"
+                                placeholder="Search Ice-creams..."
                                 className="search-bar"
                                 aria-label="Search"
                                 id="search-bar"
