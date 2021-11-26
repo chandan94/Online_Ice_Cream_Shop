@@ -35,7 +35,12 @@ const IPagination = ({active, total, setActivePage, getAllICream, search, isAdmi
 
     const totalCount = total ? total : 0;
 
-    const pageCount = (totalCount / showCount) + 1;
+    let pageCount = (totalCount / showCount);
+
+    if (totalCount  % showCount !== 0) {
+        pageCount = pageCount + 1;
+    }
+
 
     if(total) {
         for (let num = 1; num <= pageCount  ; num++) {

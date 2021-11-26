@@ -5,7 +5,7 @@ import { createStructuredSelector } from "reselect";
 
 // import { selectCartItems, selectCartItemsCount, selectCartItemsTotal } from '../../redux/cart/cart.selector';
 import Orders from '../../components/orders/orders.compnent'
-import { selectAllOrders } from "../../redux/orders/icream.selector";
+import { selectAllOrders } from "../../redux/orders/order.selector";
 import { fetchOrdersStart } from "../../redux/orders/order.action";
 import { Order, OrderItems } from "../../redux/orders/order.types";
 

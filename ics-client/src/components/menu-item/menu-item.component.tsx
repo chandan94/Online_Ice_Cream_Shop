@@ -17,7 +17,7 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 import './menu-item.styles.scss';
 import { MenuItemProps, Item } from './menu-item.types';
 
-const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage, addItem }: MenuItemProps) => {
+const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage, addItemToCart }: MenuItemProps) => {
 
     const { name, flavor, cost, img, calorie, ingredients, imageName, desc } = item;
 
@@ -81,8 +81,8 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
     }
 
     const handleAddToCart = () => {
-        if (addItem) {
-            addItem(item);
+        if (addItemToCart) {
+            addItemToCart(item);
         }
     }
 
@@ -139,7 +139,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     showModal: (show: boolean) => dispatch(setModalShow(show)),
     editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
-    addItem: (item: Item) => dispatch(addItem(item)),
+    addItemToCart: (item: Item) => dispatch(addItem(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);

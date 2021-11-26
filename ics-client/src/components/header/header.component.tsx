@@ -61,7 +61,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
         if (getAllICream) {
             getAllICream({
                 search: searchValue,
-                page: activePage && activePage > 1 ? activePage : 0,
+                page: 1,
                 filter: dropdownValue,
             });
         }

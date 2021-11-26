@@ -9,3 +9,7 @@
 .error {
     border: 2px solid #FF6565;
 }
+
+body {
+    background-image: url('./images/ics-bg3.jpg');
+}
