@@ -11,6 +11,7 @@ import HomePage from './pages/homepage/homepage.component';
 import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
 import CartPage from './pages/cart/cart.component';
 import { isSpinnerLoading } from './redux/overlay/overlay.selector';
+import OrderHistory from './pages/order-history/order-history.component';
 
 
 
@@ -26,6 +27,7 @@ const App = ({ loading } : any) => {
         <Route path="/" element={<HomePage />} />
         <Route path="/sign-in-up" element={<SignInUpPage />} />
         <Route path="/cart-items" element={<CartPage />} />
+        <Route path="/order-history" element={<OrderHistory />} />
       </Routes>
       </div>
       </LoadingOverlay>

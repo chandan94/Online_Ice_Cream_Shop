@@ -23,8 +23,8 @@ export interface OrderGetRepsonse {
 }
 
 export interface Order {
-    _id: string,
-    userId: string,
-    date: string,
-    items: OrderItems[],
+    _id?: string,
+    userId?: string,
+    date?: string,
+    items?: OrderItems[],
 }
