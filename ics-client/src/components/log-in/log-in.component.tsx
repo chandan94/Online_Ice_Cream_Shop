@@ -9,8 +9,10 @@ import bcrypt from 'bcryptjs';
 import { setCurrentUser } from '../../redux/user/user.actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const LogIn = ({setCurrentUser}:any) => {
+    const navigate = useNavigate();
 
     const LoginSchema = yup.object().shape({
         email: yup.string()
@@ -39,7 +41,14 @@ const LogIn = ({setCurrentUser}:any) => {
                         alert('INVALID PASSWORD');
                     }
                     else{
-                        setCurrentUser(values.email)  ;   
+                        const currentUser=resp.data.email;
+                        const isAdmin = resp.data.admin===1 ?   true : false ;
+                        const user = {
+                            currentUser,
+                           isAdmin
+                        };
+                        setCurrentUser(user)  ;   
+                        navigate("/");
                     
                     }
                     }

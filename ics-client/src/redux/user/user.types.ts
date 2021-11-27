@@ -3,6 +3,6 @@ export const userActions = {
 }
 
 export interface UserState {
-    currentUser: {},
+    currentUser: string,
     isAdmin: boolean,
 }

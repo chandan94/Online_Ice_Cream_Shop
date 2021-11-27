@@ -8,6 +8,8 @@ import axios from 'axios';
 import { setCurrentUser } from '../../redux/user/user.actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { UserState } from '../../redux/user/user.types';
 
 var bcrypt = require('bcryptjs');
 
@@ -64,6 +66,8 @@ const initialValues = {
 }
 const SignUp = () => {
     const width = window.outerWidth;
+    const navigate = useNavigate();
+
     return (
         <Formik
             initialValues={initialValues}
@@ -93,7 +97,15 @@ const SignUp = () => {
                 axios.post(url, requestOptions)
                 .then((resp: any) =>  {
                     if (resp.status === 200) {
-                        setCurrentUser(resp.data.email);                      }
+
+                        const currentUser=resp.data.email;
+                        const isAdmin = resp.data.admin===1 ?   true : false ;
+                        const user :UserState = {
+                            currentUser,
+                           isAdmin
+                        };
+                        setCurrentUser(user)  ;   
+                        navigate("/");                    }
                 })
                 .catch((err: any) => console.error(err));
 }}

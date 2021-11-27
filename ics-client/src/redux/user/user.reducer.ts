@@ -1,7 +1,7 @@
 import {  userActions, UserState } from "./user.types"
 
 const INITIAL_STATE : UserState = {
-    currentUser : {},
+    currentUser : '',
     isAdmin: false,
 }
 
@@ -10,7 +10,8 @@ const userReducer = (state : UserState = INITIAL_STATE, action : any) : UserStat
         case userActions.SET_CURRENT_USER:
             return {
                 ...state,
-                currentUser: action.payload,
+                currentUser: action.payload.currentUser,
+                isAdmin : action.payload.isAdmin
             };
         default:
             return state;

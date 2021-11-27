@@ -1,12 +1,12 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {
-    faCartPlus,
-    faShoppingCart,
-    faMinus,
-    faPlus,
-  } from "@fortawesome/free-solid-svg-icons";
+// import {
+//     faCartPlus,
+//     faShoppingCart,
+//     faMinus,
+//     faPlus,
+//   } from "@fortawesome/free-solid-svg-icons";
   import { connect } from 'react-redux';
   import {  addItem } from '../../redux/cart/cart.action';
   import Header from "../../components/header/header.component";
@@ -86,7 +86,7 @@ const IceCreamDetail = ({item}:any) =>  {
                         className="btn btn-primary text-white"
                         type="button"
                       >
-                        <FontAwesomeIcon icon={faMinus} />
+                        {/* <FontAwesomeIcon icon={faMinus} /> */}
                       </button>
                       <input
                         type="text"
@@ -97,7 +97,7 @@ const IceCreamDetail = ({item}:any) =>  {
                         className="btn btn-primary text-white"
                         type="button"
                       >
-                        <FontAwesomeIcon icon={faPlus} />
+                        {/* <FontAwesomeIcon icon={faPlus} /> */}
                       </button>
                     </div>
                   </div>
@@ -107,7 +107,7 @@ const IceCreamDetail = ({item}:any) =>  {
                     title="Add to cart"
                     onClick={ () => addItem(item) }
                   >
-                    <FontAwesomeIcon icon={faCartPlus} /> Add to cart
+                    {/* <FontAwesomeIcon icon={faCartPlus} /> Add to cart */}
                   </button>
                 </div>
               </div>
