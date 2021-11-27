@@ -4,8 +4,6 @@ import { createStructuredSelector } from "reselect";
 
 import { selectCartItems, selectCartItemsCount, selectCartItemsTotal } from '../../redux/cart/cart.selector';
 import Cart from '../../components/cart/cart.component'
-import axios from "axios";
-import { ORDER_DETAILS_URL } from '../../ics-constants';
 import { selectCurrUser } from "../../redux/user/user.selector";
 
 const CartPage = ({cartItems, cartTotal,itemCount}:any)=>

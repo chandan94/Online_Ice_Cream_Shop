@@ -47,9 +47,8 @@ const LogIn = ({setCurrentUser}:any) => {
                             currentUser,
                            isAdmin
                         };
-                        setCurrentUser(user)  ;   
+                        setCurrentUser(user);
                         navigate("/");
-                    
                     }
                     }
                     }
@@ -100,9 +99,9 @@ const LogIn = ({setCurrentUser}:any) => {
                                         : null
                                 }
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                                 <Form.Check type="checkbox" label="Remember me" />
-                            </Form.Group>
+                            </Form.Group> */}
                         </Col>
                     </Row>
                     <Row>

@@ -10,9 +10,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { UserState } from '../../redux/user/user.types';
-
-var bcrypt = require('bcryptjs');
-
+import bcrypt from 'bcryptjs';
 
 const SignupSchema = yup.object().shape({
     firstName: yup.string()
@@ -24,18 +22,17 @@ const SignupSchema = yup.object().shape({
     email: yup.string()
         .email('Please enter a valid email address.')
         .required('Email is required.')
-        .matches(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g),
+        .matches(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g, "Please enter a valid email address."),
     password: yup.string()
         .required()
         .min(8, "Password should be of 8 characters at least.")
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/),
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, "Password should have at least 1 capital letter, small letter, 1 number and 1 special character among !@#$%^&*"),
     confirm: yup.string()
         .required("Re-enter password.")
         .oneOf([yup.ref("password")], 'Passwords do not match.'),
-    phoneNumber: yup.string()
-        .optional()
-        // eslint-disable-next-line no-useless-escape
-        .matches(/(?:1?|\+1|\+\s1|\(?)(?:\(?|\s\(|[\.\-\s])\d{3}(?:\)?|\)\s|[\.\-\s])\d{3}[\.\-\s]\d{4}/g),
+    phoneNumber: yup.number()
+        .required("Please enter your phone number.")
+        .test("length", "Phone number should be of 10 digit length.", val => val?.toString().length === 10),
     address1: yup.string()
         .required("Please enter your delivery address."),
     address2: yup.string()
@@ -47,8 +44,8 @@ const SignupSchema = yup.object().shape({
         .min(2, "State should have at least two characters.")
         .required("State is required."),
     zip: yup.number()
-        .required("Zip code is required")
-        .min(6, "Zip code should be of minimum 6 digits."),
+        .required("Zip code is required.")
+        .test("length", "Zip code should be of 6 digit length.", val => val?.toString().length === 6),
 });
 
 const initialValues = {
@@ -95,20 +92,21 @@ const SignUp = () => {
                     })
                 };
                 axios.post(url, requestOptions)
-                .then((resp: any) =>  {
-                    if (resp.status === 200) {
+                    .then((resp: any) => {
+                        if (resp.status === 200) {
 
-                        const currentUser=resp.data.email;
-                        const isAdmin = resp.data.admin===1 ?   true : false ;
-                        const user :UserState = {
-                            currentUser,
-                           isAdmin
-                        };
-                        setCurrentUser(user)  ;   
-                        navigate("/");                    }
-                })
-                .catch((err: any) => console.error(err));
-}}
+                            const currentUser = resp.data.email;
+                            const isAdmin = resp.data.admin === 1 ? true : false;
+                            const user: UserState = {
+                                currentUser,
+                                isAdmin
+                            };
+                            setCurrentUser(user);
+                            navigate("/");
+                        }
+                    })
+                    .catch((err: any) => console.error(err));
+            }}
         >
     {({
         errors,
