@@ -8,4 +8,5 @@ export interface IPagingProps {
     getAllICream?: (payload: GetAllICreamPayload) => void,
     search?: string,
     isAdmin?: boolean,
+    filter?: string,
 }

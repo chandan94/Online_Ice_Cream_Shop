@@ -15,8 +15,9 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
 
 import './header.styles.scss';
+import { selectICreamFilter } from '../../redux/icream/icream.selector';
 
-const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
+const Header = ({ getAllICream , activePage, filter} : HeaderProps  ) => {
 
 
     const navigate = useNavigate();
@@ -46,9 +47,9 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
         const searchBar: any = document.getElementById("search-bar");
         if (searchBar && searchBar?.value === "" && getAllICream) {
             getAllICream({
-                search: "",
+                search : "",
                 page: activePage && activePage > 1 ? activePage : 0,
-                filter: "",
+                filter,
             });
         }
     }
@@ -56,13 +57,11 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
     const handleSearch = () => {
         const searchBar: any = document.getElementById("search-bar")
         const searchValue = searchBar ? searchBar.value : "";
-        const dropdown: any = document.getElementById("flavor-filter");
-        const dropdownValue = dropdown ? dropdown.value : "";
         if (getAllICream) {
             getAllICream({
                 search: searchValue,
                 page: 1,
-                filter: dropdownValue,
+                filter,
             });
         }
     }
@@ -107,6 +106,7 @@ const Header = ({ getAllICream , activePage} : HeaderProps  ) => {
 
 const mapStateToProps = createStructuredSelector({
     activePage: selectActivePage,
+    filter: selectICreamFilter,
 });
 
 const mapDispatchToProps = (dispatch : Dispatch) => ({

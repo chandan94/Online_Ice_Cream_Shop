@@ -16,7 +16,6 @@ const IceCreamDetail = ({item}:any) =>  {
 
     return (
         <div className="IceCreamDetail">
-        <Header />
         <div className="container-fluid mt-3">
         <div className="row">
           <div className="col-md-8">

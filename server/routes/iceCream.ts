@@ -29,7 +29,6 @@ router.get('/',  async (req: Request, res: Response) => {
 
     const totalCount = await db.collection(ICE_CREAM_COLL).find({delete : false}).count();
 
-  
     const cursor = db.collection(ICE_CREAM_COLL).find(filter).skip(offset).limit(limit);
 
     cursor.toArray( (err: any, results: any) => {

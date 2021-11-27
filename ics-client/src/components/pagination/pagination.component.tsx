@@ -9,10 +9,10 @@ import { Dispatch } from "redux";
 import { setActivePageNumber } from "../../redux/pagination/pagination.action";
 import { GetAllICreamPayload } from "../../redux/icream/icream.types";
 import { fetchIcreamStart } from "../../redux/icream/icream.action";
-import { selectICreamSearch } from "../../redux/icream/icream.selector";
+import { selectICreamFilter, selectICreamSearch } from "../../redux/icream/icream.selector";
 import { selectIsAdminUser } from "../../redux/user/user.selector";
 
-const IPagination = ({active, total, setActivePage, getAllICream, search, isAdmin }: IPagingProps) => {
+const IPagination = ({active, total, setActivePage, getAllICream, search, isAdmin, filter }: IPagingProps) => {
 
     const icreams = [];
 
@@ -26,7 +26,7 @@ const IPagination = ({active, total, setActivePage, getAllICream, search, isAdmi
             getAllICream({
                 search : search && search.length > 0 ? search : "",
                 page: page > 1 ? page : 0,
-                filter: "",
+                filter: filter ? filter : "",
             });
         }
     }
@@ -65,6 +65,7 @@ const mapStateToProps = createStructuredSelector({
     active : selectActivePage,
     search : selectICreamSearch,
     isAdmin : selectIsAdminUser,
+    filter: selectICreamFilter,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
