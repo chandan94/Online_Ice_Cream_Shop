@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import './icon-btn.styles.scss';
@@ -6,7 +7,6 @@ import { IconBtn } from './icon-btn.types';
 
 const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: IconBtn) => {
     const navigate = useNavigate();
-
     const navigateToURL = () => {
         if (url && url.length > 0) {
             navigate(url);
@@ -26,5 +26,6 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: I
         </div>
     );
 }
+
 
 export default IconButton;

@@ -5,7 +5,7 @@ import { orderActions } from "./order.types";
 import { axiosGetCall } from "../axios.util";
 import { setOverlayLoading } from '../overlay/overlay.actions';
 
-const ORDERS_URL = '/api/ice-cream';
+const ORDERS_URL = '/api/orderDetails';
 
 export function* fetchOrdersCall({ payload } : any): Generator<any, any, any> {
     try {

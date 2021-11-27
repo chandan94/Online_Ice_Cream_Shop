@@ -4,4 +4,5 @@ export interface HeaderProps {
     getAllICream?: (paylaod : GetAllICreamPayload) => void,
     activePage: number,
     filter: string,
+    itemCount :number
 }

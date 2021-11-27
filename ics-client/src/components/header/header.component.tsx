@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import IconButton from '../icon-btn/icon-btn.component';
 import { IconBtnProps } from '../icon-btn/icon-btn.types';
 import { createStructuredSelector } from "reselect";
-// import { selectCartItemsCount } from '../../redux/cart/cart.selector';
+ import { selectCartItemsCount } from '../../redux/cart/cart.selector';
 
 import { Dispatch } from 'redux';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
@@ -17,7 +17,8 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 import './header.styles.scss';
 import { selectICreamFilter } from '../../redux/icream/icream.selector';
 
-const Header = ({ getAllICream , activePage, filter} : HeaderProps  ) => {
+const Header = ({ getAllICream , activePage, filter,itemCount} : HeaderProps  ) => {
+
 
 
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Header = ({ getAllICream , activePage, filter} : HeaderProps  ) => {
         iconName: "cart3",
         btnName: "Cart",
         url: "/cart-items",
-        quantity: 0,
+        quantity: itemCount,
         disabled: false
     };
 
@@ -107,6 +108,8 @@ const Header = ({ getAllICream , activePage, filter} : HeaderProps  ) => {
 const mapStateToProps = createStructuredSelector({
     activePage: selectActivePage,
     filter: selectICreamFilter,
+    itemCount: selectCartItemsCount
+
 });
 
 const mapDispatchToProps = (dispatch : Dispatch) => ({

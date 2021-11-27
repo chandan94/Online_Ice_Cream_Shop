@@ -18,10 +18,11 @@ router.get('/', function (req: any, res: any) {
     });
 });
 
-router.get('/:id', function (req: any, res: any) {
+router.get('/:email', function (req: any, res: any) {
+
     db
     .collection("orderDetails")
-    .findOne({_id: new ObjectId(req.params.id)},function (err: any, result: any) {
+    .findOne({email :req.params.email},function (err: any, result: any) {
       if (err) {
         res.status(400).send("Error fetching listings!");
      } else {
@@ -45,13 +46,13 @@ router.post('/', function (req: any, res: any) {
 });
 
 
-router.put('/:id', function (req: any, res: any) {
+router.put('/:email', function (req: any, res: any) {
 
     db
     .collection("orderDetails")
     .updateOne({
-      _id: new ObjectId(req.params.id)
-      }, {$set:req.body}, function (err: any, result: any) {
+      email: req.params.email
+      }, {$addToSet: {items:req.body}}, function (err: any, result: any) {
         if (err) { throw err };
         //if update successfull , it will return updated video object
         res.json(result+req.body.title);

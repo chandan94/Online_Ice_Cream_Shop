@@ -12,6 +12,9 @@ import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
 import CartPage from './pages/cart/cart.component';
 import { isSpinnerLoading } from './redux/overlay/overlay.selector';
 import OrderHistory from './pages/order-history/order-history.component';
+import Cart from './pages/cart/cart.component';
+ import IceCreamDetail from './pages/ice-cream-detail/ice-cream-detail.component';
+import { Omit } from 'react-redux';
 
 
 
@@ -28,6 +31,7 @@ const App = ({ loading } : any) => {
         <Route path="/sign-in-up" element={<SignInUpPage />} />
         <Route path="/cart-items" element={<CartPage />} />
         <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/ice-cream-detail" element={<IceCreamDetail/>}/>
       </Routes>
       </div>
       </LoadingOverlay>

@@ -25,6 +25,8 @@ mongodbutil.connectToServer(function (err: any) {
 
   app.use('/api/customer', customerRouter);
   app.use('/api/ice-cream', iceCreamRouter);
+  app.use('/api/orderDetails', orderDetailsRouter);
+
 
   // Serve the React static files after build
   app.use(express.static("../client/build"));

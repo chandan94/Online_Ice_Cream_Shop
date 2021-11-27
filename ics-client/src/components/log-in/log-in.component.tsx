@@ -6,8 +6,11 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import './log-in.styles.scss';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
+import { setCurrentUser } from '../../redux/user/user.actions';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
-const LogIn = () => {
+const LogIn = ({setCurrentUser}:any) => {
 
     const LoginSchema = yup.object().shape({
         email: yup.string()
@@ -31,16 +34,19 @@ const LogIn = () => {
                 axios.get(url)
                     .then(resp => {
                         if (resp.status === 200) {
-                            if (!bcrypt.compareSync(values.password, resp.data.password)) {
-                                alert('INVALID PASSWORD');
-                            }
-                            else {
-                                alert('VALID PASSWORD');
-                            }
-                        }
-                    })
-                    .catch((err: any) => console.error(err));
-            }}>
+                        if (!bcrypt.compareSync(values.password,resp.data.password))
+                    {
+                        alert('INVALID PASSWORD');
+                    }
+                    else{
+                        setCurrentUser(values.email)  ;   
+                    
+                    }
+                    }
+                    }
+                    )
+                .catch((err: any) => console.error(err));
+                }}>
             {({
                 errors,
                 touched,
@@ -102,5 +108,9 @@ const LogIn = () => {
         </Formik>
     );
 };
+const mapDispatchToProps = (dispatch : Dispatch) => ({
+    setCurrentUser: (payload: any) => dispatch(setCurrentUser(payload)),
+});
 
-export default LogIn;
+export default connect(null, mapDispatchToProps)(LogIn);
+

@@ -5,6 +5,10 @@ import * as yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import './sign-up.styles.scss';
 import axios from 'axios';
+import { setCurrentUser } from '../../redux/user/user.actions';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+
 var bcrypt = require('bcryptjs');
 
 
@@ -87,10 +91,9 @@ const SignUp = () => {
                     })
                 };
                 axios.post(url, requestOptions)
-                .then((resp: { status: number; }) =>  {
+                .then((resp: any) =>  {
                     if (resp.status === 200) {
-                        console.log(resp);
-                    }
+                        setCurrentUser(resp.data.email);                      }
                 })
                 .catch((err: any) => console.error(err));
 }}
@@ -285,4 +288,8 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+const mapDispatchToProps = (dispatch : Dispatch) => ({
+    setCurrentUser: (payload: any) => dispatch(setCurrentUser(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
