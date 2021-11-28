@@ -18,3 +18,8 @@ export const selectICreamFilter = createSelector (
     [selectIcream],
     (icream: ICreamState) => icream.filter,
 );
+
+export const selectIsFetching = createSelector (
+    [selectIcream],
+    (icream: ICreamState) => icream.isFetching,
+);

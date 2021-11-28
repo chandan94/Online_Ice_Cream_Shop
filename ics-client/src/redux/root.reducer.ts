@@ -14,7 +14,7 @@ import overlayReducer from './overlay/overlay.reducer';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist:['cart','user']
+    whitelist:['cart']
 }
 
 const rootReducer = combineReducers({

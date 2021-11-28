@@ -101,7 +101,9 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
-                    <Card.Subtitle>Cost : {cost}$</Card.Subtitle>
+                    {
+                        !isAddItem ?    <Card.Subtitle>Cost : {cost}$</Card.Subtitle> : null
+                    }
                     <Card.Text>{desc}</Card.Text>
                 </Card.Body>
                 <Card.Footer>

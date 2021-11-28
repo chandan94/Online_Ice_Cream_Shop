@@ -17,3 +17,11 @@
         border-color: #212529;
     }
 }
+
+.sticky-paging {
+    position: fixed;
+    margin: 0 auto;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+}

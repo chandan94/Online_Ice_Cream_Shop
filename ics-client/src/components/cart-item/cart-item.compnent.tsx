@@ -1,6 +1,3 @@
-import { openStdin } from 'process';
-import React from 'react';
-
 import { connect } from 'react-redux';
 import { clearItem, addItem, removeItem } from '../../redux/cart/cart.action';
 

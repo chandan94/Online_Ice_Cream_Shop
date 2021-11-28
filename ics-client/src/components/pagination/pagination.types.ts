@@ -1,4 +1,4 @@
-import { GetAllICreamPayload } from "../../redux/icream/icream.types";
+import { GetAllICreamPayload, ICream } from "../../redux/icream/icream.types";
 
 export interface IPagingProps {
     total? : number,
@@ -9,4 +9,5 @@ export interface IPagingProps {
     search?: string,
     isAdmin?: boolean,
     filter?: string,
+    icreams: ICream[],
 }
