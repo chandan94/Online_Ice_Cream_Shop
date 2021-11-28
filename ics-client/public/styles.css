@@ -1,5 +1,5 @@
 .error-message {
-    color: #FF6565;
+    color: #9a1750 !important;
     height: 1em;
     font-size: .8em;
     text-align: left;
@@ -7,7 +7,7 @@
 }
 
 .error {
-    border: 2px solid #FF6565;
+    border: 2px solid #9a1750 !important;
 }
 
 body {
