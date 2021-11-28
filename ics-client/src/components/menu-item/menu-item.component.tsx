@@ -98,7 +98,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                             </div>
                         ) : null
                 }
-                <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`} />
+                <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}  />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     {

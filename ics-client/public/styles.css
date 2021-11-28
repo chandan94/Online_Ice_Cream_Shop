@@ -11,5 +11,10 @@
 }
 
 body {
-    background-image: url('./images/ics-bg3.jpg');
+    background: #efe2ba !important;
+    color: black;
+}
+
+.btn-dark:hover {
+    background-color: #9a1750 !important;
 }
