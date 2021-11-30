@@ -7,8 +7,8 @@ export const orderActions = {
 export interface OrderItems {
     _id: string,
     name: string,
-    price: number,
-    image: string,
+    cost: number,
+    img: string,
     quantity: number,
 }
 

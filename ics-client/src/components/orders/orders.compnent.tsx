@@ -5,37 +5,26 @@ import './orders.styles.scss';
 import { OrderProps } from './orders.types';
 
 const Orders = ({ item  } : OrderProps) => {
-    const  { name, price, quantity, image } = item;
+    const  { name, cost, quantity, img } = item;
     return (
         <tr>
-            <td data-th="Product">
-                <div className="row">
-                    <div className="col-md-3 text-left">
-                        <img src={image} alt="" className="img-fluid d-none d-md-block rounded mb-2 shadow " />
-                    </div>
-                    <div className="col-md-9 text-left mt-sm-2">
-                        <h4>Product Name</h4>
-                        <p className="font-weight-light">{name}</p>
-                    </div>
-                </div>
-            </td>
-            <td data-th="Price">{price}</td>
-            <td data-th="Quantity">
-                {/* <div className='arrow' onClick={() => removeItem(cartItem)}>&#10094;</div> */}
-                <span className='value'>{quantity}</span>
-                {/* <div className='arrow' onClick={() => addItem(cartItem)}>&#10095;</div> */}
-            </td>
-            {/* <td className="actions" data-th="">
-                <div className="text-right">
-                    <button className="btn btn-white border-secondary bg-white btn-md mb-2">
-                        <i className="fas fa-sync"></i>
-                    </button>
-                    <button className="btn btn-white border-secondary bg-white btn-md mb-2">
-                        <i className="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td> */}
-        </tr>
+                        <td data-th="Product">
+                                <div className="col-md-3 text-left">
+                                    <img src={`${img}`} alt={`${name}`} title={name} className="img-fluid d-none d-md-block rounded mb-2 shadow img-custom"/>
+                                </div>
+                        </td>
+                        <td data-th="Price">${cost}</td>
+                       
+                       <td>
+                          <div className='quantity-custom'> 
+                        <div className='arrow' onClick={ () => removeItem(item) }>&#10094;    </div>
+                        <span className='value'>     {quantity}    </span>
+                        <div className='arrow' onClick={ () => addItem(item) }> &#10095;</div> 
+                        </div>                     
+                         </td>
+                         <div className='remove-button' onClick={() => clearItem(item)}>&#10005;</div>
+
+                    </tr>
     );
 };
 

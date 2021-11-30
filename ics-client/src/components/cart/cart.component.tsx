@@ -8,24 +8,52 @@ import axios from "axios";
 import { ORDER_DETAILS_URL } from '../../ics-constants';
 import { selectCurrUser } from "../../redux/user/user.selector";
 import { useNavigate } from 'react-router';
-
+import Button from "@restart/ui/esm/Button";
 const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
     const navigate = useNavigate();
 
+    const handleContinue = () =>
+    {
+        navigate("/");
+    }
     const handleCheckout = () => 
     {
 
+        if(currUser ==='')
+        {
+            navigate('/login');
+        }
+        else
+        {
 
          axios.get(`${ORDER_DETAILS_URL}/${currUser}`)
          .then (resp => { 
              console.log(resp);
-             if(resp.data!==null)
-             {
+             if(resp.data !== null )
+             { if(resp.data.length !== 0)
+                { 
                axios.put(`${ORDER_DETAILS_URL}/${currUser}`,cartItems).then(resp => {
                  if (resp.status === 200) {
- 
+                    
                  }
                  });
+                }else
+                {
+                    var today = new Date();
+                    let todate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                    const data = {
+                        email:currUser,
+                        date: todate,
+                        count:itemCount,
+                        total:cartTotal,
+                        items:cartItems
+                    };
+                    axios.post(`${ORDER_DETAILS_URL}`,data).then(resp => {
+                        if (resp.status === 200) {
+        
+                        }
+                        });
+                    }
              }
              else
              {
@@ -47,7 +75,9 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
              }
 
          })
+
          navigate("/order-History"); 
+        }
            };
 
     return(
@@ -76,7 +106,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
             </tbody>
                 </table>
                 <div className="float-right text-right">
-                    <h4>Subtotal:</h4>
+                    <h4>Total:</h4>
                     <h1>${cartTotal}</h1>
                 </div>
             </div>
@@ -84,11 +114,10 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
         <div className="row mt-4 d-flex align-items-center">
             <div className="col-sm-6 order-md-2 text-right">
                 {/* <a href="catalog.html" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a> */}
-                <button onClick={handleCheckout} className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</button>
+                <Button  type="submit" className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout} >Checkout</Button>
             </div>
             <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                <a href="/">
-                    <i className="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
+            <Button  type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleContinue}>Continue Shopping</Button>
             </div>
         </div>
     </div>

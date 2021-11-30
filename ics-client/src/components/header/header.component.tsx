@@ -16,8 +16,9 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
 import './header.styles.scss';
 import { selectICreamFilter } from '../../redux/icream/icream.selector';
+import { selectCurrUser } from '../../redux/user/user.selector';
 
-const Header = ({ getAllICream , activePage, filter,itemCount} : HeaderProps  ) => {
+const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : HeaderProps  ) => {
 
 
 
@@ -95,6 +96,7 @@ const Header = ({ getAllICream , activePage, filter,itemCount} : HeaderProps  ) 
                             <Button variant="outline-light search-icon" onClick={handleSearch}><i className="bi bi-search"></i></Button>
                         </Form>
                         <div className="icon-btn-group">
+                            
                             <IconButton button={signIn} />
                             <IconButton button={cartIcon} />
                         </div>
@@ -108,7 +110,8 @@ const Header = ({ getAllICream , activePage, filter,itemCount} : HeaderProps  ) 
 const mapStateToProps = createStructuredSelector({
     activePage: selectActivePage,
     filter: selectICreamFilter,
-    itemCount: selectCartItemsCount
+    itemCount: selectCartItemsCount,
+    currUser : selectCurrUser
 
 });
 

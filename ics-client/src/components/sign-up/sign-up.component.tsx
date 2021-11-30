@@ -78,10 +78,7 @@ const SignUp = () => {
                 const hashdPwd=bcrypt.hashSync(values.password,salt);
 
                 const url = '/api/customer/';
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
+                const body={
                         firstName: values.firstName,
                         lastName: values.lastName,
                         email: values.email,
@@ -91,21 +88,14 @@ const SignUp = () => {
                         address2: values.address2,
                         city: values.city,
                         state: values.state,
-                        zip: values.zip
-                    })
-                };
-                axios.post(url, requestOptions)
+                        zip: values.zip,
+                        isAdmin :0
+                    };
+                    
+                axios.post(url, body)
                 .then((resp: any) =>  {
                     if (resp.status === 200) {
-
-                        const currentUser=resp.data.email;
-                        const isAdmin = resp.data.admin===1 ?   true : false ;
-                        const user :UserState = {
-                            currentUser,
-                           isAdmin
-                        };
-                        setCurrentUser(user)  ;   
-                        navigate("/");                    }
+                        navigate("/login");                    }
                 })
                 .catch((err: any) => console.error(err));
 }}

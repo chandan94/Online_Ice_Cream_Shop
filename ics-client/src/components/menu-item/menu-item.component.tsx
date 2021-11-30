@@ -85,6 +85,11 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
             addItemToCart(item);
         }
     }
+    const handleClick = () => {
+        if (addItemToCart) {
+            addItemToCart(item);
+        }
+    }
 
     return (
         <div className="menu-item">
@@ -100,7 +105,9 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                 }
                 <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`} />
                 <Card.Body>
-                    <Card.Title>{name}</Card.Title>
+               {/* <div onClick={handleClick()}>  */}
+                <Card.Title>{name}</Card.Title>
+                {/* </div>  */}
                     <Card.Subtitle>Cost : {cost}$</Card.Subtitle>
                     <Card.Text>{desc}</Card.Text>
                 </Card.Body>

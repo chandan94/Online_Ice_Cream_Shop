@@ -47,7 +47,6 @@ router.post('/', function (req: any, res: any) {
 
 
 router.put('/:email', function (req: any, res: any) {
-
     db
     .collection("orderDetails")
     .updateOne({

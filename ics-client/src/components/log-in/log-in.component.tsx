@@ -11,7 +11,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const LogIn = ({setCurrentUser}:any) => {
+const LogIn = ({ setCurrentUser }: any) => {
     const navigate = useNavigate();
 
     const LoginSchema = yup.object().shape({
@@ -32,30 +32,36 @@ const LogIn = ({setCurrentUser}:any) => {
             }}
             validationSchema={LoginSchema}
             onSubmit={values => {
-                const url = '/api/customer/'+values.email;
+                const url = '/api/customer/' + values.email;
                 axios.get(url)
                     .then(resp => {
+                        console.log(resp);
                         if (resp.status === 200) {
-                        if (!bcrypt.compareSync(values.password,resp.data.password))
-                    {
-                        alert('INVALID PASSWORD');
-                    }
-                    else{
-                        const currentUser=resp.data.email;
-                        const isAdmin = resp.data.admin===1 ?   true : false ;
-                        const user = {
-                            currentUser,
-                           isAdmin
-                        };
-                        setCurrentUser(user)  ;   
-                        navigate("/");
-                    
-                    }
-                    }
+                            if (resp.data === null) {
+                                alert('INVALID EMAIL');
+                            }else
+                            {
+                            if (!bcrypt.compareSync(values.password, resp.data.password)) {
+                                alert('INVALID PASSWORD');
+                            }
+                            else {
+                                const currentUser = resp.data.email;
+                                const isAdmin = resp.data.admin === 1 ? true : false;
+                                const user = {
+                                    currentUser,
+                                    isAdmin
+                                };
+                                setCurrentUser(user);
+                                navigate("/");
+
+                            }
+                        }
+                           
+                        }
                     }
                     )
-                .catch((err: any) => console.error(err));
-                }}>
+                    .catch((err: any) => console.error(err));
+            }}>
             {({
                 errors,
                 touched,
@@ -93,7 +99,7 @@ const LogIn = ({setCurrentUser}:any) => {
                                     placeholder="Password"
                                     className={touched.password && errors.password ? "error" : ""}
                                     onChange={handleChange}
-                                    onBlur={handleBlur}/>
+                                    onBlur={handleBlur} />
                                 {
                                     touched.password && errors.password ?
                                         (<div className="error-message">{errors.password}</div>)
@@ -117,7 +123,7 @@ const LogIn = ({setCurrentUser}:any) => {
         </Formik>
     );
 };
-const mapDispatchToProps = (dispatch : Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     setCurrentUser: (payload: any) => dispatch(setCurrentUser(payload)),
 });
 
