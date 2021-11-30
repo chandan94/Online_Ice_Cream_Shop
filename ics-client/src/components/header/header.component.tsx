@@ -20,8 +20,6 @@ import { selectCurrUser } from '../../redux/user/user.selector';
 
 const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : HeaderProps  ) => {
 
-
-
     const navigate = useNavigate();
 
     const cartIcon: IconBtnProps = {
@@ -86,7 +84,10 @@ const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : Header
     return (
         <Navbar className="header" bg="dark" variant="dark" expand="lg" sticky="top">
             <Container>
-                <Navbar.Brand href="" onClick={handleBrandClick}>Ice-Cream Shop</Navbar.Brand>
+                <Navbar.Brand href="" onClick={handleBrandClick}>
+                    <img src="./images/logo7.png" alt="Yumm Ice-creams"/>
+                    {/* Yumm.. Ice-creams */}
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav onSelect={handleNavSelect} id="ice-cream-nav" className="justify-content-center">

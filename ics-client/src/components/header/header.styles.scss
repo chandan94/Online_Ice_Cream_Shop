@@ -1,5 +1,5 @@
 .header {
-    padding: 1.25em;
+    padding: 0.25em;
     background: #9a1750 !important;
 
     .container {
@@ -7,20 +7,25 @@
     }
 
     .navbar-brand {
-        font-size: 1.5em;
+        padding-top: 0;
+        font-size: 2em;
         font-style: italic;
         color: white;
     }
 
     form {
         justify-content: center;
-        margin-left: 17.5em;
+        margin-left: 18.7em;
     }
 
     @media screen and (max-width: 992px){ 
         form {
             margin: 1em auto;
-        }   
+        }
+        
+        .navbar-brand > img {
+            margin-left: 0;
+        }
     }
 
     .search-bar {
@@ -47,5 +52,12 @@
         display: flex;
         justify-content: flex-end;
         margin: 0 auto;
+    }
+
+    .navbar-brand > img {
+        height: 1.75em;
+        width: 3em;
+        border-radius: 50%;
+        margin-left: 2em;
     }
 }
