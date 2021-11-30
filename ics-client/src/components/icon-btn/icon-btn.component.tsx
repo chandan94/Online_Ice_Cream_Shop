@@ -1,13 +1,28 @@
 import { useNavigate } from 'react-router';
+import { clearCart } from '../../redux/cart/cart.action';
 
 import './icon-btn.styles.scss';
-import { IconBtn } from './icon-btn.types';
+import { connect } from 'react-redux';
 
-const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: IconBtn) => {
+import { IconBtn } from './icon-btn.types';
+import { Dispatch } from 'redux';
+import { setCurrentUser } from '../../redux/user/user.actions';
+
+const IconButton = ({ button : {iconName , btnName, url,quantity,disabled}, clearCart,setCurrentUser }: IconBtn) => {
     const navigate = useNavigate();
     const navigateToURL = () => {
         if (url && url.length > 0) {
             navigate(url);
+        }
+        if (!url && url.length===0 && btnName === 'Log Out')
+        {
+            clearCart();
+            const user = {
+                email : '',
+                isAdmin :false
+            };   
+            setCurrentUser(user);
+            navigate('/login');
         }
     }
 
@@ -25,5 +40,8 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled } }: I
     );
 }
 
-
-export default IconButton;
+const mapDispatchToProps = (dispatch : Dispatch) => ({ 
+    clearCart :() => dispatch(clearCart()),
+    setCurrentUser: (payload: any) => dispatch(setCurrentUser(payload)),
+});
+export default connect(null,mapDispatchToProps)(IconButton);

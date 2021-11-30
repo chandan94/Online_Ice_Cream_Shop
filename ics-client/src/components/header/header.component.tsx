@@ -40,6 +40,14 @@ const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : Header
         quantity: 0,
         disabled: false,
     }
+    const logOut : IconBtnProps = {
+        iconName : "person-check-fill",
+        btnName : "Log Out",
+        url : "",
+        quantity:0,
+        disabled : false
+    }
+
 
     const handleSearchFormSubmit = (e: any) => {
         e.preventDefault();
@@ -97,7 +105,9 @@ const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : Header
                         </Form>
                         <div className="icon-btn-group">
                             
-                            <IconButton button={signIn} />
+
+                            
+                            {currUser ? <IconButton button={logOut} /> : <IconButton button={signIn} />}                           
                             <IconButton button={cartIcon} />
                         </div>
                     </Nav>

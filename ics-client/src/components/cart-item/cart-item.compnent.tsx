@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { clearItem, addItem, removeItem, clearCart } from '../../redux/cart/cart.action';
+import { clearItem, addItem, removeItem } from '../../redux/cart/cart.action';
 
 import './cart-item.styles.scss';
 
@@ -37,7 +37,6 @@ const mapDispatchToProps = (dispatch: (arg0: { type: any; payload: any; }) => an
     clearItem: (item: any) => dispatch(clearItem(item)),
     addItem: (item: any) => dispatch(addItem(item)),
     removeItem: (item: any) => dispatch(removeItem(item)),
-    // clearCart :(item: any) => dispatch(clearCart(item))
 });
 
 export default connect(null, mapDispatchToProps)(CartItem);

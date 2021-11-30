@@ -4,9 +4,13 @@ export interface IconBtnProps {
     btnName: string,
     url: string,
     quantity : number,
-    disabled: boolean
+    disabled: boolean,
+   
 };
 
 export interface IconBtn {
-    button: IconBtnProps
+    button: IconBtnProps, 
+    clearCart ?:any,
+    setCurrentUser ?:any
+
 }

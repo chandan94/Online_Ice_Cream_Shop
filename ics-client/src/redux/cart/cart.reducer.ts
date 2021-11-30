@@ -6,7 +6,7 @@ const INITIAL_CART_STATE = {
     cartItems  :[],
 }
 
-const cartReducer = (state = INITIAL_CART_STATE, action: { type: any; payload: { id: any; }; }) => {
+const cartReducer = (state = INITIAL_CART_STATE, action: any) => {
     switch (action.type) {
         case cartActionTypes.ADD_ITEM:
             return {

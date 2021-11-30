@@ -8,7 +8,7 @@ import axios from "axios";
 import { ORDER_DETAILS_URL } from '../../ics-constants';
 import { selectCurrUser } from "../../redux/user/user.selector";
 import { useNavigate } from 'react-router';
-import Button from "@restart/ui/esm/Button";
+import {Button} from 'react-bootstrap';
 const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
     const navigate = useNavigate();
 
@@ -114,10 +114,10 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
         <div className="row mt-4 d-flex align-items-center">
             <div className="col-sm-6 order-md-2 text-right">
                 {/* <a href="catalog.html" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a> */}
-                <Button  type="submit" className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout} >Checkout</Button>
+                <Button variant="dark" type="submit" className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout} >Checkout</Button>
             </div>
             <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-            <Button  type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleContinue}>Continue Shopping</Button>
+            <Button variant="dark" type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleContinue}>Continue Shopping</Button>
             </div>
         </div>
     </div>
