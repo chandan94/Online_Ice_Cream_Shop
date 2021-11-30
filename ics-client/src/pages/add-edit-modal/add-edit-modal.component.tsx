@@ -344,7 +344,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                     </Form.Group>
                                 </Row>
                                 <div className="submit-btn">
-                                    <Button variant="primary" type="submit" onClick={handleAddEdit}>
+                                    <Button variant="dark" type="submit" onClick={handleAddEdit}>
                                         {modalButton}
                                     </Button>
                                 </div>

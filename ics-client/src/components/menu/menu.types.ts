@@ -6,4 +6,6 @@ export interface MenuProps {
     icreams: ICream[],
     editClicked: boolean,
     currIcream: Item | null,
+    filter: string,
+    isFetching: boolean,
 }

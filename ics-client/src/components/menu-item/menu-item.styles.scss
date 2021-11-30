@@ -7,11 +7,12 @@
         width: 22em;
         padding: 2rem;
         border: 1px solid #212529;
+        background: #efe2ba;
     }
 
-    .card-title {
-        margin: 1em;
-    }
+    // .card-title {
+    //     margin: 1em;
+    // }
 
     .card-subtitle {
         margin: 0;
@@ -37,6 +38,7 @@
     .card-img-top {
         height: 11.25em;
         border: 1px solid #212529;
+        border-radius: 50%;
     }
 
     .img-margin {

@@ -1,13 +1,20 @@
 .header {
     padding: 1.25em;
+    background: #9a1750 !important;
 
     .container {
         padding: 0;
     }
 
+    .navbar-brand {
+        font-size: 1.5em;
+        font-style: italic;
+        color: white;
+    }
+
     form {
         justify-content: center;
-        margin-left: 19.5em;
+        margin-left: 17.5em;
     }
 
     @media screen and (max-width: 992px){ 

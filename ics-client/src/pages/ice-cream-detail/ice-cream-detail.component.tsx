@@ -7,10 +7,8 @@ import React from "react";
 //     faMinus,
 //     faPlus,
 //   } from "@fortawesome/free-solid-svg-icons";
-  import { connect } from 'react-redux';
-  import {  addItem } from '../../redux/cart/cart.action';
-  import Header from "../../components/header/header.component";
-
+import { connect } from 'react-redux';
+import {  addItem } from '../../redux/cart/cart.action';
 
 const IceCreamDetail = ({item}:any) =>  {
 

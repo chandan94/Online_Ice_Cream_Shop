@@ -26,8 +26,8 @@ const Filter = ({ search, page, getAllICream, filter }: any) => {
             <option value="">All</option>
             <option value="chocolate">Chocolate</option>
             <option value="strawberry">Strawberry</option>
-            <option value="strawberry">Pista</option>
-            <option value="strawberry">Vanila</option>
+            <option value="pista">Pista</option>
+            <option value="vanila">Vanila</option>
         </Form.Select>
     );
 }
