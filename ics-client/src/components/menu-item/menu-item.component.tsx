@@ -11,13 +11,14 @@ import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 import { onItemEditClick } from '../../redux/menu-item/menu-item.actions';
 import { selectActivePage } from '../../redux/pagination/pagination.selector';
-// import IconButton from '../icon-btn/icon-btn.component';
-// import { IconBtnProps } from '../icon-btn/icon-btn.types';
+import { setToastComp } from '../../redux/toast/toast.actions';
+import { ToastState } from '../../redux/toast/toast.types';
 
 import './menu-item.styles.scss';
 import { MenuItemProps, Item } from './menu-item.types';
 
-const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllICream, activePage, addItemToCart }: MenuItemProps) => {
+const MenuItem = ({ item, isAdmin, isAddItem, showModal, showToast,
+                    editBtnClicked, getAllICream, activePage, addItemToCart }: MenuItemProps) => {
 
     const { name, flavor, cost, img, calorie, ingredients, imageName, desc } = item;
 
@@ -53,6 +54,13 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
     }
 
     const handleOnDelete = () => {
+        const toastObj = {
+            show: true,
+            header: "Delete Ice-cream",
+            msg: "",
+            variant: "",
+        };
+
         if (window.confirm(`Are you sure you want to delete ice-cream ${item.name}`)) {
             const data = {
                 name,
@@ -67,7 +75,8 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
             axios.put(`${ICE_CREAM_URL}/${item._id}`, data)
                 .then(resp => {
                     if (resp.status === 200) {
-                        alert(` ${item.name} ice-cream deleted successfully`);
+                        toastObj.msg = `${item.name} ice-cream deleted successfully`;
+                        toastObj.variant = "success";
                         if (getAllICream) {
                             getAllICream({
                                 search: "",
@@ -76,6 +85,13 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, editBtnClicked, getAllI
                             });
                         }
                     }
+                })
+                .catch(() => {
+                    toastObj.msg = `Error in deleting ${item.name} ice-cream, Try again after sometime.`
+                    toastObj.variant = "warning";
+                })
+                .finally(() => {
+                    showToast?.(toastObj);
                 })
         }
     }
@@ -151,6 +167,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
     addItemToCart: (item: Item) => dispatch(addItem(item)),
+    showToast: (payload: ToastState) => dispatch(setToastComp(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);

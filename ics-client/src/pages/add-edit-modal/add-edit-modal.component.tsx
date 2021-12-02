@@ -4,23 +4,30 @@ import { Dispatch } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 
+import ToastNotification from '../../components/toast/toast.component';
 import { setModalShow } from '../../redux/add-edit-modal/add-edit-modal.actions';
 import { selectModalShow } from '../../redux/add-edit-modal/add-edit-modal.selector';
-
-import './add-edit-modal.styles.scss';
 import { AddEditModalProps } from './add-edit-modal.types';
-import axios from 'axios';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { editDone } from '../../redux/menu-item/menu-item.actions';
 import { FILE_SIZE, ICE_CREAM_URL, SUPPORTED_FORMATS } from '../../ics-constants';
 import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
-const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllICream, currIcream, isEdit, editCleanUp, activePage }: AddEditModalProps) => {
+import './add-edit-modal.styles.scss';
+import { setToastComp } from '../../redux/toast/toast.actions';
+import { ToastState } from '../../redux/toast/toast.types';
+
+const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllICream,
+                        currIcream, isEdit, editCleanUp, activePage, showToast }: AddEditModalProps) => {
 
     let imageData: any;
     let imageName: string | undefined = isEdit && currIcream ? currIcream.imageName : "";
+    let toastMsg = "";
+    const toastHeader = "Add/Edit Ice-cream";
+    let toastVariant = ""
     // let imageFile: any;
 
     const handleClose = () => {
@@ -35,26 +42,6 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
     const handleAddEdit = () => {
         return;
     };
-
-    // const dataURLtoFile = (dataUrl: string, filename: string) => {
-    //     const arr = dataUrl.split(',');
-    //     const match1 = (arr[0].match(/:(.*?);/));
-    //     const mime = match1 ? match1[1] : null;
-    //     const bstr = arr ? atob(arr[1]) : null
-    //     let n = bstr ? bstr.length : 0;
-    //     const u8arr = new Uint8Array(n);
-
-    //     while (n--) {
-    //         if (bstr)
-    //             u8arr[n] = bstr.charCodeAt(n);
-    //     }
-
-    //     return new File([u8arr], filename, { type: mime ? mime : '' });
-    // }
-
-    // if (isEdit && currIcream) {
-    //     imageFile = dataURLtoFile(currIcream.img, "file.png");
-    // }
 
     const modalSchema = yup.object().shape({
         name: yup.string()
@@ -144,14 +131,26 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                 axios.post(ICE_CREAM_URL, data)
                                     .then(resp => {
                                         if (resp.status === 200) {
-                                            alert(`${values.name} ice-cream added successfully`);
+                                            toastMsg = `${values.name} ice-cream added successfully`;
+                                            showToast({
+                                                show: true,
+                                                header: toastHeader,
+                                                msg: toastMsg,
+                                                variant: "success",
+                                            });
                                             getAllICream({
                                                 search: "",
                                                 page: activePage && activePage > 1 ? activePage : 0,
                                                 filter: "",
                                             });
                                         } else {
-                                            alert(`There was an issue in adding ${values.name}, please try later`);
+                                            toastMsg = `There was an issue in adding ${values.name}, please try later`;
+                                            showToast({
+                                                show: true,
+                                                header: toastHeader,
+                                                msg: toastMsg,
+                                                variant: "danger",
+                                            });
                                         }
                                     })
                                     .catch(err => {
@@ -170,14 +169,26 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                 axios.put(`${ICE_CREAM_URL}/${id}`, data)
                                     .then(resp => {
                                         if (resp.status === 200) {
-                                            alert(`${values.name} ice-cream updated successfully`);
+                                            toastMsg = `${values.name} ice-cream updated successfully`;
+                                            showToast({
+                                                show: true,
+                                                header: toastHeader,
+                                                msg: toastMsg,
+                                                variant: "success",
+                                            });
                                             getAllICream({
                                                 search: "",
                                                 page: activePage && activePage > 1 ? activePage : 0,
                                                 filter: "",
                                             });
                                         } else {
-                                            alert(`There was an issue in updating ${values.name}, please try later`);
+                                            toastMsg = `There was an issue in updating ${values.name}, please try later`;
+                                            showToast({
+                                                show: true,
+                                                header: toastHeader,
+                                                msg: toastMsg,
+                                                variant: "warning",
+                                            });
                                         }
                                     })
                                     .catch(err => {
@@ -248,13 +259,6 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                                 defaultValue={currIcream ? currIcream.imageName : ''}
                                                 disabled
                                             />
-                                        {/* </Form.Group>
-                                        <Form.Group as={Col} className="mb-3" >
-                                            <Form.Check
-                                                type="switch"
-                                                id="custom-switch"
-                                                label="Edit image?"
-                                            /> */}
                                         </Form.Group>
                                     </Row> : null
                                 }
@@ -353,6 +357,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                     </Formik>
                 </Modal.Body>
             </Modal>
+            <ToastNotification />
         </div>
     );
 };
@@ -365,7 +370,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     closeModal: (show: boolean) => dispatch(setModalShow(show)),
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
-    editCleanUp: () => dispatch(editDone())
+    editCleanUp: () => dispatch(editDone()),
+    showToast: (show: ToastState) => dispatch(setToastComp(show)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEditModal);

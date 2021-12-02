@@ -4,6 +4,7 @@ import { MenuItemState } from "./menu-item/menu-item.types";
 import { OrderState } from "./orders/order.types";
 import { OverlayState } from "./overlay/overlay.types";
 import { PaginationState } from "./pagination/pagination.types";
+import { ToastState } from "./toast/toast.types";
 import { UserState } from "./user/user.types";
 
 export interface RootState {
@@ -14,6 +15,7 @@ export interface RootState {
     page: PaginationState,
     orderDetails: OrderState,
     spinner: OverlayState,
+    toast: ToastState,
 }
 
 export default RootState;

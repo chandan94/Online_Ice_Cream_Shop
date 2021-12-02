@@ -1,4 +1,5 @@
 import { GetAllICreamPayload } from "../../redux/icream/icream.types";
+import { ToastState } from "../../redux/toast/toast.types";
 
 export interface Item {
     _id?: string,
@@ -25,4 +26,5 @@ export interface MenuItemProps {
     editBtnClicked?: (item: Item) => void,
     getAllICream?: (payload: GetAllICreamPayload) => void
     addItemToCart?: (item: Item) => void,
+    showToast?: (payload: ToastState) => void,
 }
