@@ -27,4 +27,6 @@ export interface Order {
     userId?: string,
     date?: string,
     items?: OrderItems[],
+    getAllOrders :any
+
 }

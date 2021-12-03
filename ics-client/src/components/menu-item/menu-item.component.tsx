@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { Dispatch } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { ICE_CREAM_URL } from '../../ics-constants';
 
 import { setModalShow } from '../../redux/add-edit-modal/add-edit-modal.actions';
-import { addItem } from '../../redux/cart/cart.action';
+import { addItem ,addNavigate} from '../../redux/cart/cart.action';
 import { fetchIcreamStart } from '../../redux/icream/icream.action';
 import { GetAllICreamPayload } from '../../redux/icream/icream.types';
 import { onItemEditClick } from '../../redux/menu-item/menu-item.actions';
@@ -17,9 +18,8 @@ import { ToastState } from '../../redux/toast/toast.types';
 import './menu-item.styles.scss';
 import { MenuItemProps, Item } from './menu-item.types';
 
-const MenuItem = ({ item, isAdmin, isAddItem, showModal, showToast,
-                    editBtnClicked, getAllICream, activePage, addItemToCart }: MenuItemProps) => {
-
+const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicked, getAllICream, activePage ,addItemToCart,addNavigateItemToCart }: MenuItemProps) => {
+    const navigate = useNavigate();
     const { name, flavor, cost, img, calorie, ingredients, imageName, desc } = item;
 
     // const plusIconBtn: IconBtnProps = {
@@ -101,9 +101,14 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, showToast,
             addItemToCart(item);
         }
     }
-    const handleClick = () => {
-        if (addItemToCart) {
-            addItemToCart(item);
+    const handleNameClick = () => {
+        if (addNavigateItemToCart) {
+            const cartitem = {
+                navigate :'true',
+                ...item 
+            }
+            addNavigateItemToCart(cartitem);
+            navigate('/ice-cream-detail')
         }
     }
 
@@ -121,11 +126,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal, showToast,
                 }
                 <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}  />
                 <Card.Body>
-               {/* <div onClick={handleClick()}>  */}
-                <Card.Title>{name}</Card.Title>
-                {/* </div>  */}
-                    <Card.Subtitle>Cost : {cost}$</Card.Subtitle>
-                    <Card.Title>{name}</Card.Title>
+                    <Card.Title onClick={handleNameClick}>{name}</Card.Title>
                     {
                         !isAddItem ?    <Card.Subtitle>Cost : {cost}$</Card.Subtitle> : null
                     }
@@ -166,6 +167,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     showModal: (show: boolean) => dispatch(setModalShow(show)),
     editBtnClicked: (item: Item) => dispatch(onItemEditClick(item)),
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
+    addNavigateItemToCart: (item: Item) => dispatch(addNavigate(item)),
     addItemToCart: (item: Item) => dispatch(addItem(item)),
     showToast: (payload: ToastState) => dispatch(setToastComp(payload)),
 });

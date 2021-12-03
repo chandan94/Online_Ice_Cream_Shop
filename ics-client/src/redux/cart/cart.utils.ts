@@ -18,14 +18,25 @@ export const addItemToCart = (cartItems: any[], newItem: any) => {
     return [...cartItems, newItem];
 }
 
+export const addNavigateItemToCart = (cartItems: any[], newItem: any) => {
 
-export const removeItemFromCart = (cartItems: any[], itemtoRemove: { id: any; }) => {
+    return [...cartItems, newItem];
+}
 
-    const existingItem = cartItems.find(item => item.id === itemtoRemove.id)
+
+export const removeItemFromCart = (cartItems: any[], itemtoRemove:any) => {
+
+    const existingItem = cartItems.find(item => item.name === itemtoRemove.name)
 
     if (existingItem && existingItem.quantity === 1) {
-        return cartItems.filter(item => item.id !== existingItem.id)
+        return cartItems.filter(item => item.name !== existingItem.name)
     }
 
-    return cartItems.map(item => item.id === existingItem.id ? { ...item , quantity: item.quantity - 1} : item);
+    return cartItems.map(item => item.name === existingItem.name ? { ...item , quantity: item.quantity - 1} : item);
+}
+
+export const removeNavigate = (cartItems: any[], itemtoRemove:any) => {
+
+        return cartItems.filter(item => (item.navigate !== 'true')  );
+
 }

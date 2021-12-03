@@ -82,6 +82,17 @@ router.put('/:id', function (req: any, res: any) {
         });
     });
 
+    router.put('/updateflavor/:flavor', function (req: any, res: any) {
+      db
+      .collection(ICE_CREAM_COLL)
+      .update({
+        flavor: req.params.flavor
+        }, {$inc: {inventory: -(1*req.body.quantity)}}, function (err: any, result: any) {
+          if (err) { throw err };
+          //if update successfull , it will return updated video object
+          res.json(result+req.body.title);
+          });
+      });
 
 //delete an existing  video 
 router.delete('/:id', function (req: any, res: any) {

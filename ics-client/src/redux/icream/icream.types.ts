@@ -13,7 +13,7 @@ export interface ICream {
     calorie: number,
     ingredients: string,
     imageName: string,
-    quantity: number,
+    inventory: number,
 }
 
 export interface ICreamState {

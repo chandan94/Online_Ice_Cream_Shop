@@ -5,18 +5,20 @@ import { createStructuredSelector } from "reselect";
 import { selectCartItems, selectCartItemsCount, selectCartItemsTotal } from '../../redux/cart/cart.selector';
 import CartItem from '../cart-item/cart-item.compnent'
 import axios from "axios";
-import { ORDER_DETAILS_URL } from '../../ics-constants';
+import { ORDER_DETAILS_URL ,ICE_CREAM_URL} from '../../ics-constants';
 import { selectCurrUser } from "../../redux/user/user.selector";
 import { useNavigate } from 'react-router';
 import {Button} from 'react-bootstrap';
-const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
+import { Dispatch } from "redux";
+import { fetchOrdersStart } from "../../redux/orders/order.action";
+const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders}:any)=>{
     const navigate = useNavigate();
 
     const handleContinue = () =>
     {
         navigate("/");
     }
-    const handleCheckout = () => 
+    async function handleCheckout  ()  
     {
 
         if(currUser ==='')
@@ -27,8 +29,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
         {
 
          axios.get(`${ORDER_DETAILS_URL}/${currUser}`)
-         .then (resp => { 
-             console.log(resp);
+         .then (async resp => { 
              if(resp.data !== null )
              { if(resp.data.length !== 0)
                 { 
@@ -48,7 +49,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
                         total:cartTotal,
                         items:cartItems
                     };
-                    axios.post(`${ORDER_DETAILS_URL}`,data).then(resp => {
+                    await axios.post(`${ORDER_DETAILS_URL}`,data).then(resp => {
                         if (resp.status === 200) {
         
                         }
@@ -66,7 +67,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
                      total:cartTotal,
                      items:cartItems
                  };
-                 axios.post(`${ORDER_DETAILS_URL}`,data).then(resp => {
+                await axios.post(`${ORDER_DETAILS_URL}`,data).then(resp => {
                      if (resp.status === 200) {
      
                      }
@@ -74,9 +75,18 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
  
              }
 
-         })
+         });
 
-         navigate("/order-History"); 
+            cartItems.forEach(async (item:any) => {
+               await axios.put(`${ICE_CREAM_URL}/updateflavor/${item.flavor}`,{quantity:item.quantity}).then(resp => {
+                    if (resp.status === 200) {
+    
+                    }
+                    });
+            });
+            
+           await getAllOrders();
+            alert("Order placed successfully");            
         }
            };
 
@@ -94,7 +104,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
                             <th className="cartTableHeaderProduct" >Product</th>
                             <th className="cartTableHeaderPrice">Price</th>
                             <th className="cartTableHeaderQuantity">Quantity</th>
-                            <th className="cartTableHeader"></th>
+                            <th className="cartTableHeader">Clear Item</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,18 +116,19 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser}:any)=>{
             </tbody>
                 </table>
                 <div className="float-right text-right">
-                    <h4>Total:</h4>
-                    <h1>${cartTotal}</h1>
+                    <h4>Total:${cartTotal}</h4>
                 </div>
             </div>
         </div>
         <div className="row mt-4 d-flex align-items-center">
-            <div className="col-sm-6 order-md-2 text-right">
-                {/* <a href="catalog.html" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a> */}
-                <Button variant="dark" type="submit" className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout} >Checkout</Button>
-            </div>
-            <div className="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-            <Button variant="dark" type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleContinue}>Continue Shopping</Button>
+            <div className="col-sm-6 order-md-1 text-right">
+            {
+                    itemCount > 0 ?  <Button variant="dark" type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout}>Checkout</Button>
+                    :
+                    <Button disabled variant="dark" type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout}>Checkout</Button>
+                }
+                <Button variant="dark" type="submit" className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleContinue} >Continue Shopping</Button>
+
             </div>
         </div>
     </div>
@@ -134,4 +145,7 @@ const mapStateToProps = createStructuredSelector({
     currUser : selectCurrUser,
 });
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    getAllOrders: (userId: any) => dispatch(fetchOrdersStart(userId)),
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Cart);

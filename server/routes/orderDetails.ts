@@ -19,7 +19,7 @@ router.get('/', function (req: any, res: any) {
 });
 
 router.get('/:email', function (req: any, res: any) {
-
+  console.log(req.params.email);
     db
     .collection("orderDetails")
     .findOne({email :req.params.email},function (err: any, result: any) {

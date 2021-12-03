@@ -5,7 +5,12 @@ const selectCart = (state: { cart: any; }) => state.cart;
 
 export const selectCartItems = createSelector (
     [selectCart],
-    cart => cart.cartItems,
+    cart => cart.cartItems.filter((item:any) => (item.navigate !== 'true') ),
+);
+
+export const selectNavigateCart = createSelector (
+    [selectCart],
+    cart => cart.cartItems.find( (item:any ) => ( (item.navigate && item.navigate === 'true' ))),
 );
 
 export const selectCartShow = createSelector (

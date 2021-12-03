@@ -17,11 +17,12 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 import './header.styles.scss';
 import { selectICreamFilter } from '../../redux/icream/icream.selector';
 import { selectCurrUser } from '../../redux/user/user.selector';
+import { fetchOrdersStart } from '../../redux/orders/order.action';
 
-const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : HeaderProps  ) => {
+const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currUser} : HeaderProps  ) => {
 
     const navigate = useNavigate();
-
+     getAllOrders(currUser);
     const cartIcon: IconBtnProps = {
         iconName: "cart3",
         btnName: "Cart",
@@ -45,6 +46,15 @@ const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : Header
         quantity:0,
         disabled : false
     }
+
+    const orders : IconBtnProps = {
+        iconName : "cart-check",
+        btnName : "Orders",
+        url : "/order-History",
+        quantity:0,
+        disabled : false
+    }
+
 
 
     const handleSearchFormSubmit = (e: any) => {
@@ -108,7 +118,8 @@ const Header = ({ getAllICream , activePage, filter,itemCount,currUser} : Header
                             
 
                             
-                            {currUser ? <IconButton button={logOut} /> : <IconButton button={signIn} />}                           
+                            {currUser ? <IconButton button={logOut} /> : <IconButton button={signIn} />}
+                            <IconButton button={orders}/>
                             <IconButton button={cartIcon} />
                         </div>
                     </Nav>
@@ -128,6 +139,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch : Dispatch) => ({
     getAllICream: (payload: GetAllICreamPayload) => dispatch(fetchIcreamStart(payload)),
+    getAllOrders: (userId: any) => dispatch(fetchOrdersStart(userId)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

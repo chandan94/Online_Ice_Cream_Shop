@@ -30,7 +30,7 @@ const Menu = ({ isAdmin, icreams, editClicked, currIcream, filter, isFetching }:
             }
             {
                 icreams && icreams.length > 0 ?
-                    icreams.map(({ _id, name, flavor, calorie, cost, ingredients, image, imageName, quantity }, index) => {
+                    icreams.map(({ _id, name, flavor, calorie, cost, ingredients, image, imageName, inventory }, index) => {
                     const item: Item = {
                         _id,
                         name,
@@ -44,7 +44,7 @@ const Menu = ({ isAdmin, icreams, editClicked, currIcream, filter, isFetching }:
                         img: image,
                         imageName,
                         orderAmount: 0,
-                        quantity,
+                        inventory,
                     };
                     return (
                         <MenuItem key={index + 1} item={item} isAdmin={isAdmin} isAddItem={false} />

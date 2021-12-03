@@ -11,7 +11,7 @@ export function* fetchOrdersCall({ payload } : any): Generator<any, any, any> {
     try {
         yield put(setOverlayLoading(true));
         const icreamResp = yield axiosGetCall(ORDERS_URL, payload);
-        yield put(fetchOrderSuccess(icreamResp.data));
+        yield put(fetchOrderSuccess(icreamResp));
     } catch (error : any) {
         yield put(fetchOrdersFailure(error));
     } finally {

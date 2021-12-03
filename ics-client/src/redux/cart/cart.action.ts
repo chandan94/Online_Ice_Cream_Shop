@@ -5,9 +5,19 @@ export const addItem = (item: any) => ({
     type: cartActionTypes.ADD_ITEM,
     payload: item,
 });
+export const addNavigate = (item: any) => ({
+    type: cartActionTypes.ADD_NAVIGATE_ITEM,
+    payload: item,
+});
+
 
 export const removeItem = (item: any) => ({
     type: cartActionTypes.REMOVE_ITEM,
+    payload: item,
+});
+
+export const removeNavigateItem = (item: any) => ({
+    type: cartActionTypes.REMOVE_NAVIGATE,
     payload: item,
 });
 

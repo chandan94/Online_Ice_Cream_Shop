@@ -68,13 +68,13 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
             .required("Please enter the cost of ice-cream..")
             .min(1, "Cost cannot be 0."),
         calorie: yup.number()
-            .required("Please enter the quantity of ice-cream costable.")
+            .required("Please enter the calorie of ice-cream costable.")
             .min(1, "Calories should be greater than 0."),
         ingredients: yup.string()
             .required("Please enter at least one ingredient."),
-        quantity: yup.number()
-            .required("Please enter the quantity of ice-cream costable.")
-            .min(1, "At least 1 quantity of the ice-cream should be costable."),
+        inventory: yup.number()
+            .required("Please enter the inventory of ice-cream costable.")
+            .min(1, "At least 1 inventory of the ice-cream should be costable."),
     });
 
     const handleImageUpload = (e: any, setFieldValue: any) => {
@@ -105,12 +105,12 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                             cost: currIcream ? currIcream.cost : 0,
                             ingredients: currIcream ? currIcream.ingredients : '',
                             calorie: currIcream ? currIcream.calorie : '',
-                            quantity: currIcream ? currIcream.quantity: 0,
+                            inventory: currIcream ? currIcream.inventory: 0,
                             servingSize: 'small',
                         }}
                         validationSchema={modalSchema}
                         onSubmit={(values, actions) => {
-                            const { name, flavor, calorie, ingredients, cost, image, quantity } = values;
+                            const { name, flavor, calorie, ingredients, cost, image, inventory } = values;
 
                             const data = {
                                 name,
@@ -122,7 +122,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                 imageName,
                                 delete: false,
                                 servingSize: "small",
-                                quantity,
+                                inventory,
                             };
                             if (!isEdit) {
                                 if (!imageData || imageData.length === 0) {
@@ -314,19 +314,19 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
                                         }
                                     </Form.Group>
                                     <Form.Group as={Col} className="mb-3" controlId="ice-cream-quant">
-                                        <Form.Label>Quantity</Form.Label>
+                                        <Form.Label>Inventory</Form.Label>
                                         <Form.Control
                                             type="number"
-                                            name="quantity"
-                                            placeholder="Enter the quantity available."
-                                            className={touched.quantity && errors.quantity ? "error" : ""}
+                                            name="inventory"
+                                            placeholder="Enter the inventory available."
+                                            className={touched.inventory && errors.inventory ? "error" : ""}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            defaultValue={currIcream? currIcream.quantity : 0}
+                                            defaultValue={currIcream? currIcream.inventory : 0}
                                         />
                                         {
-                                            touched.quantity && errors.quantity ?
-                                                (<div className="error-message">{errors.quantity}</div>)
+                                            touched.inventory && errors.inventory ?
+                                                (<div className="error-message">{errors.inventory}</div>)
                                                 : null
                                         }
                                     </Form.Group>

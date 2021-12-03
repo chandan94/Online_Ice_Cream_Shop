@@ -35,7 +35,6 @@ const LogIn = ({ setCurrentUser }: any) => {
                 const url = '/api/customer/' + values.email;
                 axios.get(url)
                     .then(resp => {
-                        console.log(resp);
                         if (resp.status === 200) {
                             if (resp.data === null) {
                                 alert('INVALID EMAIL');

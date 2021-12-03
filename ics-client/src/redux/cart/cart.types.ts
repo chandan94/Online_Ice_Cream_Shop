@@ -1,8 +1,10 @@
 const cartActionTypes = {
     ADD_ITEM: 'ADD_ITEM',
+    ADD_NAVIGATE_ITEM: 'ADD_NAVIGATE_ITEM',
     CLEAR_ITEM: 'CLEAR_ITEM',
     REMOVE_ITEM: 'REMOVE_ITEM',
     CLEAR_CART: 'CLEAR_CART',
+    REMOVE_NAVIGATE : 'REMOVE_NAVIGATE'
 };
 
 export default cartActionTypes;

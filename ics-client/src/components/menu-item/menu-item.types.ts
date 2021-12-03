@@ -14,7 +14,7 @@ export interface Item {
     orderAmount?: number,
     delete?: boolean
     imageName?: string,
-    quantity?: number,
+    inventory?: number,
 }
 
 export interface MenuItemProps {
@@ -24,7 +24,8 @@ export interface MenuItemProps {
     activePage?: number,
     showModal?: (show: boolean) => void,
     editBtnClicked?: (item: Item) => void,
-    getAllICream?: (payload: GetAllICreamPayload) => void
+    getAllICream?: (payload: GetAllICreamPayload) => void,
     addItemToCart?: (item: Item) => void,
     showToast?: (payload: ToastState) => void,
+    addNavigateItemToCart?: (item: Item) => void,
 }

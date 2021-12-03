@@ -8,9 +8,10 @@ import Orders from '../../components/orders/orders.compnent'
 import { selectAllOrders } from "../../redux/orders/order.selector";
 import { fetchOrdersStart } from "../../redux/orders/order.action";
 import { Order, OrderItems } from "../../redux/orders/order.types";
+import { selectCurrentUser } from "../../redux/user/user.selector";
 
-const OrderHistory = ({ _id, userId, date, items }: Order) => {
-
+const OrderHistory = ({ _id, userId, date, items,getAllOrders }: Order) => {
+    console.log("sdsdsd"+items);
     return (
         <section className="pt-5 pb-5">
             <div className="container">
@@ -59,10 +60,13 @@ const OrderHistory = ({ _id, userId, date, items }: Order) => {
 
 const mapStateToProps = createStructuredSelector({
     orders: selectAllOrders,
+    userId : selectCurrentUser
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    getAllOrders: () => dispatch(fetchOrdersStart()),
+    getAllOrders: (userId: any) => dispatch(fetchOrdersStart(userId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory);
+
+

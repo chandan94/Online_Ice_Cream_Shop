@@ -17,12 +17,13 @@ const CartItem = ({ cartItem, clearItem , addItem, removeItem}:any) => {
                        
                        <td>
                           <div className='quantity-custom'> 
-                        <div className='arrow' onClick={ () => removeItem(cartItem) }>&#10094;    </div>
+                        <div className='arrow' onClick={ () => removeItem(cartItem) }>&#8722;    </div>
                         <span className='value'>     {quantity}    </span>
-                        <div className='arrow' onClick={ () => addItem(cartItem) }> &#10095;</div> 
+                        <div className='arrow' onClick={ () => addItem(cartItem) }> &#43;</div> 
                         </div>                     
                          </td>
                          <td>
+                             
                          <div className='remove-button' onClick={() => clearItem(cartItem)}>&#10005;</div>
                          </td>
 

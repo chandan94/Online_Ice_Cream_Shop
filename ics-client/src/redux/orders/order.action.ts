@@ -1,7 +1,8 @@
 import { Order, orderActions } from "./order.types";
 
-export const fetchOrdersStart = () => ({
+export const fetchOrdersStart = (userId :any ) => ({
     type: orderActions.FETCH_ORDERS_START,
+    payload :userId
 });
 
 export const fetchOrderSuccess = (orders: Order[]) => ({

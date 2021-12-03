@@ -42,7 +42,6 @@ router.get('/:email', function (req: any, res: any) {
 });
 
 router.post('/', function (req: any, res: any) {
-  console.log(req.body);
     db
     .collection("customer")
     .insertOne( req.body, function (err: any, result: any) {
