@@ -28,7 +28,7 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled}, clea
                 isAdmin :false
             };   
             setCurrentUser(user);
-            navigate('/login');
+            navigate('/sign-in-up');
         }
     }
 
