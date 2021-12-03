@@ -26,7 +26,6 @@ class OrderHistory extends React.Component<OrderProps> {
     if (order) {
         ({ items } = order);
     }
-
     return (
         <section className="pt-5 pb-5">
             <div className="container">
@@ -34,7 +33,7 @@ class OrderHistory extends React.Component<OrderProps> {
                     <div className="col-lg-12 col-md-12 col-12">
                         <h3 className="display-5 mb-2 text-center">Orders</h3>
                         {/* <p className="mb-5 text-center">
-                <i className="text-info font-weight-bold">{itemCount}</i> this.props.items in your cart</p> */}
+                <i className="text-info font-weight-bold">{itemCount}</i> items in your cart</p> */}
                         <table id="shoppingCart" className="table table-condensed table-responsive">
                             <thead>
                                 <tr>
@@ -59,7 +58,7 @@ class OrderHistory extends React.Component<OrderProps> {
                     </div> */}
                     </div>
                 </div>
-                <div className="row mt-4 d-flex align-this.props.items-center">
+                <div className="row mt-4 d-flex align-items-center">
                     {/* <div className="col-sm-6 order-md-2 text-right">
                     <a href="catalog.html" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
                 </div> */}
@@ -75,7 +74,7 @@ class OrderHistory extends React.Component<OrderProps> {
 };
 
 const mapStateToProps = createStructuredSelector({
-    orders: selectAllOrders,
+    order: selectAllOrders,
     userId : selectCurrentUser
 });
 

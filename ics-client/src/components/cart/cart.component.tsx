@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router';
 import {Button} from 'react-bootstrap';
 import { Dispatch } from "redux";
 import { fetchOrdersStart } from "../../redux/orders/order.action";
-const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders}:any)=>{
+import { clearCart } from "../../redux/cart/cart.action";
+const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:any)=>{
     const navigate = useNavigate();
 
     const handleContinue = () =>
@@ -85,7 +86,8 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders}:any)=>{
                     });
             });
             
-           await getAllOrders();
+        
+           clearCart();
             alert("Order placed successfully");            
         }
            };
@@ -147,5 +149,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     getAllOrders: (userId: any) => dispatch(fetchOrdersStart(userId)),
+    clearCart :() => dispatch(clearCart()),
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Cart);

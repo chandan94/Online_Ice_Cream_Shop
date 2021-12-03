@@ -19,7 +19,6 @@ router.get('/', function (req: any, res: any) {
 });
 
 router.get('/:email', function (req: any, res: any) {
-  console.log(req.params.email);
     db
     .collection("orderDetails")
     .findOne({email :req.params.email},function (err: any, result: any) {
@@ -51,10 +50,10 @@ router.put('/:email', function (req: any, res: any) {
     .collection("orderDetails")
     .updateOne({
       email: req.params.email
-      }, {$addToSet: {items:req.body}}, function (err: any, result: any) {
+      }, {$addToSet: {items: {$each: req.body}}}, function (err: any, result: any) {
         if (err) { throw err };
         //if update successfull , it will return updated video object
-        res.json(result+req.body.title);
+        res.json(result);
         });
     });
 

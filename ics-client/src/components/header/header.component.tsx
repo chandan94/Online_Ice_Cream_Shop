@@ -22,7 +22,6 @@ import { fetchOrdersStart } from '../../redux/orders/order.action';
 const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currUser} : HeaderProps  ) => {
 
     const navigate = useNavigate();
-     getAllOrders(currUser);
     const cartIcon: IconBtnProps = {
         iconName: "cart3",
         btnName: "Cart",

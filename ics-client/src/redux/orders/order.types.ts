@@ -25,5 +25,4 @@ export interface Order {
     count?: number,
     items?: OrderItems[],
     total?: number,
-    getAllOrders :any
 }

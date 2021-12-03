@@ -6,5 +6,5 @@ export const selectOrders = (state: RootState) => state.orderDetails;
 
 export const selectAllOrders = createSelector (
     [selectOrders],
-    (orderDetails: OrderState) => orderDetails.orders,
+    (orderDetails) => orderDetails.orders,
 );

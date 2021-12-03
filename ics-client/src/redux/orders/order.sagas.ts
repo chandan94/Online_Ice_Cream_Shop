@@ -10,7 +10,8 @@ const ORDERS_URL = '/api/orderDetails';
 export function* fetchOrdersCall({ payload } : any): Generator<any, any, any> {
     try {
         yield put(setOverlayLoading(true));
-        const icreamResp = yield axiosGetCall(ORDERS_URL, payload);
+        let url = `${ORDERS_URL}/${payload}`;
+        const icreamResp = yield axiosGetCall(url,payload);
         yield put(fetchOrderSuccess(icreamResp));
     } catch (error : any) {
         yield put(fetchOrdersFailure(error));
