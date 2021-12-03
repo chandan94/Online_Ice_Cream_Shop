@@ -40,7 +40,6 @@ class OrderHistory extends React.Component<OrderProps> {
                                     <th className="cartTableHeaderProduct" >Product</th>
                                     <th className="cartTableHeaderPrice">Price</th>
                                     <th className="cartTableHeaderQuantity">Quantity</th>
-                                    <th className="cartTableHeader"></th>
                                 </tr>
                             </thead>
                             <tbody>

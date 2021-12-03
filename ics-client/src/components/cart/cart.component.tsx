@@ -111,8 +111,8 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:a
                     </thead>
                     <tbody>
                     {
-                cartItems.map((item: { id: React.Key | null | undefined; }) => {
-                    return <CartItem key={item.id} cartItem={item} />
+                cartItems.map((item: { _id: any }) => {
+                    return <CartItem key={item._id} cartItem={item} />
                 })
             }
             </tbody>

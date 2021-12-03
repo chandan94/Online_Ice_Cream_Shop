@@ -114,7 +114,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicke
 
     return (
         <div className="menu-item">
-            <Card>
+            <Card onClick={handleNameClick}>
                 {
                     isAdmin && !isAddItem ?
                         (
@@ -126,7 +126,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicke
                 }
                 <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}  />
                 <Card.Body>
-                    <Card.Title onClick={handleNameClick}>{name}</Card.Title>
+                    <Card.Title >{name}</Card.Title>
                     {
                         !isAddItem ?    <Card.Subtitle>Cost : {cost}$</Card.Subtitle> : null
                     }

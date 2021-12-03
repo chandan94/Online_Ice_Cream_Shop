@@ -114,9 +114,6 @@ const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currU
                             <Button variant="outline-light search-icon" onClick={handleSearch}><i className="bi bi-search"></i></Button>
                         </Form>
                         <div className="icon-btn-group">
-                            
-
-                            
                             {currUser ? <IconButton button={logOut} /> : <IconButton button={signIn} />}
                             {currUser ? <IconButton button={orders}/> : ''}
                             <IconButton button={cartIcon} />
