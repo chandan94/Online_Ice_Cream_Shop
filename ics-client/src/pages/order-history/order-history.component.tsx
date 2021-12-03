@@ -10,8 +10,13 @@ import { fetchOrdersStart } from "../../redux/orders/order.action";
 import { Order, OrderItems } from "../../redux/orders/order.types";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 
-const OrderHistory = ({ _id, userId, date, items,getAllOrders }: Order) => {
-    console.log("sdsdsd"+items);
+class OrderHistory extends React.Component<Order> 
+{
+    componentDidMount()
+    {
+        this.props.getAllOrders();
+    }
+    render() {
     return (
         <section className="pt-5 pb-5">
             <div className="container">
@@ -19,7 +24,7 @@ const OrderHistory = ({ _id, userId, date, items,getAllOrders }: Order) => {
                     <div className="col-lg-12 col-md-12 col-12">
                         <h3 className="display-5 mb-2 text-center">Orders</h3>
                         {/* <p className="mb-5 text-center">
-                <i className="text-info font-weight-bold">{itemCount}</i> items in your cart</p> */}
+                <i className="text-info font-weight-bold">{itemCount}</i> this.props.items in your cart</p> */}
                         <table id="shoppingCart" className="table table-condensed table-responsive">
                             <thead>
                                 <tr>
@@ -31,8 +36,8 @@ const OrderHistory = ({ _id, userId, date, items,getAllOrders }: Order) => {
                             </thead>
                             <tbody>
                                 {
-                                    items && items.length > 0 ?
-                                    items.map((item: OrderItems) => {
+                                    this.props.items && this.props.items.length > 0 ?
+                                    this.props.items.map((item: OrderItems) => {
                                         return <Orders key={item._id} item={item} />
                                     }) : null
                                 }
@@ -44,7 +49,7 @@ const OrderHistory = ({ _id, userId, date, items,getAllOrders }: Order) => {
                     </div> */}
                     </div>
                 </div>
-                <div className="row mt-4 d-flex align-items-center">
+                <div className="row mt-4 d-flex align-this.props.items-center">
                     {/* <div className="col-sm-6 order-md-2 text-right">
                     <a href="catalog.html" className="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
                 </div> */}
@@ -56,6 +61,7 @@ const OrderHistory = ({ _id, userId, date, items,getAllOrders }: Order) => {
             </div>
         </section>
     )
+            }
 };
 
 const mapStateToProps = createStructuredSelector({
