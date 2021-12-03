@@ -40,6 +40,20 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
   }
   
   render() {
+
+    const { item } = this.props;
+
+    let name;
+    let cost;
+    let flavor;
+    let inventory;
+    let ingredients;
+    let calorie;
+    let img;
+
+    if (item) {
+      ({ name, cost, flavor, inventory, ingredients, calorie, img} = item);
+    }
     return (
       <section className="mb-5 section-custom">
 
@@ -54,7 +68,7 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
 
           <div className="col-12 mb-0">
             <figure className="view overlay rounded z-depth-1 main-img">
-                <img src={this.props.item.img}  alt={this.props.item.name}
+                <img src={img}  alt={name}
                   className="img-fluid z-depth-1"/>
             </figure>
           </div>
@@ -69,28 +83,28 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
     </div>
     <div className="col-md-6">
 
-      <h5 className="ice-cream-name">{this.props.item.name}</h5>
+      <h5 className="ice-cream-name">{name}</h5>
       <p className="mb-2 text-muted text-uppercase small ice-cream">IceCreams</p>
-      <p className="ice-cream-cost"><span className="mr-1"><strong>${this.props.item.cost}</strong></span></p>
+      <p className="ice-cream-cost"><span className="mr-1"><strong>${cost}</strong></span></p>
       <br/>
       <div className="table-responsive">
         <table className="table table-sm table-borderless mb-0">
           <tbody>
             <tr>
               <th className="pl-0 w-25" scope="row"><strong>Flavor</strong></th>
-              <td>{this.props.item.flavor}</td>
+              <td>{flavor}</td>
             </tr>
             <tr>
               <th className="pl-0 w-25" scope="row"><strong>Calories</strong></th>
-              <td>{this.props.item.calorie}</td>
+              <td>{calorie}</td>
             </tr>
             <tr>
               <th className="pl-0 w-25" scope="row"><strong>Ingredients</strong></th>
-              <td>{this.props.item.ingredients}</td>
+              <td>{ingredients}</td>
             </tr>
             <tr>
               <th className="pl-0 w-25" scope="row"><strong>Availability</strong></th>
-              {this.props.item.inventory>0?<td>In Stock</td>:<td>Out of Stock</td>}
+              {inventory>0?<td>In Stock</td>:<td>Out of Stock</td>}
             </tr>
           </tbody>
         </table>
@@ -116,18 +130,14 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
           </tbody>
         </table>
       </div> */}
-    
         {
-          this.props.item.inventory >0 ? <Button variant="dark" type="submit" onClick={this.handleaddToCart} className="add-to-cart">Add to cart</Button> :         <Button disabled variant="dark" type="submit" className="add-to-cart">Add to cart</Button>
+          inventory >0 ? <Button variant="dark" type="submit" onClick={this.handleaddToCart} className="add-to-cart">Add to cart</Button> :         <Button disabled variant="dark" type="submit" className="add-to-cart">Add to cart</Button>
 
         }
-       
        </div>
   </div>
 
 </section>
-
-    
     );
   }
 };
