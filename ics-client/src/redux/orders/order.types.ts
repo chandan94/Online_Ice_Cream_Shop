@@ -20,8 +20,10 @@ export interface OrderState {
 
 export interface Order {
     _id?: string,
-    userId?: string,
+    email?: string,
     date?: string,
+    count?: number,
     items?: OrderItems[],
+    total?: number,
     getAllOrders :any
 }
