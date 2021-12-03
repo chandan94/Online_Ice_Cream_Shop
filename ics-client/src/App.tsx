@@ -12,10 +12,8 @@ import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
 import CartPage from './pages/cart/cart.component';
 import { isSpinnerLoading } from './redux/overlay/overlay.selector';
 import OrderHistory from './pages/order-history/order-history.component';
-import Cart from './pages/cart/cart.component';
  import IceCreamDetail from './pages/ice-cream-detail/ice-cream-detail.component';
  import Login from './components/log-in/log-in.component';
-import { Omit } from 'react-redux';
 
 
 

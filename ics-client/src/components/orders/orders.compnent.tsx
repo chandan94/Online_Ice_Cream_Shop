@@ -11,18 +11,19 @@ const Orders = ({ item  } : OrderProps) => {
                         <td data-th="Product">
                                 <div className="col-md-3 text-left">
                                     <img src={`${img}`} alt={`${name}`} title={name} className="img-fluid d-none d-md-block rounded mb-2 shadow img-custom"/>
+                                    <p className="order-name">{name}</p>
                                 </div>
                         </td>
                         <td data-th="Price">${cost}</td>
                        
                        <td>
                           <div className='quantity-custom'> 
-                        <div className='arrow' onClick={ () => removeItem(item) }>&#10094;    </div>
+                        <div className='arrow' onClick={ () => removeItem(item) }>    </div>
                         <span className='value'>     {quantity}    </span>
-                        <div className='arrow' onClick={ () => addItem(item) }> &#10095;</div> 
+                        <div className='arrow' onClick={ () => addItem(item) }> </div> 
                         </div>                     
                          </td>
-                         <div className='remove-button' onClick={() => clearItem(item)}>&#10005;</div>
+                         <div className='remove-button' onClick={() => clearItem(item)}></div>
 
                     </tr>
     );

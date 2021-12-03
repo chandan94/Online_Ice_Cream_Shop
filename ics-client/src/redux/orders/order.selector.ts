@@ -1,6 +1,5 @@
 import { createSelector } from "reselect";
 import RootState from "../store.type";
-import { OrderState } from "./order.types";
 
 export const selectOrders = (state: RootState) => state.orderDetails;
 

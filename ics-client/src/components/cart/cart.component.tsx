@@ -59,7 +59,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:a
              }
              else
              {
-                 var today = new Date();
+                  today = new Date();
                  let todate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                  const data = {
                      email:currUser,

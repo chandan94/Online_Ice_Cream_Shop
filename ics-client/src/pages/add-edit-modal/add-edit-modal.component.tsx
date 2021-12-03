@@ -27,7 +27,7 @@ const AddEditModal = ({ showModal, closeModal, modalTitle, modalButton, getAllIC
     let imageName: string | undefined = isEdit && currIcream ? currIcream.imageName : "";
     let toastMsg = "";
     const toastHeader = "Add/Edit Ice-cream";
-    let toastVariant = ""
+    // let toastVariant = ""
     // let imageFile: any;
 
     const handleClose = () => {

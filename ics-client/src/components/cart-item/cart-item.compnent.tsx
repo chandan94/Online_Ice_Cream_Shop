@@ -11,6 +11,7 @@ const CartItem = ({ cartItem, clearItem , addItem, removeItem}:any) => {
                         <td data-th="Product">
                                 <div className="col-md-3 text-left">
                                     <img src={`${img}`} alt={`${name}`} title={name} className="img-fluid d-none d-md-block rounded mb-2 shadow img-custom"/>
+                                    <p className="item-name">{name}</p>
                                 </div>
                         </td>
                         <td data-th="Price">${cost}</td>

@@ -9,7 +9,6 @@ import { setCurrentUser } from '../../redux/user/user.actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { UserState } from '../../redux/user/user.types';
 import bcrypt from 'bcryptjs';
 
 const SignupSchema = yup.object().shape({

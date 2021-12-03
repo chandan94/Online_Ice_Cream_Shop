@@ -1,6 +1,6 @@
 export const addItemToCart = (cartItems: any[], newItem: any) => {
 
-    const existingItem = cartItems.find(item => item.name === newItem.name)
+    const existingItem = cartItems.find(item => (item.name === newItem.name && item.navigate!== 'true') )
 
     if (existingItem) {
         return cartItems.map(item => {

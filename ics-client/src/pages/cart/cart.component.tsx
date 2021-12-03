@@ -9,7 +9,7 @@ import { selectCurrUser } from "../../redux/user/user.selector";
 const CartPage = ({cartItems, cartTotal,itemCount}:any)=>
     (
         <div>
-            <Cart id="1"/>
+            <Cart key="1"/>
         </div>
     );
 

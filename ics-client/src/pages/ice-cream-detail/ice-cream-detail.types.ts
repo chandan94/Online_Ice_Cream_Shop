@@ -1,6 +1,7 @@
 export interface IceCreamDetailProps
 {
     item : any,
+    addItem :any
     removeNavigateItem ? :any
 }
 

@@ -118,7 +118,7 @@ const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currU
 
                             
                             {currUser ? <IconButton button={logOut} /> : <IconButton button={signIn} />}
-                            <IconButton button={orders}/>
+                            {currUser ? <IconButton button={orders}/> : ''}
                             <IconButton button={cartIcon} />
                         </div>
                     </Nav>
