@@ -7,11 +7,17 @@ import { connect } from 'react-redux';
 import { IconBtn } from './icon-btn.types';
 import { Dispatch } from 'redux';
 import { setCurrentUser } from '../../redux/user/user.actions';
+import { fetchOrdersStart } from '../../redux/orders/order.action';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 
-const IconButton = ({ button : {iconName , btnName, url,quantity,disabled}, clearCart,setCurrentUser }: IconBtn) => {
+const IconButton = ({ button : {iconName , btnName, url,quantity,disabled}, clearCart,setCurrentUser, getAllOrders, user}: IconBtn) => {
     const navigate = useNavigate();
     const navigateToURL = () => {
         if (url && url.length > 0) {
+            if (url === '/order-History') {
+                getAllOrders(user);
+            }
             navigate(url);
         }
         if (!url && url.length===0 && btnName === 'Log Out')
@@ -40,8 +46,13 @@ const IconButton = ({ button : {iconName , btnName, url,quantity,disabled}, clea
     );
 }
 
-const mapDispatchToProps = (dispatch : Dispatch) => ({ 
+const mapStateToProps = createStructuredSelector({
+    user: selectCurrentUser,
+})
+
+const mapDispatchToProps = (dispatch : Dispatch) => ({
     clearCart :() => dispatch(clearCart()),
     setCurrentUser: (payload: any) => dispatch(setCurrentUser(payload)),
+    getAllOrders: (userId: any) => dispatch(fetchOrdersStart(userId)),
 });
-export default connect(null,mapDispatchToProps)(IconButton);
+export default connect(mapStateToProps,mapDispatchToProps)(IconButton);
