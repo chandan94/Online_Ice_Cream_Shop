@@ -91,6 +91,7 @@ const SignUp = () => {
                 axios.post(url, body)
                 .then((resp: any) =>  {
                     if (resp.status === 200) {
+                        alert("Sign Up successful")
                         navigate("/login");                    }
                 })
                 .catch((err: any) => console.error(err));
@@ -274,9 +275,7 @@ const SignUp = () => {
                     }
                 </Form.Group>
             </Row>
-            <Form.Group className="mb-3" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Log me in" />
-            </Form.Group>
+
             <Button variant="dark" type="submit" className="sign-up-button">
                 Sign Up
             </Button>
