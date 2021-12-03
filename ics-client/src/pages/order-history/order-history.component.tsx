@@ -7,16 +7,26 @@ import { createStructuredSelector } from "reselect";
 import Orders from '../../components/orders/orders.compnent'
 import { selectAllOrders } from "../../redux/orders/order.selector";
 import { fetchOrdersStart } from "../../redux/orders/order.action";
-import { Order, OrderItems } from "../../redux/orders/order.types";
+import { OrderItems } from "../../redux/orders/order.types";
 import { selectCurrentUser } from "../../redux/user/user.selector";
+import { OrderProps } from "./order-history.types";
 
-class OrderHistory extends React.Component<Order> 
-{
-    componentDidMount()
-    {
-        this.props.getAllOrders();
+class OrderHistory extends React.Component<OrderProps> {
+
+    componentDidMount() {
+        const { userId, getAllOrders } = this.props;
+        getAllOrders?.(userId);
     }
+
     render() {
+
+    const { order } = this.props;
+    let items;
+
+    if (order) {
+        ({ items } = order);
+    }
+
     return (
         <section className="pt-5 pb-5">
             <div className="container">
@@ -36,8 +46,8 @@ class OrderHistory extends React.Component<Order>
                             </thead>
                             <tbody>
                                 {
-                                    this.props.items && this.props.items.length > 0 ?
-                                    this.props.items.map((item: OrderItems) => {
+                                    items && items.length > 0 ?
+                                    items.map((item: OrderItems) => {
                                         return <Orders key={item._id} item={item} />
                                     }) : null
                                 }

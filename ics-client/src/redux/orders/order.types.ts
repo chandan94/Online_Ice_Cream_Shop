@@ -18,15 +18,10 @@ export interface OrderState {
     error: Error | null,
 }
 
-export interface OrderGetRepsonse {
-    data: Order[],
-}
-
 export interface Order {
     _id?: string,
     userId?: string,
     date?: string,
     items?: OrderItems[],
     getAllOrders :any
-
 }
