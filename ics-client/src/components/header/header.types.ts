@@ -6,5 +6,7 @@ export interface HeaderProps {
     activePage: number,
     filter: string,
     itemCount :number,
-    currUser ?: string
+    currUser ?: string,
+    isAdmin ?: boolean,
+
 }

@@ -12,6 +12,7 @@ import {Button} from 'react-bootstrap';
 import { Dispatch } from "redux";
 import { fetchOrdersStart } from "../../redux/orders/order.action";
 import { clearCart } from "../../redux/cart/cart.action";
+import "./cart.styles.scss";
 const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:any)=>{
     const navigate = useNavigate();
 
@@ -98,8 +99,8 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:a
         <div className="row w-100">
             <div className="col-lg-12 col-md-12 col-12">
                 <h3 className="display-5 mb-2 text-center">Shopping Cart</h3>
-                <p className="mb-5 text-center">
-                    <i className="text-info font-weight-bold">{itemCount}</i> items in your cart</p>
+                {/* <p className="mb-5 text-center">
+                    <i className="text-info font-weight-bold">{itemCount}</i> items in your cart</p> */}
                 <table id="shoppingCart" className="table table-condensed table-responsive">
                     <thead>
                         <tr>
@@ -123,13 +124,14 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:a
             </div>
         </div>
         <div className="row mt-4 d-flex align-items-center">
-            <div className="col-sm-6 order-md-1 text-right">
+            <div className="col-sm-6 order-md-0 text-right button-div-custom">
             {
-                    itemCount > 0 ?  <Button variant="dark" type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout}>Checkout</Button>
+                    itemCount > 0 ?  <Button variant="dark " type="submit"  className=" btn-custom" onClick={handleCheckout}>Checkout</Button>
                     :
-                    <Button disabled variant="dark" type="submit"  className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleCheckout}>Checkout</Button>
+                    <Button disabled variant="dark " type="submit"  className="btn-custom" onClick={handleCheckout}>Checkout</Button>
                 }
-                <Button variant="dark" type="submit" className="btn btn-primary mb-4 btn-lg pl-5 pr-5" onClick={handleContinue} >Continue Shopping</Button>
+
+                <Button variant="dark " type="submit" className="btn-custom"  onClick={handleContinue} >Continue Shopping</Button>
 
             </div>
         </div>

@@ -22,8 +22,21 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
   handleaddToCart = () =>
   {
     const {item,addItem} = this.props;
-    // delete item['navigate'];
-    addItem(item);
+     let cartItem = 
+     {
+       _id:item._id,
+       orderAmount:item.orderAmount,
+       name:item.name,
+       inventory:item.inventory,
+       ingredients:item.ingredients,
+       img:item.img,
+       imageName:item.imageName,
+       flavor:item.flavor,
+       desc:item.desc,
+       cost:item.cost,
+       calorie:item.calorie
+     };
+    addItem(cartItem);
   }
   
   render() {

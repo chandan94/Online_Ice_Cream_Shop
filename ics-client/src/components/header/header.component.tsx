@@ -16,10 +16,10 @@ import { selectActivePage } from '../../redux/pagination/pagination.selector';
 
 import './header.styles.scss';
 import { selectICreamFilter } from '../../redux/icream/icream.selector';
-import { selectCurrUser } from '../../redux/user/user.selector';
+import { selectCurrUser, selectIsAdminUser } from '../../redux/user/user.selector';
 import { fetchOrdersStart } from '../../redux/orders/order.action';
 
-const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currUser} : HeaderProps  ) => {
+const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currUser,isAdmin} : HeaderProps  ) => {
 
     const navigate = useNavigate();
     const cartIcon: IconBtnProps = {
@@ -116,7 +116,7 @@ const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currU
                         <div className="icon-btn-group">
                             {currUser ? <IconButton button={logOut} /> : <IconButton button={signIn} />}
                             {currUser ? <IconButton button={orders}/> : ''}
-                            <IconButton button={cartIcon} />
+                            {isAdmin === false ? <IconButton button={cartIcon} />: ''}
                         </div>
                     </Nav>
                 </Navbar.Collapse>
@@ -129,7 +129,8 @@ const mapStateToProps = createStructuredSelector({
     activePage: selectActivePage,
     filter: selectICreamFilter,
     itemCount: selectCartItemsCount,
-    currUser : selectCurrUser
+    currUser : selectCurrUser,
+    isAdmin: selectIsAdminUser,
 
 });
 
