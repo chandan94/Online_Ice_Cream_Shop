@@ -95,17 +95,14 @@ const Header = ({ getAllICream ,getAllOrders, activePage, filter,itemCount,currU
             <Container>
                 <Navbar.Brand href="" onClick={handleBrandClick}>
                     <img src="./images/logo7.png" alt="Yumm Ice-creams"/>
-                    {/* Yumm.. Ice-creams */}
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav onSelect={handleNavSelect} id="ice-cream-nav" className="justify-content-center">
-                        {/* <Nav.Link href="" eventKey="/menu" >Menu</Nav.Link>
-                        <Nav.Link href="" eventKey="/contact">Contact Us</Nav.Link> */}
                         <Form className="d-flex" onSubmit={handleSearchFormSubmit}>
                             <FormControl
                                 type="search"
-                                placeholder="Search Ice-creams..."
+                                placeholder="Search Ice-cream names..."
                                 className="search-bar"
                                 aria-label="Search"
                                 id="search-bar"

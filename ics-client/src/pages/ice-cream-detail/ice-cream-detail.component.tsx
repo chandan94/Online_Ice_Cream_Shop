@@ -85,7 +85,6 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
 
       <h5 className="ice-cream-name">{name}</h5>
       <p className="mb-2 text-muted text-uppercase small ice-cream">IceCreams</p>
-      <p className="ice-cream-cost"><span className="mr-1"><strong>${cost}</strong></span></p>
       <br/>
       <div className="table-responsive">
         <table className="table table-sm table-borderless mb-0">
@@ -105,6 +104,10 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
             <tr>
               <th className="pl-0 w-25" scope="row"><strong>Availability</strong></th>
               {inventory>0?<td>In Stock</td>:<td>Out of Stock</td>}
+            </tr>
+            <tr>
+              <th className="pl-0 w-25" scope="row"><strong>Cost</strong></th>
+              {cost}
             </tr>
           </tbody>
         </table>
