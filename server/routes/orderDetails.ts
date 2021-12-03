@@ -25,7 +25,7 @@ router.get('/:email', function (req: any, res: any) {
       if (err) {
         res.status(400).send("Error fetching listings!");
      } else {
-       console.log(result);
+
         res.json(result);
       }
     });
