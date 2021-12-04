@@ -5,10 +5,12 @@ export const addItemToCart = (cartItems: any[], newItem: any) => {
     if (existingItem) {
         return cartItems.map(item => {
             if (item.name === newItem.name) {
+                if(item.inventory>= item.quantity+1){
                 return {
                     ...item,
                     quantity: item.quantity + 1,
                 }
+            }
             }
             return item;
         });

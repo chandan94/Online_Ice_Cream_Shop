@@ -23,7 +23,7 @@ const Cart = ({cartItems, cartTotal,itemCount,currUser,getAllOrders,clearCart}:a
     async function handleCheckout  ()  
     {
 
-        if(currUser ==='')
+        if(currUser ==='' || !currUser)
         {
             navigate('/login');
         }
