@@ -107,7 +107,7 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
             </tr>
             <tr>
               <th className="pl-0 w-25" scope="row"><strong>Cost</strong></th>
-              {cost}
+              {cost }
             </tr>
           </tbody>
         </table>
@@ -134,7 +134,10 @@ class IceCreamDetail extends React.Component<IceCreamDetailProps> {
         </table>
       </div> */}
         {
-          inventory >0 ? <Button variant="dark" type="submit" onClick={this.handleaddToCart} className="add-to-cart">Add to cart</Button> :         <Button disabled variant="dark" type="submit" className="add-to-cart">Add to cart</Button>
+          inventory > 0 ? <Button variant="dark" type="submit" onClick={this.handleaddToCart} className="add-to-cart">Add to cart</Button> :
+            <Button variant="dark" type="submit" className="out-of-stock" disabled={true}>
+                Out of Stock!
+            </Button>
 
         }
        </div>

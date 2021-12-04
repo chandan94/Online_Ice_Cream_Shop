@@ -8,7 +8,6 @@
         padding: 2rem;
         border: 1px solid #212529;
         background: #efe2ba;
-        cursor: pointer;
     }
 
     // .card-title {
@@ -17,6 +16,10 @@
 
     .card-subtitle {
         margin: 0;
+    }
+
+    .card-body {
+        cursor: pointer;
     }
 
     .inc-dec-btn-group {
@@ -40,6 +43,7 @@
         height: 11.25em;
         border: 1px solid #212529;
         border-radius: 50%;
+        cursor: pointer;
     }
 
     .img-margin {
@@ -58,5 +62,15 @@
     .card-footer {
         background: none;
         border: none;
+        cursor: pointer;
+    }
+
+    .out-of-stock {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .def-cursor {
+        cursor: auto;
     }
 }

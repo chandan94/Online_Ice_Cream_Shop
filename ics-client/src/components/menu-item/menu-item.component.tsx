@@ -20,7 +20,7 @@ import { MenuItemProps, Item } from './menu-item.types';
 
 const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicked, getAllICream, activePage ,addItemToCart,addNavigateItemToCart }: MenuItemProps) => {
     const navigate = useNavigate();
-    const { name, flavor, cost, img, calorie, ingredients, imageName, desc } = item;
+    const { name, flavor, cost, img, calorie, ingredients, imageName, desc, inventory } = item;
 
     // const plusIconBtn: IconBtnProps = {
     //     iconName: "plus-circle",
@@ -114,7 +114,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicke
 
     return (
         <div className="menu-item">
-            <Card onClick={handleNameClick}>
+            <Card>
                 {
                     isAdmin && !isAddItem ?
                         (
@@ -125,32 +125,28 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicke
                         ) : null
                 }
                 <Card.Img variant="top" src={img} className={`${desc && desc.includes("add") ? "img-margin" : ""}`}  />
-                <Card.Body>
+                <Card.Body onClick={handleNameClick}>
                     <Card.Title >{name}</Card.Title>
                     {
                         !isAddItem ?    <Card.Subtitle>Cost : {cost}$</Card.Subtitle> : null
                     }
                     <Card.Text>{desc}</Card.Text>
                 </Card.Body>
-                <Card.Footer>
+                <Card.Footer className={`${inventory ? inventory <= 0 ? "def-cursor": "" : "def-cursor"}`}>
                     {
                         isAdmin && isAddItem ? <Button variant="dark" onClick={setShowModal}>Add Ice-cream</Button> : null
                     }
                     {
                         !isAdmin && !isAddItem ?
+                        inventory && inventory > 0 ?
                             (
-                                // <div className="inc-dec-btn-group">
-                                //     <IconButton button={minusIconBtn} />
-                                //     <span>{0}</span>
-                                //     <IconButton button={plusIconBtn} />
-                                // </div>
-                                // <Row>
-                                // <Col>
                                 <Button variant="dark" type="submit" className="add-to-cart" onClick={handleAddToCart}>
                                     Add to Cart
                                 </Button>
-                                //     </Col>
-                                // </Row>
+                            ) : (
+                                <Button variant="dark" type="submit" className="out-of-stock" onClick={handleAddToCart} disabled={true}>
+                                    Out of Stock!
+                                </Button>
                             ) : null
                     }
                 </Card.Footer>

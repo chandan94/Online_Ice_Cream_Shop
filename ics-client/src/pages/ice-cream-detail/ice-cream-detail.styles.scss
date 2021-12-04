@@ -14,3 +14,7 @@ img{
 .ice-cream-cost{
     margin-right: 15%;
 }
+.out-of-stock {
+    pointer-events: none;
+    cursor: default;
+}
