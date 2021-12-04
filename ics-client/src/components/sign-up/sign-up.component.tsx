@@ -47,7 +47,7 @@ const SignupSchema = yup.object().shape({
         .required("State is required."),
     zip: yup.number()
         .required("Zip code is required.")
-        .test("length", "Zip code should be of 6 digit length.", val => val?.toString().length === 6),
+        .test("length", "Zip code should have 5 digits.", val => val?.toString().length === 5),
 });
 
 const initialValues = {
@@ -92,16 +92,15 @@ const SignUp = ({showToast} :SignUpProps) => {
                         zip: values.zip,
                         isAdmin :0
                     };
-                    
+
                     const geturl = '/api/customer/' + values.email;
                     axios.get(geturl)
                         .then(resp => {
                             if (resp.status === 200) {
-
-                                if (resp.data === null) { 
+                                if (resp.data === null) {
                  axios.post(url, body)
-                .then((resp: any) =>  {
-                    if (resp.status === 200) {
+                .then((signUpResp: any) =>  {
+                    if (signUpResp.status === 200) {
                         toastMsg = `Sign Up Success`;
                         showToast({
                             show: true,
@@ -311,11 +310,9 @@ const SignUp = ({showToast} :SignUpProps) => {
             </Button>
         </Form>
     )}
-        
         </Formik >
         <ToastNotification/>
         </div>
-        
     );
 }
 
