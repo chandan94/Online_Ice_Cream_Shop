@@ -10,6 +10,10 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs';
+import ToastNotification from '../../components/toast/toast.component';
+import { setToastComp } from '../../redux/toast/toast.actions';
+import { ToastState } from '../../redux/toast/toast.types';
+import { SignUpProps } from './sign-up.types';
 
 const SignupSchema = yup.object().shape({
     firstName: yup.string()
@@ -60,11 +64,13 @@ const initialValues = {
     state: '',
     zip: '',
 }
-const SignUp = () => {
+const SignUp = ({showToast} :SignUpProps) => {
     const width = window.outerWidth;
     const navigate = useNavigate();
-
+    let toastMsg = "";
+    const toastHeader = "Sign Up User";
     return (
+        <div className="sign-up">
         <Formik
             initialValues={initialValues}
             validationSchema={SignupSchema}
@@ -88,13 +94,38 @@ const SignUp = () => {
                         isAdmin :0
                     };
                     
-                axios.post(url, body)
+                    const geturl = '/api/customer/' + values.email;
+                    axios.get(geturl)
+                        .then(resp => {
+                            if (resp.status === 200) {
+
+                                if (resp.data === null) { 
+                 axios.post(url, body)
                 .then((resp: any) =>  {
                     if (resp.status === 200) {
-                        alert("Sign Up successful")
+                        toastMsg = `Sign Up Success`;
+                        showToast({
+                            show: true,
+                            header: toastHeader,
+                            msg: toastMsg,
+                            variant: "success",
+                        });
                         navigate("/login");                    }
                 })
                 .catch((err: any) => console.error(err));
+            }
+            else if (resp.data !== null)
+            {
+                toastMsg = `Username / Email already exists`;
+                showToast({
+                    show: true,
+                    header: toastHeader,
+                    msg: toastMsg,
+                    variant: "danger",
+                });
+            }
+        }
+    });
 }}
         >
     {({
@@ -281,12 +312,16 @@ const SignUp = () => {
             </Button>
         </Form>
     )}
+        
         </Formik >
+        <ToastNotification/>
+        </div>
+        
     );
 }
 
 const mapDispatchToProps = (dispatch : Dispatch) => ({
-    setCurrentUser: (payload: any) => dispatch(setCurrentUser(payload)),
+    showToast: (show: ToastState) => dispatch(setToastComp(show)),
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);
