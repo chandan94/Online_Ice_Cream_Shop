@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import './sign-up.styles.scss';
 import axios from 'axios';
-import { setCurrentUser } from '../../redux/user/user.actions';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
