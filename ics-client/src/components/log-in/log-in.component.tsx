@@ -45,7 +45,7 @@ const LogIn = ({ setCurrentUser }: any) => {
                             }
                             else {
                                 const currentUser = resp.data.email;
-                                const isAdmin = resp.data.admin === 1 ? true : false;
+                                const isAdmin = resp.data.isAdmin === 1 ? true : false;
                                 const user = {
                                     currentUser,
                                     isAdmin

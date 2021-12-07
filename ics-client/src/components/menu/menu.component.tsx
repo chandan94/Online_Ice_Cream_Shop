@@ -49,7 +49,7 @@ const Menu = ({ isAdmin, icreams, editClicked, currIcream, filter, isFetching }:
                     return (
                         <MenuItem key={index + 1} item={item} isAdmin={isAdmin} isAddItem={false} />
                     );
-                }) : !isFetching ? <div className="no-flavor">Oh no! we don't have any more ice-creams of {filter} flavor &#128546;.<br /> Please check after a day!</div> : null
+                }) : !isFetching && !isAdmin ? <div className="no-flavor">Oh no! we don't have any more ice-creams of {filter} flavor &#128546;.<br /> Please check after a day!</div> : null
             }
             <AddEditModal modalTitle={modalTitle} modalButton={modalButton} currIcream={currIcream} isEdit={editClicked}/>
         </Container>

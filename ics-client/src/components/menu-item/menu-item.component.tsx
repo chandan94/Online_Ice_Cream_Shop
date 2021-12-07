@@ -105,7 +105,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicke
         if (addNavigateItemToCart) {
             const cartitem = {
                 navigate :'true',
-                ...item 
+                ...item
             }
             addNavigateItemToCart(cartitem);
             navigate('/ice-cream-detail')
@@ -144,7 +144,7 @@ const MenuItem = ({ item, isAdmin, isAddItem, showModal,showToast, editBtnClicke
                                     Add to Cart
                                 </Button>
                             ) : (
-                                <Button variant="dark" type="submit" className="out-of-stock" onClick={handleAddToCart} disabled={true}>
+                                <Button variant="dark" type="submit" className="out-of-stock" disabled={true}>
                                     Out of Stock!
                                 </Button>
                             ) : null
